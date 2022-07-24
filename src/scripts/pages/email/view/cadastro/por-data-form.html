@@ -1,0 +1,116 @@
+<md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12); padding: 10px">
+    <div layout="row">
+        <!-- Data de Referência -->
+        <md-input-container class="md-block" flex="50">
+            <font size=2>Data de Referência</font>
+            <md-select name="dataReferencia"
+                       ng-model="formularioEmailCtrl.dataReferenciaModel"
+                       ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="formularioEmailCtrl.isDisabled"
+                       required>
+                <md-option ng-repeat="data in formularioEmailCtrl.dataReferenciaList" ng-value="data">
+                    {{ data.nome }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <!-- space -->
+        <span style="width: 20px">&nbsp;</span>
+        <!-- Dias antes da data de referência -->
+
+    </div>
+    <!--  -->
+    <div layout="row">
+        <!-- Data de envio do e-mail -->
+        <md-input-container flex="50">
+            <font size=2>Data de envio do e-mail</font>
+            <md-select name="dataEnvioDoEmail"
+                       ng-model="formularioEmailCtrl.dataEnvioEmailModel"
+                       ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="formularioEmailCtrl.isDisabled"
+                       required>
+                <md-option ng-repeat="data in formularioEmailCtrl.dataEnvioEmailList" ng-value="data">
+                    {{ data.nome }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <!---->
+        <span style="width: 20px">&nbsp;</span>
+        <!---->
+        <!-- Dias antes da data de referência -->
+        <md-input-container flex="20" ng-if="formularioEmailCtrl.dataEnvioEmailModel.id == 6">
+            <script language='JavaScript'>
+                function SomenteNumero(e){
+                    var tecla=(window.event)?event.keyCode:e.which;
+                    if((tecla>47 && tecla<58)) return true;
+                    else{
+                        if (tecla==8 || tecla==0) return true;
+                        else  return false;
+                    }
+                }
+            </script>
+            <label>Dias antes da data de referência</label>
+            <input name="diasAntesDataReferencia"
+                   ng-model="formularioEmailCtrl.diasAntesDataReferenciaModel"
+                   type="number" onkeypress="return SomenteNumero(event);" min="0" step="any" max="10" required ng-disabled="formularioEmailCtrl.isDisabled"/>
+        </md-input-container>
+        <!-- Dias após a data de referência -->
+        <md-input-container flex="20" ng-if="formularioEmailCtrl.dataEnvioEmailModel.id == 7">
+            <script language='JavaScript'>
+                function SomenteNumero(e){
+                    var tecla=(window.event)?event.keyCode:e.which;
+                    if((tecla>47 && tecla<58)) return true;
+                    else{
+                        if (tecla==8 || tecla==0) return true;
+                        else  return false;
+                    }
+                }
+            </script>
+            <label>Dias após a data de referência</label>
+            <input name="diasAposDataReferencia"
+                   ng-model="formularioEmailCtrl.diasAposDataReferenciaModel"
+                   type="number" onkeypress="return SomenteNumero(event);" min="0" step="any" max="10" required ng-disabled="formularioEmailCtrl.isDisabled"/>
+        </md-input-container>
+        <!-- Reenviar este e-mail até alteração do status -->
+        <md-input-container flex="30" ng-if="formularioEmailCtrl.dataEnvioEmailModel.id == 7">
+            <label>&nbsp;</label>
+            <md-checkbox name="reenvioEmailAteAlteracaoStatus" ng-model="formularioEmailCtrl.reenvioEmailAteAlteracaoStatusModel"
+                ng-disabled="formularioEmailCtrl.isDisabled">
+                Reenviar este e-mail até alteração do status
+            </md-checkbox>
+        </md-input-container>
+    </div>
+    <!-- Status da Demanda ---  -->
+    <div layout="row">
+        <!-- Status da Demanda -->
+        <!--Gambiarra aqui-->
+        <md-input-container flex="50">
+         <font size=2>Status da Demanda</font>   <img src="https://static.thenounproject.com/png/93070-200.png" style="width: 15px" >
+            <md-tooltip md-direction="right" style="font-size: 14px;">Status atual da demanda para que o e-mail seja enviado</md-tooltip>
+            <md-select name="statusDaDemanda"
+                       ng-model="formularioEmailCtrl.statusDemandaModel"
+                       ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="formularioEmailCtrl.isDisabled"
+                       required>
+                <md-option ng-repeat="status in formularioEmailCtrl.statusDemandaList" ng-value="status">
+                    {{ status.nome }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <!-- space -->
+        <span style="width: 20px">&nbsp;</span>
+        <!-- Destinatários -->
+        <md-input-container flex="50">
+            <font size=2>Destinatários</font>
+            <md-select name="destinatario"
+                       ng-model="formularioEmailCtrl.destinatarioModel"
+                       ng-model-options="{trackBy: '$value.id'}"
+                       data-md-container-class="selectdemoSelectHeader"
+                       ng-disabled="formularioEmailCtrl.isDisabled"
+                       multiple required>
+                <md-option ng-repeat="dest in formularioEmailCtrl.destinatarioList" ng-value="dest">
+                    {{ dest.nome }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+</md-card>

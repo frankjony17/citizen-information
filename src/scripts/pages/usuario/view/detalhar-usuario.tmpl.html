@@ -1,0 +1,97 @@
+<md-content>
+    <ng-form name = atribuirUnidadeCtrl.atribuirUnidadeForm >
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>Detalhar Usuário</h1>
+                </md-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">Usuário</label>
+                        <input ng-model="detalharUsuarioCtrl.detalharUsuario.nome" ng-readonly="true"/>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">Perfil</label>
+                        <input nome="perfis" ng-model="detalharUsuarioCtrl.detalharUsuario.perfil"  ng-readonly="true"/>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">CPF</label>
+                        <input ng-model="detalharUsuarioCtrl.detalharUsuario.cpf" ng-readonly="true"/>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">Email</label>
+                        <input ng-model="detalharUsuarioCtrl.detalharUsuario.email" type="email" ng-readonly="true"/>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" style="margin-right: 20px;" flex="100">
+                        <label>Cargo</label>
+                        <input type="text" ng-model="detalharUsuarioCtrl.detalharUsuario.cargo" ng-readonly="true">
+                    </md-input-container>
+                    <md-input-container class="md-block" style="margin-right: 20px;" flex="100">
+                        <label>Função</label>
+                        <input ng-model="detalharUsuarioCtrl.detalharUsuario.funcao" ng-readonly="true">
+                    </md-input-container>
+                </div>
+                    <md-input-container class="md-block" flex="100">
+                        <label class="tamanho-text">Telefone</label>
+                        <input ng-model="detalharUsuarioCtrl.detalharUsuario.telefone" ng-readonly="true"/>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100">
+                        <label class="tamanho-text">Assinatura</label>
+                        <input ng-model="detalharUsuarioCtrl.detalharUsuario.assinatura" ng-readonly="true"/>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <!-- Órgãos -->
+                    <md-input-container class="md-block" flex="80">
+                        <label>Orgão</label>
+                        <input ng-model="detalharUsuarioCtrl.detalharUsuario.orgao[0].nomeUnidade" ng-readonly="true"/>
+                    </md-input-container>
+                    <!-- Unidade -->
+                    <md-input-container class="md-block" flex="100">
+                        <label>Unidade</label>
+                        <input ng-model="detalharUsuarioCtrl.detalharUsuario.unidade[0].nomeUnidade" ng-readonly="true"/>
+                    </md-input-container>
+                    <!-- Subunidades -->
+                    <md-input-container class="md-block" flex="100">
+                        <label>Subunidades <b>({{ detalharUsuarioCtrl.detalharUsuario.subunidades.length }})</b></label>
+                        <md-select ng-model="detalharUsuarioCtrl.defaultSubunidade" ng-model-options="{trackBy: '$value.id'}" data-md-container-class="selectdemoSelectHeader" ng-disabled="true" multiple>
+                            <md-option ng-repeat="sub in detalharUsuarioCtrl.detalharUsuario.unidadeSubunidades" ng-value="sub">
+                                {{ sub.nomeUnidade }} ({{ sub.siglaUnidade }})
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                </br>
+                <md-input-container class="md-block" flex>
+                    <label class="tamanho-text" style="padding: 0">Autoridade Hierárquica 1º instância</label>
+                    <input ng-model="detalharUsuarioCtrl.detalharUsuario.autoridadeHier" ng-readonly="true"/>
+                </md-input-container>
+                <md-input-container class="md-block" flex>
+                    <label class="tamanho-text" style="padding: 0">Autoridade Máxima 2º instância</label>
+                    <input ng-model="detalharUsuarioCtrl.detalharUsuario.autoridadeMaxi" ng-readonly="true"/>
+                </md-input-container>
+                <div layout="row" flex>
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">Responsável pelo Recurso de 3ª Instância</label>
+                        <input name="responsavelRecursoTerceiraInstancia" ng-model="detalharUsuarioCtrl.detalharUsuario.responsavelRecurso3" ng-readonly="true"/>
+                    </md-input-container>
+                </div>
+                <div layout="row" flex>
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">Responsável pelo Recurso de 4ª Instância</label>
+                        <input name="responsavelRecursoQuartaInstancia" ng-model="detalharUsuarioCtrl.detalharUsuario.responsavelRecurso4" ng-readonly="true"/>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-raised md-primary" ng-click="detalharUsuarioCtrl.voltar()">
+                        Voltar
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

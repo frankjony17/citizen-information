@@ -1,0 +1,165 @@
+<md-content>
+    <ng-form name="eouvCtrl.eouvForm">
+        <md-content>
+            <h1>Encaminhar E-Ouv</h1>
+        </md-content>
+        <md-card md-theme-watch>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Dados do Pedido</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Protocolo</label>
+                        <input ng-model="eouvCtrl.eouv.pedido.protocolo" readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="80">
+                        <label>Solicitante</label>
+                        <input ng-model="eouvCtrl.eouv.pedido.solicitanteDTO.nome" readonly>
+                    </md-input-container>
+                    <div flex="20">
+                        <md-button class="md-raised md-primary" ng-click="eouvCtrl.consultarDadosSolicitante()">
+                            Ver Dados
+                        </md-button>
+                    </div>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Vencimento e-SIC</label>
+                        <input ng-value="eouvCtrl.eouv.pedido.vencimentoESic | date: 'dd/MM/yyyy'" readonly/>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Recebimento da Resposta</label>
+                        <input ng-model="eouvCtrl.eouv.pedido.formaRecebimento" readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Resumo da Solicitação</label>
+                        <textarea rows="5" ng-model="eouvCtrl.eouv.pedido.resumoSolicitacao" readonly>
+                        </textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Detalhes da Solicitação</label>
+                        <textarea rows="5" ng-model="eouvCtrl.eouv.pedido.detalhamentoSolicitacao" readonly>
+                        </textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row" class="metadeComprimentoTab">
+                    <md-list>
+                        <md-list-item ng-repeat="anexo in eouvCtrl.eouv.pedido.anexos">
+                            <div class="md-list-item-text">
+                                <a class="md-primary md-button md-ink-ripple"
+                                   ng-click="eouvCtrl.downloadAnexo(anexo.nome)">
+                                    {{anexo.nome}}
+                                </a>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </div>
+            </md-card-content>
+        </md-card>
+
+        <md-card md-theme-watch>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Dados de Envio para E-Ouv</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Tipo de Resposta</label>
+                        <input ng-model="eouvCtrl.tipoTratamento.nome" readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Tipo Manifestação</label>
+                        <md-select ng-model="eouvCtrl.eouv.tipoManifestacao" required>
+                            <md-option ng-repeat="tipoManifestacao in eouvCtrl.listaTipoManifestacao" ng-value="tipoManifestacao">
+                                {{tipoManifestacao.nome}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Resposta</label>
+                        <textarea ng-model="eouvCtrl.eouv.tipoManifestacao.descricao" readonly>
+                        </textarea>
+                    </md-input-container>
+                </div>
+            </md-card-content>
+        </md-card>
+        <md-card md-theme-watch>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Sobre o pedido</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Categoria</label>
+                        <md-select ng-model="eouvCtrl.eouv.categoria" ng-change="eouvCtrl.buscarSubCategorias()" required>
+                            <md-option ng-repeat="categoria in eouvCtrl.listaCategoria" ng-value="categoria">
+                                {{categoria.descricao}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Subcategoria</label>
+                        <md-select ng-model="eouvCtrl.eouv.subcategoria" required>
+                            <md-option ng-repeat="subcategoria in eouvCtrl.listaSubCategoria" ng-value="subcategoria">
+                                {{subcategoria.descricao}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="column">
+                        <label>Palavra-Chave</label>
+                    <ul id="palavrasChaves">
+                        <li ng-repeat="palavrasChaves in eouvCtrl.listaPalavrasChaves">{{palavrasChaves.descricao}}</li>
+                    </ul>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Restrição conteúdo*</label>
+                        <br/>
+                        <p>
+                            Os pedidos e respostas registrados no e-SIC serão disponibilizados para consulta aberta com o objetivo de ampliar a publicação proativa de informações públicas no Poder Executivo Federal, desde que não contenha informações pessoais ou protegidas para outras hipóteses de sigilo. Este pedido de acesso ou respectiva resposta contém informações sujeitas, à restrição de acesso conforme previsto na lei 12.527/2011?
+                        </p>
+                        <md-radio-group ng-model="eouvCtrl.eouv.restricaoConteudo" layout="row" ng-required="true">
+                            <md-radio-button id="radio1" ng-value="true">
+                                Sim
+                            </md-radio-button>
+                            <md-radio-button id="radio2" ng-value="false">
+                                Não
+                            </md-radio-button>
+                        </md-radio-group>
+                    </md-input-container>
+                </div>
+            </md-card-content>
+        </md-card>
+        <div layout="row" layout-align="end right">
+            <md-button class="md-primary md-raised" ng-click="eouvCtrl.enviarEouv($event)">
+                Enviar
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="eouvCtrl.voltarDetalhar()">
+                Voltar
+            </md-button>
+        </div>
+    </ng-form>
+</md-content>
+

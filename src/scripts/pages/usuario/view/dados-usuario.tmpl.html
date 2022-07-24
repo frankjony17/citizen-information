@@ -1,0 +1,97 @@
+<md-content>
+    <ng-form name=dadosUsuarioCtrl.dadosUsuarioForm >
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card>
+                <md-content>
+                    <h1>Dados do Usuário</h1>
+                </md-content>
+                <!-- Perfil, Usuário -->
+                <div layout="row">
+                    <md-input-container flex="50">
+                        <label><b>Perfil</b></label>
+                        <input ng-model="dadosUsuarioCtrl.perfil" ng-readonly="true"/>
+                    </md-input-container>
+                    <md-input-container flex="50">
+                        <label><b>Usuário</b></label>
+                        <input ng-model="dadosUsuarioCtrl.usuario.nome" ng-readonly="true"/>
+                    </md-input-container>
+                </div>
+                <!-- CPF, E-mail -->
+                <div layout="row">
+                    <md-input-container flex="50">
+                        <label><b>CPF</b></label>
+                        <input ng-model="dadosUsuarioCtrl.usuario.cpf" ng-readonly="true"/>
+                    </md-input-container>
+                    <md-input-container flex="50">
+                        <label><b>E-mail</b></label>
+                        <input name="email" ng-model="dadosUsuarioCtrl.usuario.email" type="email" required/>
+                    </md-input-container>
+                </div>
+                <!-- Telefone, Cargo, Função -->
+                <div layout="row">
+                    <md-input-container flex="50">
+                        <label><b>Telefone</b></label>
+                        <input name="telefone" ng-model="dadosUsuarioCtrl.usuario.telefone" type="number" required/>
+                    </md-input-container>
+                    <md-input-container flex="25">
+                        <label><b>Cargo</b></label>
+                        <input ng-model="dadosUsuarioCtrl.usuario.cargo" ng-readonly="true"/>
+                    </md-input-container>
+                    <md-input-container flex="25">
+                        <label><b>Função</b></label>
+                        <input ng-model="dadosUsuarioCtrl.usuario.funcao" ng-readonly="true"/>
+                    </md-input-container>
+                </div>
+            </md-card-content>
+            <!-- Assinatura -->
+            <div layout="row">
+                <md-input-container flex="100">
+                    <label><b>Assinatura</b></label>
+                    <input ng-model="dadosUsuarioCtrl.usuario.assinatura" ng-readonly="true"/>
+                </md-input-container>
+            </div>
+            <!-- Unidade, Subunidade -->
+            <div layout="row">
+                <md-input-container flex="50">
+                    <label><b>Unidade</b></label>
+                    <input ng-model="dadosUsuarioCtrl.usuario.unidade" ng-readonly="true"/>
+                </md-input-container>
+                <md-input-container flex="50">
+                    <label><b>Subunidade</b></label>
+                    <textarea ng-model="dadosUsuarioCtrl.usuario.subunidade" ng-readonly="true"></textarea>
+                </md-input-container>
+            </div>
+            <!-- Autoridade Hierárquica 1ª Instância, Autoridade Máxima 2ª Instância -->
+            <div layout="row">
+                <md-input-container flex="50" ng-if="dadosUsuarioCtrl.autoridadeHierarquica != dadosUsuarioCtrl.perfil">
+                    <label><b>Autoridade Hierárquica 1ª Instância</b></label>
+                    <input ng-model="dadosUsuarioCtrl.usuario.autoridadeHierarquica" ng-readonly="true"/>
+                </md-input-container>
+                <md-input-container flex="50" ng-if="dadosUsuarioCtrl.autoridadeHierarquica != dadosUsuarioCtrl.perfil">
+                    <label><b>Autoridade Máxima 2ª Instância</b></label>
+                    <textarea ng-model="dadosUsuarioCtrl.usuario.autoridadeMaxima" ng-readonly="true"></textarea>
+                </md-input-container>
+            </div>
+            <!-- Responsável pelo Recurso de 3ª Instância, Responsável pelo Recurso de 4ª Instância -->
+            <div layout="row">
+                <md-input-container flex="50">
+                    <label><b>Responsável pelo Recurso de 3ª Instância</b></label>
+                    <input ng-model="dadosUsuarioCtrl.usuario.responsavelTercera" ng-readonly="true"/>
+                </md-input-container>
+                <md-input-container flex="50">
+                    <label><b>Responsável pelo Recurso de 4ª Instância</b></label>
+                    <textarea ng-model="dadosUsuarioCtrl.usuario.responsavelQuarta" ng-readonly="true"></textarea>
+                </md-input-container>
+            </div>
+            <!-- Button Voltar, Salvar -->
+            <div layout="row" layout-align="end right">
+                <md-button class="md-raised md-primary" ng-click="dadosUsuarioCtrl.voltar()">
+                    Voltar
+                </md-button>
+                <md-button id="btn-salvar" class="md-raised md-primary" ng-click="dadosUsuarioCtrl.isValid()">
+                    Salvar
+                </md-button>
+            </div>
+        </md-card>
+    </ng-form>
+</md-content>

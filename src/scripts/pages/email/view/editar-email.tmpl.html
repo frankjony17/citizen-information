@@ -1,0 +1,99 @@
+<md-content>
+    <ng-form name=editarEmailCtrl.editarEmailForm>
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12);">
+            <md-card-content>
+                    <md-content>
+                        <h1>E-mail</h1>
+                    </md-content>
+                    <!-- FORM EMAIL -->
+                    <md-card>
+                        <div ng-include="'scripts/pages/email/view/edicao/tipo-radio-button.html'"></div>
+                        <!-- POR DATA FORM SHOW ON radio-button => 'Por data' = true -->
+                        <div ng-if="editarEmailCtrl.radioAlerta.data == 'Data'"
+                             ng-include="'scripts/pages/email/view/edicao/por-data-form.html'">
+                        </div> <!-- end if -->
+                        <!-- POR DATA FORM SHOW ON radio-button => 'Por acao' = true -->
+                        <div ng-if="editarEmailCtrl.radioAlerta.acao == 'Acao'"
+                             ng-include="'scripts/pages/email/view/edicao/por-acao-form.html'">
+                        </div> <!-- end if -->
+                        <!---->
+                        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12); padding: 10px">
+                            <div layout="column" flex>
+                                <!-- Assunto do E-mail -->
+                                <md-input-container>
+                                    <label>
+                                        Assunto do E-mail</label>
+                                    <input name="assuntoEmail" ng-model="editarEmailCtrl.assuntoEmailModel" maxlength="100" required/>
+                                </md-input-container>
+                                <!-- Conteúdo do E-mail -->
+                                <div layout="row">
+                                    <p style="text-align: left; width: 85%;">Conteúdo do E-mail <span style="color: #9C9C9C">*</span></p>
+                                </div>
+                                <textarea name="editor1" id="editor1" required></textarea>
+                            </div>
+                        </md-card>
+                        <!-- Button Salvar, Voltar -->
+                        <div layout="row" layout-align="end right">
+                            <md-button class="md-raised md-primary" ng-click="editarEmailCtrl.isValid($event)">
+                                Salvar
+                            </md-button>
+                            <md-button class="md-raised md-primary" ng-click="editarEmailCtrl.voltar()">
+                                Cancelar
+                            </md-button>
+                        </div>
+                    </md-card>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>
+<style>
+    .cke_button__inserirprotocolo_label { display : inline !important; font-weight: bold; text-align: center; }
+    .cke_button__inserircampodata_label { display : inline !important; font-weight: bold; text-align: center; }
+    .cke_button__inserirprotocolo_icon { background:url('../../../../assets/img/icons/hashtag.png'); width: 16px; height: 16px; }
+    .cke_button__inserircampodata_icon { background:url('../../../../assets/img/icons/calendar-check.png'); width: 16px; height: 16px; }
+</style>
+<script type="text/javascript">
+    CKEDITOR.replace('editor1');
+    CKEDITOR.plugins.add('InserirButtonSdsic', {
+        init: function(editor) {
+            editor.ui.addButton( 'InserirProtocolo', {
+                label: 'Inserir Protocolo',
+                command: 'InserirProtocolo',
+                toolbar: 'others,100'
+            });
+            editor.ui.addButton( 'InserirCampoData', {
+                label: 'Inserir Campo Data',
+                command: 'InserirCampoData',
+                toolbar: 'others'
+            });
+
+            editor.addCommand( 'InserirProtocolo', {
+                exec: function( editor ) {
+                    editor.insertHtml('{{#NO-PROTOCOLO#}}');
+                }
+            });
+            editor.addCommand( 'InserirCampoData', {
+                exec: function( editor ) {
+                    editor.insertHtml('{{#DATA-REFERENCIA#}}');
+                }
+            });
+        }
+    });
+    CKEDITOR.config.extraPlugins = 'InserirButtonSdsic';
+    CKEDITOR.config.toolbar = [
+        { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+        { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Scayt' ] },
+        { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+        { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
+        { name: 'tools', items: [ 'Maximize' ] },
+        { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] },
+        { name: 'others', items: [ '-', 'InserirProtocolo', 'InserirCampoData' ] },
+        '/',
+        { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat', '-', 'TextColor', 'BGColor' ] },
+        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+    ];
+    CKEDITOR.on("instanceReady", function (evt) {
+        $(".cke_button__inserirprotocolo").closest(".cke_toolbar").css({ "float": "right" });
+    });
+</script>

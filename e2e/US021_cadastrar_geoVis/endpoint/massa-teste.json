@@ -1,0 +1,14 @@
+{
+    "calogoValido": {
+        "nomeEndpoint": "MME",
+        "url": "http://spunet-geoinformacao.tst.basis.com.br/geoidentificacao/api/public/geoidentific",
+        "descricao": "descrição do endpoint",
+        "atributoIdentificacao": "atr_indet",
+        "atributoTitulo": "Atributo titulo teste",
+        "parametros": {
+            "nome": "parametro",
+            "tipo": "String",
+            "expressao": "d{2}"
+        }
+    }
+}

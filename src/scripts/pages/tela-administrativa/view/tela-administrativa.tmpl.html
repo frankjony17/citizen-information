@@ -1,0 +1,139 @@
+<md-content>
+    <md-content>
+        <h1>Tela Administrativa - Gerenciar Demanda </h1>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline ">Protocolo</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+
+            <md-input-container style="width: 80%">
+                <input ng-model="scope.protocolo">
+            </md-input-container>
+            <md-button class="md-raised md-primary" ng-click=" scope.buscarPeloProtocolo(scope.protocolo)" style="width: 10%"> Pesquisar</md-button>
+        </md-card-content>
+        </md-card-content>
+
+
+    <div style="text-align:left; ">
+        <h3 style="padding: 15px; color: black">Dados da Solicitação atual</h3>
+    </div>
+
+    <form name="formulario">
+    <div style="margin-left: 20px">
+
+        <div layout="row">
+
+            <div layout="column" flex>
+                <md-input-container style="width: 80%">
+                    <label>Assunto</label>
+                    <input ng-model="scope.TelaAdministrativaDTO.temaDTO.nomeTema " readonly>
+                </md-input-container>
+            </div>
+
+            <div layout="column" flex>
+                <md-input-container style="width: 80%">
+                    <label>Sub assunto</label>
+                    <md-select ng-model="scope.TelaAdministrativaDTO.subtemas" readonly>
+                        <md-option ng-repeat="subtema in scope.TelaAdministrativaDTO.subtemas" ng-value="subtema.nomeSubtema">
+                            {{subtema.nomeSubtema}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+        </div>
+
+        <div layout="row">
+
+            <div layout="column" flex>
+                <md-input-container style="width: 80%">
+                    <label>Status da Solicitação</label>
+                    <input ng-model="scope.statusSolicitacao"  readonly>
+                </md-input-container>
+            </div>
+
+            <div layout="column" flex>
+                <md-input-container style="width: 80%">
+                    <label>Status da Tramitação</label>
+                    <input ng-model="scope.statusTramitacao" readonly>
+                </md-input-container>
+            </div>
+
+        </div>
+
+        <div layout="row">
+
+            <div layout="column" flex>
+                <md-input-container style="width: 80%">
+                    <label>Unidade atual</label>
+                    <input ng-model="user.title" readonly>
+                </md-input-container>
+            </div>
+
+            <div layout="column" flex>
+                <md-input-container style="width: 80%">
+                    <label>Subunidade atual</label>
+                    <input ng-model="user.title" readonly>
+                </md-input-container>
+            </div>
+
+        </div>
+        <div layout="row">
+            <div layout="column" flex>
+                <md-input-container style="width: 40%">
+                    <label>Usuário atual</label>
+                    <input ng-model="scope.usuarioLogadoDTO.nome" readonly>
+                </md-input-container>
+            </div>
+
+
+        </div>
+
+    </div>
+    </form>
+        <form name="formulario">
+            <div style="text-align:left; ">
+                <h3 style="padding: 15px; color: black">Novos dados da Solicitação atual</h3>
+            </div>
+            <div style="margin-left: 20px">
+
+                <div layout="row">
+
+                    <div layout="column" flex ng-if="(scope.usuarioLogadoDTO.perfil == 'FKSOLUTIONS.ADMIN'|| scope.usuarioLogadoDTO.perfil == 'FKSOLUTIONS.ATENDIMENTO.SIC') && (scope.statusSolicitacao == 'Recurso 1ª Produção' || scope.statusSolicitacao == 'Recurso 2ª Produção') || scope.isPedido">
+                        <md-input-container class="md-block" flex>
+                            <label>Novo Status da Solicitacao</label>
+                            <md-select ng-model="scope.alteracaoPedidoRecursoDTO.idStatusSolicitacao">
+                                <md-option ng-repeat="status in scope.NovostatusSolicitacao" ng-value="status.id">
+                                    {{status.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                </div>
+
+                <div layout="row">
+                    <div layout="column" flex ng-if="(scope.usuarioLogadoDTO.perfil == 'FKSOLUTIONS.ADMIN'|| scope.usuarioLogadoDTO.perfil == 'FKSOLUTIONS.ATENDIMENTO.SIC') && (scope.statusSolicitacao == 'Recurso 1ª Produção' || scope.statusSolicitacao == 'Recurso 2ª Produção') || scope.isPedido">
+                        <md-input-container>
+                            <label>Justificativa</label>
+                            <textarea  ng-model="scope.alteracaoPedidoRecursoDTO.justificativa" required>
+                            </textarea>
+                        </md-input-container>
+                    </div>
+
+
+                </div>
+            </div>
+            <div style="float: right">
+                <md-button class="md-raised md-primary" ng-click="scope.alterarPedidoRecurso(scope.alteracaoPedidoRecursoDTO)">Salvar</md-button>
+                <md-button class="md-raised md-primary" ng-click="scope.voltar()">Cancelar</md-button>
+            </div>
+        </form>
+
+
+</md-card>
+

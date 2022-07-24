@@ -1,0 +1,59 @@
+<md-content>
+    <md-content>
+        <h1>Encaminhar Pedido de Informação</h1>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Encaminhar</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <form name="formulario">
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Observação</label>
+                        <textarea ng-model="scope.respostaAssinadaDTO.observacao" rows="5"
+                                  md-select-on-focus></textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Status da Solicitação</label>
+                        <input ng-model="scope.respostaAssinadaDTO.nomeStatusSolicitacao" readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row" ng-show="scope.respostaAssinadaDTO.resposta == 'encaminharSic' && scope.respostaAssinadaDTO.nomeStatusSolicitacao != 'Produção de Resposta'">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Unidade</label>
+                        <input ng-model="scope.respostaAssinadaDTO.unidade.nomeUnidade" readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row" ng-show="scope.respostaAssinadaDTO.nomeStatusSolicitacao == 'Produção de Resposta'">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Subunidade</label>
+                        <input ng-model="scope.respostaAssinadaDTO.subunidade.nomeSubunidade" readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="end center">
+                    <md-button class="md-raised md-primary"
+                               ng-show="scope.respostaAssinadaDTO.resposta != 'encaminharSic' && scope.editarResposta.resposta == null" ng-click="scope.escreverPropostaResposta()">
+                        Escrever Proposta Resposta
+                    </md-button>
+
+                    <md-button ng-show="scope.respostaAssinadaDTO.resposta != 'encaminharSic' && scope.editarResposta.resposta != null" class="md-raised md-primary" ng-click="scope.escreverPropostaResposta()">
+                        Editar Proposta Resposta
+                    </md-button>
+
+                    <md-button class="md-raised md-primary" ng-click="scope.enviar($event)">
+                        Enviar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="scope.voltar()">
+                        Voltar
+                    </md-button>
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+</md-content>
+

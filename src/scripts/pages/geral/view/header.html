@@ -1,0 +1,22 @@
+<md-toolbar>
+    <div class="container-fluid" id="sdsic" layout="row" style="padding-top: 1%">
+        <div style="color:white" layout="column" >
+            <sgr-glossario termo="Sistema de Demandas do Serviços de Informações ao Cidadão - FKSOLUTIONS"></sgr-glossario>
+        </div>
+    </div>
+        <div>
+            <a href="/#/logout"
+               style="text-align: right;
+               font-size: medium;color: white;text-decoration: none; float: right; margin-top: -30px; margin-right: 10px"
+               layout="column">Encerrar sessão</a>
+        <div>
+            <a style="font-size: 13px; text-align: right;
+            font-size: medium;color: white;text-decoration: none; margin-right: 10px;"
+             layout="column">
+            Olá, {{usuarioLogadoV2.nome}} - {{diaSemana}}  {{date | date:'dd/MM/yyyy'}}
+
+            </a>
+        </div>
+</md-toolbar>
+<md-toolbar style="min-height: 25px !important;background: #0f4098 !important;"> <ncy-breadcrumb></ncy-breadcrumb></md-toolbar>
+

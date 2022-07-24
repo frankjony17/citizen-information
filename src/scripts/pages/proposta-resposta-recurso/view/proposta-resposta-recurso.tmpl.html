@@ -1,0 +1,117 @@
+<md-content>
+    <md-content>
+        <h1>Encaminhar Recurso</h1>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Encaminhar</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <form name="formulario">
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Observação</label>
+                        <textarea ng-model="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.observacao" rows="5"
+                                  md-select-on-focus></textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Status da solicitação</label>
+                        <input ng-model="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.nome" readonly>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="50" ng-if ="
+                    (propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 1ª Triagem' && propostaRespostaRecursoCtrl.ultimaUnidade.nomeUnidade == 'SIC')
+                    ||propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 1ª Distribuição PF'">
+                        <label>Autoridade Hierárquica SIC</label>
+                        <md-select ng-model="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.usuarioAcessosList" required>
+                            <md-option ng-repeat=" usuario in propostaRespostaRecursoCtrl.usuarios"
+                                       ng-value="usuario">
+                                {{usuario.nomeUsuario}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex="50" ng-if ="
+                    propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 2ª Triagem'
+                    ||propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 2ª Distribuição PF'">
+                        <label>Autoridade Máxima</label>
+                        <md-select ng-model="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.usuarioAcessosList" required>
+                            <md-option ng-repeat=" usuario in propostaRespostaRecursoCtrl.autoridadeHierarquicaList"
+                                       ng-value="usuario">
+                                {{usuario.nomeUsuario}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" ng-show="
+                  propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 2ª Assinado'
+                  || propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 2ª Produção'">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Autoridade Máxima</label>
+                        <input readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row" ng-show="propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 1ª Triagem'
+                  || propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 1ª Respondido'
+                  || propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 1ª Para Revisão'
+                  || propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 1ª Para Envio'
+                  || propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 2ª Triagem'
+                  || propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 2ª Respondido'
+                  || propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 2ª Para Envio'
+                  ||propostaRespostaRecursoCtrl.StatusSolicitacaoRecursoDTO.nome == 'Recurso 2ª Distribuição PF'">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Unidade</label>
+                        <md-select ng-model="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.idUnidade" ng-disabled="true">
+                            <md-option ng-repeat="listaUnidade in propostaRespostaRecursoCtrl.listaUnidade"
+                                       ng-value="listaUnidade.id">
+                                {{listaUnidade.nomeUnidade}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" ng-show="propostaRespostaRecursoCtrl.recursoDetalhadoDTO.nome == 'Recurso 1ª Produção'  || propostaRespostaRecursoCtrl.recursoDetalhadoDTO.nome == 'Recurso 2ª Produção' ">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Técnico</label>
+                        <md-select ng-model="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.idUnidade" ng-disabled="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.idStatusSolicitacaoRecurso === 2 || propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.idStatusSolicitacaoRecurso === 10 ">
+                            <md-option ng-value="">Selecione</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" ng-show="propostaRespostaRecursoCtrl.recursoDetalhadoDTO.nome == 'Recurso 1ª Distribuição PF' || propostaRespostaRecursoCtrl.recursoDetalhadoDTO.nome == 'Recurso 2ª Distribuição PF' ">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Subunidade</label>
+                        <md-select ng-model="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.idUnidade" ng-disabled="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.idStatusSolicitacaoRecurso === 2 || propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.idStatusSolicitacaoRecurso === 10">
+                            <md-option ng-value="">Selecione</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="50">
+                        <label>Respondente</label>
+                        <md-select ng-model="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.idUnidade" ng-disabled="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.idStatusSolicitacaoRecurso === 2 || propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.idStatusSolicitacaoRecurso === 10">
+                            <md-option ng-value="">Selecione</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <br/>
+                <div layout="row" layout-align="end center">
+                    <md-button class="md-raised md-primary" ng-show="propostaRespostaRecursoCtrl.editarRespostaRecurso.resposta == null && propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.nome != 'Recurso 1ª Para Envio'" ng-click="propostaRespostaRecursoCtrl.escreverPropostaRespostaRecurso()">
+                        Escrever Proposta Resposta
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-show="propostaRespostaRecursoCtrl.editarRespostaRecurso.resposta != null && propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.nome != 'Recurso 1ª Para Envio' && propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.nome != 'Recurso 2ª Para Envio'" ng-click="propostaRespostaRecursoCtrl.escreverPropostaRespostaRecurso()">
+                        Editar Proposta Resposta
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="propostaRespostaRecursoCtrl.enviar()">
+                        Encaminhar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="propostaRespostaRecursoCtrl.voltar()">
+                        Voltar
+                    </md-button>
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+</md-content>
+
+

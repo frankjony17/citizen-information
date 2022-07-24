@@ -1,0 +1,123 @@
+<md-content>
+    <md-content>
+        <div layout="row">
+        <div layout="column" flex>
+            <h1>Pedidos do Solicitante</h1>
+        </div>
+        <div layout="column">
+            <h4>Protocolo: {{pedidoDuplicadoCtrl.pedido.protocolo}}</h4>
+        </div>
+        </div>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Pesquisar Protocolo</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <form name="pedidoDuplicadoForm">
+                <div layout="row">
+                    <md-input-container flex="60">
+                        <label>Protocolo</label>
+                        <input ng-model="pedidoDuplicadoCtrl.protocolo" ng-maxlength="17" name="textProtocolo"/>
+                    </md-input-container>
+                    <div flex="20">
+                        <md-button class="md-raised md-primary" ng-click="pedidoDuplicadoCtrl.consultarPedidoPeloProtocolo()">
+                            Pesquisar
+                        </md-button>
+                        <md-button class="md-raised md-primary" ng-click="pedidoDuplicadoCtrl.limpar()">
+                            Limpar
+                        </md-button>
+                    </div>
+
+                </div>
+            </form>
+        </md-card-content>
+
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Lista de Protocolos</span>
+            </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content>
+            <md-table-container>
+                <table md-table>
+                    <thead md-head>
+                    <tr md-row>
+                        <th md-column>Protocolo</th>
+                        <th md-column>Status da Solicitação</th>
+                        <th md-column>Data Vencimento e-SIC</th>
+                        <th md-column>Data da Resposta</th>
+                        <th md-column>Pedido Duplicado</th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr ng-if="pedidoDuplicadoCtrl.pedidoDuplicadoDTO == undefined"
+                        md-row
+                        ng-repeat="pedidoDuplicadoDTO in pedidoDuplicadoCtrl.listaPedidoDuplicadoDTO.content">
+                        <td md-cell >
+                            <a href="/#/detalheSolicitacaoInformacao/{{pedidoDuplicadoDTO.idPedido}}">{{pedidoDuplicadoDTO.protocolo}}</a>
+                        </td>
+                        <td md-cell>
+                            {{pedidoDuplicadoDTO.nomeStatusSolicitacao}}
+                        </td>
+                        <td md-cell>
+                            {{pedidoDuplicadoDTO.dataVencimentoESic | date: 'dd/MM/yyyy HH:mm:ss'}}
+                        </td>
+                        <td md-cell>
+                        </td>
+                        <td md-cell>
+                            <md-radio-group ng-model="pedidoDuplicadoCtrl.idPedidoDuplicado" ng-change="pedidoDuplicadoCtrl.vincularPedidoDuplicado()">
+                                <md-radio-button ng-value="pedidoDuplicadoDTO.idPedido" class="md-primary"></md-radio-button>
+                            </md-radio-group>
+                        </td>
+                    </tr>
+                    <tr ng-if="pedidoDuplicadoCtrl.pedidoDuplicadoDTO != undefined"
+                        md-row>
+                        <td md-cell >
+                            <a href="/#/detalheSolicitacaoInformacao/{{pedidoDuplicadoCtrl.pedidoDuplicadoDTO.idPedido}}">{{pedidoDuplicadoCtrl.pedidoDuplicadoDTO.protocolo}}</a>
+                        </td>
+                        <td md-cell>
+                            {{pedidoDuplicadoCtrl.pedidoDuplicadoDTO.nomeStatusSolicitacao}}
+                        </td>
+                        <td md-cell>
+                            {{pedidoDuplicadoCtrl.pedidoDuplicadoDTO.dataVencimentoESic | date: 'dd/MM/yyyy HH:mm:ss'}}
+                        </td>
+                        <td md-cell>
+                        </td>
+                        <td md-cell>
+                            <md-radio-group ng-model="pedidoDuplicadoCtrl.idPedidoDuplicado" ng-change="pedidoDuplicadoCtrl.vincularPedidoDuplicado()">
+                                <md-radio-button ng-value="pedidoDuplicadoCtrl.pedidoDuplicadoDTO.idPedido" class="md-primary"></md-radio-button>
+                            </md-radio-group>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination ng-if="pedidoDuplicadoCtrl.pedidoDuplicadoDTO == undefined" style="margin: auto; background-color: #D8F8E1;"
+                                 md-on-paginate="pedidoDuplicadoCtrl.consultarPedidoSolicitante"
+                                 md-limit="pedidoDuplicadoCtrl.tabelaConsulta.limit"
+                                 md-limit-options="pedidoDuplicadoCtrl.tabelaConsulta.limitsPage"
+                                 md-page="pedidoDuplicadoCtrl.tabelaConsulta.page"
+                                 md-total="{{pedidoDuplicadoCtrl.totalElementosConsulta}}"
+                                 md-page-select>
+            </md-table-pagination>
+        </md-card-content>
+
+    </md-card>
+    <md-card md-theme-watch>
+
+
+    </md-card>
+    <div layout="row" layout-align="end right">
+        <md-button class="md-raised md-primary" ng-click="pedidoDuplicadoCtrl.responderPedidoInformacao()" ng-show="pedidoDuplicadoCtrl.idPedidoDuplicado && pedidoDuplicadoCtrl.idPedidoDuplicado != pedidoDuplicadoCtrl.pedido.id">
+            Responder
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="pedidoDuplicadoCtrl.voltarDetalhePerdido()">
+            Voltar
+        </md-button>
+    </div>
+</md-content>
+

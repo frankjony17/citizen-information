@@ -1,0 +1,40 @@
+<md-content>
+    <md-content>
+        <h1>Devolver Pedido de Informação</h1>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Devolver</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <form name="formulario">
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Justificativa</label>
+                        <textarea ng-model="scope.devolvePedidoDTO.justificativa" rows="5" ng-minlength="30" name="textJusticafiva"
+                                  md-select-on-focus required></textarea>
+                    </md-input-container>
+
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Status da Solicitação</label>
+                        <input ng-model="scope.devolvePedidoDTO.nomeStatusSolicitacao" readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="end center">
+                    <md-button class="md-raised md-primary" ng-click="scope.devolver()">
+                        Devolver
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="scope.voltar()">
+                        Voltar
+                    </md-button>
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+</md-content>
+
+

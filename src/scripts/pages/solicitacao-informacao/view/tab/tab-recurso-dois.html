@@ -1,0 +1,277 @@
+<md-tab id="tabRecursos2" ng-click="scope.verificaNumeroDaAba(scope.abas.selectedIndex)">
+    <md-tab-label>Recurso 2ª Instância</md-tab-label>
+    <md-tab-body>
+        <div style="border-left: 1px solid rgba(0, 0, 0, 0.2); border-bottom: 1px solid rgba(0, 0, 0, 0.2); border-right: 1px solid rgba(0, 0, 0, 0.2);">
+            <md-content>
+                <div layout="row">
+                    <md-input-container flex="50">
+                        <label>Protocolo</label>
+                        <input ng-model="scope.recursoDetalhadoSegundaInstanciaDTO.protocolo" readonly/>
+                    </md-input-container>
+                    <md-input-container flex="50">
+                        <label>Vencimento e-SIC</label>
+                        <input
+                            ng-value="scope.recursoDetalhadoSegundaInstanciaDTO.dataPrazoAtendimento | date: 'dd/MM/yyyy'" readonly/>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container flex="50">
+                        <label>Situação do Recurso</label>
+                        <input ng-model="scope.recursoDetalhadoSegundaInstanciaDTO.nomeSituacaoRecurso" readonly/>
+                    </md-input-container>
+                    <md-input-container flex="50">
+                        <label>Prazo Limite para Recurso</label>
+                        <input ng-value="scope.recursoDetalhadoSegundaInstanciaDTO.dataLimiteRecurso | date: 'dd/MM/yyyy'" readonly/>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container flex="80">
+                        <label>Solicitante</label>
+                        <input ng-model="scope.recursoDetalhadoSegundaInstanciaDTO.solicitanteDTO.nome" readonly/>
+                    </md-input-container>
+                    <div flex="20">
+                        <md-button class="md-raised md-primary" ng-click="scope.consultarDadosRecurso('segundaInstancia')">
+                            Ver Dados
+                        </md-button>
+                    </div>
+                </div>
+                <div layout="row">
+                    <md-input-container flex="100">
+                        <label>Tipo de Recurso</label>
+                        <input ng-model="scope.recursoDetalhadoSegundaInstanciaDTO.nomeTipoRecurso" readonly/>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Justificativa</label>
+                        <textarea rows="5" ng-model="scope.recursoDetalhadoSegundaInstanciaDTO.justificativa" readonly>
+                                        </textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container flex="100">
+                        <label>Observação</label>
+                        <textarea rows="5" ng-model="scope.recursoDetalhadoSegundaInstanciaDTO.observacao" readonly>
+                                        </textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="end end">
+                    <md-button class="md-raised md-primary" ng-click="scope.encaminharRecurso(scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso)"
+                               ng-show="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Triagem'
+                               || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Distribuição PF'
+                               || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Distribuição PF'
+                               && scope.recursoDetalhadoSegundaInstanciaDTO.propostaResposta == null">
+                        Encaminhar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="scope.responderRecurso(scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso)"
+                               ng-show="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Produção'
+                               && scope.recursoDetalhadoSegundaInstanciaDTO.statusRespostaAssinada == false">
+                        Responder
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="scope.voltar()"
+                               ng-hide="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Produção'
+                               && scope.recursoDetalhadoSegundaInstanciaDTO.statusRespostaAssinada == true
+                               || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido'
+                               || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão'
+                               || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Envio'
+                               || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Enviado'
+                               || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Assinado'">
+                        Voltar
+                    </md-button>
+                </div>
+            </md-content>
+            <md-card md-theme-watch >
+                <md-card-content>
+                    <md-table-container>
+                        <table md-table>
+                            <thead md-head>
+                            <tr md-row>
+                                <th md-column>Documento</th>
+                                <th md-column>Tamanho (MB)</th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row
+                                ng-repeat="arquivoRecurso2 in scope.arquivos">
+                                <td md-cell>
+                                    <a id="file_recurso2"  ng-click="scope.downloadFile(arquivoRecurso2)" target="_blank">{{arquivoRecurso2.nome}}</a>
+                                </td>
+                                <td md-cell>
+                                    {{(arquivoRecurso.size)/1024 /1024 | number : 2}}
+                                </td>
+                                <td md-cell>
+                                    <ng-md-icon icon="delete" ng-click="scope.confirmarDelete($event,$index,arquivoRecurso2)">
+                                        <md-tooltip>Excluir</md-tooltip>
+                                    </ng-md-icon>
+                                </td>
+                            </tr>
+                            <tr md-row>
+                                <td  md-cell>
+                                    <b>Quantidade de Arquivos: {{scope.arquivos.length}}</b>
+                                </td>
+                                <td md-cell>
+                                    <b>Total(MB): {{scope.totalMbFile | number : 2}}</b>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <div id="upload_button">
+                                <label>
+                                    <input ng-model="scope.new_file" ngf-select ng-change="scope.adicionarArquivo()" id="fileRecurso2" name="file" type="file"  file-model="file"  enctype="multipart/form-data"
+                                           accept=".bmp ,.csv ,.doc ,.docx,.gif ,.jpg ,.pdf ,.png ,.ppt ,.pptx,.rtf ,.odt ,.ods ,.odp ,.sxw ,.tif ,.txt ,.xlm ,.xls ,.xlsx,.Zip"/>
+                                    <ng-md-icon icon="cloud_upload">
+                                        <md-tooltip>Upload</md-tooltip>
+                                    </ng-md-icon>
+                                </label>
+                            </div>
+                        </table>
+                    </md-table-container>
+                </md-card-content>
+            </md-card>
+            <div ng-show="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Produção'
+            && scope.recursoDetalhadoSegundaInstanciaDTO.statusRespostaAssinada == true
+            || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido'
+            || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão'
+            || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Envio'
+            || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Assinado'
+            || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Enviado'">
+                <md-content>
+                    <h1>Resposta do Recurso - 2ª Instância</h1>
+                </md-content>
+                <md-card-content>
+                    <div layout="row">
+                        <md-input-container flex="25">
+                            <label>Tipo de Resposta</label>
+                            <input readonly>
+                        </md-input-container>
+                        <md-input-container flex="25">
+                            <label>Data da Resposta</label>
+                            <input ng-value="scope.dataRespostaRecurso | date: 'dd/MM/yyyy'"/>
+                        </md-input-container>
+                    </div>
+                    <md-card md-theme-watch>
+                        <md-card-title>
+                            <md-card-title-text>
+                                <span class="md-headline">Resposta</span>
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-content>
+                            <div layout="row">
+                                <div flex="100"
+                                     ng-bind-html="scope.recursoDetalhadoSegundaInstanciaDTO.respostaESic">
+                                </div>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex="100">
+                                    <label>Responsável pela resposta</label>
+                                    <input ng-model="scope.responsavelResposta" readonly/>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex="100">
+                                    <label>Destinatário de recurso de primeira instância</label>
+                                    <input ng-model="scope.destinatarioRecursoPrimeiraInstancia" readonly/>
+                                </md-input-container>
+                            </div>
+                            <div layout="row" layout-align="end right">
+                                <md-button class="md-raised md-primary" ng-click="scope.encaminharRecurso(scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso)"
+                                           ng-show="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão'">
+                                    Encaminhar Para Envio
+                                </md-button>
+                                <md-button class="md-raised md-primary" ng-click="scope.enviarResposta(scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso)"
+                                           ng-hide="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido'
+                                           || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão'
+                                           || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Envio'
+                                           || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Enviado'">
+                                    Enviar
+                                </md-button>
+                                <md-button class="md-raised md-primary" ng-click="scope.enviarResposta(scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso)"
+                                           ng-show="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Envio'">
+                                    Enviar e-SIC
+                                </md-button>
+                                <md-button class="md-raised md-primary" ng-click="scope.enviarResposta(scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso)"
+                                           ng-show="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido'">
+                                    Enviar Para Revisão
+                                </md-button>
+                                <md-button class="md-raised md-primary" ng-click="scope.devolver(scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso)"
+                                           ng-show="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Distribuição PF'
+                                           || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido'
+                                           || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão'
+                                           || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Assinado'">
+                                    Devolver
+                                </md-button>
+                                <md-button class="md-raised md-primary" ng-click="scope.responderRecurso(scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso)"
+                                           ng-show="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Distribuição PF'
+                                           || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Assinado'">
+                                    Editar Resposta PF
+                                </md-button>
+                                <md-button class="md-raised md-primary" ng-click="scope.responderRecurso(scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso)"
+                                           ng-show="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido'
+                                           || scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão'">
+                                    Editar Resposta SIC
+                                </md-button>
+                                <md-button class="md-raised md-primary" ng-click="scope.responderRecurso(scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso)"
+                                           ng-show="scope.recursoDetalhadoSegundaInstanciaDTO.nomeStatusSolicitacao == 'Recurso 2ª Produção'">
+                                    Editar Resposta
+                                </md-button>
+                                <md-button class="md-raised md-primary" ng-click="scope.voltar()">
+                                    Voltar
+                                </md-button>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                </md-card-content>
+            </div>
+        </div>
+        <md-card md-theme-watch ng-show="scope.totalElementosConsultaHistoricoSegundaInstancia > 0">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Histórico de Edição</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                        <tr md-row>
+                            <th md-column>Data</th>
+                            <th md-column>Responsável pela edição da Resposta</th>
+                            <th md-column>Tipo de Resposta</th>
+                            <th md-column>Visualizar</th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row
+                            ng-repeat="historicoRecursoDTO in scope.listaHistoricoRecursoSegundaInstanciaDTO.content">
+                            <td md-cell>
+                                {{historicoRecursoDTO.data | date: 'dd/MM/yyyy HH:mm:ss'}}
+                            </td>
+                            <td md-cell>
+                                {{historicoRecursoDTO.nomeResponsavel}}
+                            </td>
+                            <td md-cell>
+                                {{historicoRecursoDTO.tipoTratamentoRecurso}}
+                            </td>
+                            <td md-cell>
+                                <ng-md-icon icon="search"
+                                            ng-click="scope.visualizarHistoricoRecurso($event, historicoRecursoDTO.id)">
+                                    <md-tooltip>Detalhar</md-tooltip>
+                                </ng-md-icon>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+                <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                     md-on-paginate="scope.carregarHistoricoRecursoSegundaInstancia"
+                                     md-limit="scope.tabelaConsultaHistoricoSegundaInstancia.limit"
+                                     md-limit-options="scope.tabelaConsultaHistoricoSegundaInstancia.limitsPage"
+                                     md-page="scope.tabelaConsultaHistoricoSegundaInstancia.page"
+                                     md-total="{{scope.totalElementosConsultaHistoricoSegundaInstancia}}"
+                                     md-page-select>
+                </md-table-pagination>
+            </md-card-content>
+        </md-card>
+    </md-tab-body>
+</md-tab>

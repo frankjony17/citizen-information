@@ -1,0 +1,47 @@
+<md-content>
+    <md-content>
+        <h1>{{respostaRecursoCtrl.tituloPagina}}</h1>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Enviar</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <ng-form name="respostaRecursoCtrl.respostaRecursoForm">
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Observação</label>
+                        <textarea simditor ng-model="respostaRecursoCtrl.respostaRecursoDTO.observacao" rows="5"
+                                  md-select-on-focus></textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Status da solicitação</label>
+                        <input ng-model="respostaRecursoCtrl.respostaRecursoDTO.nomeStatusSolicitacao" required readonly>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50" ng-if="respostaRecursoCtrl.respostaRecursoDTO.nomeStatusSolicitacao == 'Recurso 1ª Para Revisão' || respostaRecursoCtrl.respostaRecursoDTO.nomeStatusSolicitacao == 'Recurso 2ª Assinado'">
+                        <label>Unidade</label>
+                        <input ng-model="respostaRecursoCtrl.ultimaUnidade.nomeUnidade" ng-disabled="true">
+                    </md-input-container>
+                </div>
+
+                <div layout="row" layout-align="end center">
+                    <md-button class="md-raised md-primary" ng-click="respostaRecursoCtrl.enviar()">
+                        Enviar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="respostaRecursoCtrl.voltar()">
+                        Voltar
+                    </md-button>
+                </div>
+            </ng-form>
+        </md-card-content>
+    </md-card>
+</md-content>
+
+

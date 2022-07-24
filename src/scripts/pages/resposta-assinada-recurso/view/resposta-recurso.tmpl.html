@@ -1,0 +1,40 @@
+<md-content>
+    <md-content>
+        <h1>Resposta/Justificativa</h1>
+    </md-content>
+    <ng-form name="respostaAssinadaRecursoCtrl.respostaAssinadaRecursoForm">
+        <md-card md-theme-watch>
+            <md-card-content>
+                <textarea name="editor1" id="editor1" ng-model="">
+                </textarea>
+            </md-card-content>
+        </md-card>
+        <div layout="row" layout-align="end right">
+            <md-button class="md-primary md-raised" ng-click="" ng-disabled="true">
+                Selecionar proposta do Catálogo
+            </md-button>
+            <md-button class="md-primary md-raised" ng-click="respostaAssinadaRecursoCtrl.salvarRespostaRecurso($event)" ng-show="respostaAssinadaRecursoCtrl.statusRespostaAssinada == false">
+                Salvar
+            </md-button>
+            <md-button class="md-primary md-raised" ng-click="respostaAssinadaRecursoCtrl.editarRespostaRecurso()" ng-show="respostaAssinadaRecursoCtrl.statusRespostaAssinada == true">
+                Salvar
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="respostaAssinadaRecursoCtrl.confirmarFecharRespostaSemSalvar($event)">
+                Voltar
+            </md-button>
+        </div>
+    </ng-form>
+</md-content>
+<script>
+    CKEDITOR.replace( 'editor1', {
+        on: {
+            instanceReady: function (ev) {
+
+            }
+        }
+    });
+    CKEDITOR.config.browserContextMenuOnCtrl = true;
+    CKEDITOR.config.disableNativeSpellChecker = false;
+    CKEDITOR.config.removePlugins='scayt,wsc';
+</script>
+

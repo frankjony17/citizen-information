@@ -1,0 +1,50 @@
+<script>
+    CKEDITOR.replace( 'editor1', {
+        on: {
+            instanceReady: function (ev) {
+
+            }
+        }
+    });
+    CKEDITOR.config.browserContextMenuOnCtrl = true;
+    CKEDITOR.config.disableNativeSpellChecker = false;
+    CKEDITOR.config.removePlugins='scayt,wsc';
+</script>
+
+<md-dialog aria-label="escrever proposta de resposta">
+    <form ng-cloak>
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancelar()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <md-card md-theme-watch>
+                <md-card-content>
+                    <md-input-container flex="100">
+                        <textarea name="editor1" ng-model="">
+                        </textarea>
+                    </md-input-container>
+                </md-card-content>
+            </md-card>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button>
+               Buscar resposta do catálago
+            </md-button>
+            <md-button>
+                Salvar
+            </md-button>
+            <md-button ng-click="cancelar()">
+                Fechar
+            </md-button>
+
+        </md-dialog-actions>
+    </form>
+</md-dialog>

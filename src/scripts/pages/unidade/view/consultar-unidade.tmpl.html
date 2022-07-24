@@ -1,0 +1,157 @@
+<md-content>
+    <ng-form name = consultarUnidadeCtrl.consultarUnidadeForm >
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>Consultar Órgão/Unidade/Subunidade</h1>
+                </md-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Órgãos <b>({{ consultarUnidadeCtrl.orgaosSiorg.length }})</b></label>
+                        <md-select ng-model="consultarUnidadeCtrl.defaultOrgao"
+                                   ng-model-options="{trackBy: '$value.id'}"
+                                   ng-change="consultarUnidadeCtrl.loadUnidades(consultarUnidadeCtrl.defaultOrgao.codigoUnidade)"
+                                   md-on-close="consultarUnidadeCtrl.clearSearchTerm()">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="consultarUnidadeCtrl.searchTerm" type="search" placeholder="Consultar Órgão" class="demo-header-searchbox md-text" style="size:12px;padding:2px;width:100%">
+                            </md-select-header>
+                            <md-option ng-repeat="orgao in consultarUnidadeCtrl.orgaosSiorg | filter: consultarUnidadeCtrl.searchTerm" ng-value="orgao">
+                                {{ orgao.nomeUnidade }} <b>({{ orgao.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Unidades <b>({{ consultarUnidadeCtrl.unidadeSiorg.length }})</b></label>
+                        <md-select ng-model="consultarUnidadeCtrl.defaultUnidade"
+                                   md-on-close="consultarUnidadeCtrl.clearSearchTerm()"
+                                   ng-change="consultarUnidadeCtrl.loadSubunidade(consultarUnidadeCtrl.defaultUnidade.subunidade)">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="consultarUnidadeCtrl.searchTerm" type="search" placeholder="Consultar Unidade" class="demo-header-searchbox md-text" style="size:12px;padding:2px;width:100%">
+                            </md-select-header>
+                            <md-option ng-repeat="unidade in consultarUnidadeCtrl.unidadeSiorg | filter: consultarUnidadeCtrl.searchTerm" ng-value="unidade">
+                                {{ unidade.nomeUnidade }} <b>({{ unidade.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container  class="md-block" flex="100">
+                        <label>Subunidades <b>({{ consultarUnidadeCtrl.subunidadesSiorg.length }})</b></label>
+                        <md-select ng-model="consultarUnidadeCtrl.defaultSubunidade"
+                                   md-on-close="consultarUnidadeCtrl.clearSearchTerm()"
+                                   data-md-container-class="selectdemoSelectHeader"
+                                   multiple>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="consultarUnidadeCtrl.searchTerm" type="search" placeholder="Consultar subunidade" class="demo-header-searchbox md-text" style="size:12px;padding:2px;width:100%">
+                            </md-select-header>
+                            <md-option ng-repeat="sub in consultarUnidadeCtrl.subunidadesSiorg | filter: consultarUnidadeCtrl.searchTerm"
+                                       ng-value="sub">
+                                {{ sub.nomeUnidade }} <b>({{ sub.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-raised md-primary" ng-click="consultarUnidadeCtrl.limpar()">
+                        Limpar Campos
+                    </md-button>
+                    <md-button id="btn-buscar" class="md-raised md-primary" ng-click="consultarUnidadeCtrl.consultar()">
+                        Pesquisar
+                    </md-button>
+                    <md-button id="btn-cadastrar" class="md-raised md-primary" ng-click="consultarUnidadeCtrl.cadastrar()">
+                        Cadastrar
+                    </md-button>
+                </div>
+                <!-- TABELA -->
+                <md-card md-theme-watch>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Resultado</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <md-table-container>
+                            <table md-table style="border: 2px solid #cccccc;">
+                                <thead md-head>
+                                <tr md-row>
+                                    <th md-column width="25%">Órgão</th>
+                                    <th md-column>
+                                        <table md-table>
+                                            <tr>
+                                                <td style="width:40%;background-color: #FFFFFF;">Unidade</td>
+                                                <td style="width:40%;background-color: #FFFFFF">Subunidade</td>
+                                                <td style="width:10%;background-color: #FFFFFF">Status</td>
+                                                <td style="width:15%;background-color: #FFFFFF">Ações</td>
+                                            </tr>
+                                        </table>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody md-body>
+                                <tr md-row ng-repeat="orgao in consultarUnidadeCtrl.orgaoUnidadeSubunidade" style="background-color: #FFFFFF;">
+                                    <td md-cell width="25%">
+                                        {{ orgao.nomeOrgao }} <b>({{ orgao.siglaOrgao }})</b>
+                                    </td>
+                                    <td md-cell>
+                                        <table style="border-collapse: collapse; width: 100%;">
+                                            <tbody>
+                                            <tr data-ng-repeat="unidade in orgao.unidades" style="background-color: #FFFFFF;">
+                                                <td style="text-align: left; padding: 2px; width: 40%;">
+                                                    {{ unidade.nomeUnidade }} <b>({{ unidade.siglaUnidade }})</b>
+                                                </td>
+                                                <td style="padding: 2px; width: 40%">
+                                                    <table style="width: 100%;">
+                                                        <tr data-ng-repeat="subunidade in unidade.subunidade">
+                                                            <td style="padding: 2px;">
+                                                                {{ subunidade.nomeUnidade }} <b>({{ subunidade.siglaUnidade }})</b>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="padding: 2px; width: 10%">
+                                                    <table style="width: 100%;">
+                                                        <tr data-ng-repeat="status in consultarUnidadeCtrl.orgaosSiorg" style="background-color: #FFFFFF;">
+                                                            <td style="padding: 2px; width: 10%">
+                                                                {{ status.statusUnidade ? "Ativo" : "Inativo"}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="text-align: center; padding: 2px; width: 10%;">
+                                                    <ng-md-icon icon="search" ng-click="consultarUnidadeCtrl.detalhar(unidade.codigoUnidade)">
+                                                        <md-tooltip>Detalhar</md-tooltip>
+                                                    </ng-md-icon>
+                                                    <ng-md-icon icon="mode_edit" ng-click="consultarUnidadeCtrl.editar(unidade.codigoUnidade)" >
+                                                        <md-tooltip>Editar</md-tooltip>
+                                                    </ng-md-icon>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-table-container>
+                        <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                             md-on-paginate="consultarUnidadeCtrl.consultar"
+                                             md-limit="consultarUnidadeCtrl.tabelaConsulta.limit"
+                                             md-limit-options="consultarUnidadeCtrl.tabelaConsulta.limitsPage"
+                                             md-page="consultarUnidadeCtrl.tabelaConsulta.page"
+                                             md-total="{{consultarUnidadeCtrl.totalElementosConsulta}}"
+                                             md-page-select>
+                        </md-table-pagination>
+                    </md-card-content>
+                </md-card>
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-raised md-primary" ng-click="consultarUnidadeCtrl.gerarRelatorioExcel()">
+                        Exportar
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

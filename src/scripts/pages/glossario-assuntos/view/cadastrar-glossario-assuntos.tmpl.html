@@ -1,0 +1,98 @@
+<md-content>
+    <ng-form name="glossarioDeAssuntosCtrl.glossarioTemasForm">
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>Cadastrar Glossário de Assuntos </h1>
+                </md-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Assunto</label>
+                        <input name="assunto" id="select-assuntos" ng-model="glossarioDeAssuntosCtrl.subtema.nomeTema" required>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Subassunto</label>
+                        <input id="select-sub-assuntos" ng-model="glossarioDeAssuntosCtrl.subtema.nomeSubtema" required>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100" >
+                        <label>Palavra-chave</label>
+                        <md-chips ng-model="glossarioDeAssuntosCtrl.subtema.palavrasChaves"
+                                  readonly="glossarioDeAssuntosCtrl.readonly" placeholder="Pressione Enter"
+                                  md-transform-chip="glossarioDeAssuntosCtrl.newPalavraChave($chip)" required>
+                            <md-chip-template>
+                                   <span>
+                                   <strong>{{$chip.descricao}}</strong>
+                                   </span>
+                            </md-chip-template>
+                        </md-chips>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="end right">
+                    <md-button id="btn-incluir" class="md-primary md-raised" ng-click="glossarioDeAssuntosCtrl.incluir()">
+                        Incluir
+                    </md-button>
+                </div>
+            </md-card-content>
+
+            <md-card-content>
+                <md-table-container>
+                    <table md-table style="border: 2px solid #cccccc;" id="table-head-sub-table">
+                        <thead md-head>
+                        <tr md-row exibir-cor-elemento-consulta>
+                            <th md-column id="column-head-sub-assunto">Assunto</th>
+                            <th md-column><table md-table><tr><td style="width:50%;background-color: #FFFFFF;">Subassunto</td><td style="width:50%;background-color: #FFFFFF">Palavras-chave</td></tr></table></th>
+                            <th md-column id="column-head-sub-acao">Ação</th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row ng-repeat="tema in glossarioDeAssuntosCtrl.temaSubtemaTemp">
+                            <td md-cell>
+                                {{ tema.nomeTema }}
+                            </td>
+                            <td md-cell>
+                                <table style="border-collapse: collapse; width: 100%;">
+                                    <tbody>
+                                    <tr data-ng-repeat="sub in tema.subtemas" >
+                                        <td style="text-align: left; padding: 2px; width: 50%">{{sub.nomeSubtema}}</td>
+                                        <td style="padding: 2px; width: 50%">
+                                            <div data-ng-repeat="pch in sub.palavrasChaves">
+                                                {{pch.descricao}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td md-cell>
+                                <ng-md-icon class="icon-subacao" icon="delete" ng-click="glossarioDeAssuntosCtrl.excluirPalavraChave($event, tema)">
+                                    <md-tooltip>Excluir</md-tooltip>
+                                </ng-md-icon>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                         md-on-paginate="scope.consultar"
+                                         md-limit="scope.tabelaConsulta.limit"
+                                         md-limit-options="scope.tabelaConsulta.limitsPage"
+                                         md-page="scope.tabelaConsulta.page"
+                                         md-total="{{scope.totalElementosConsulta}}"
+                                         md-page-select>
+                    </md-table-pagination>
+                </md-table-container>
+                <div layout="row" layout-align="end right">
+                    <md-button id="btn-salvar" class="md-primary md-raised" ng-click="glossarioDeAssuntosCtrl.salvar()">
+                        Salvar
+                    </md-button>
+                    <md-button class="md-primary md-raised" ng-click="glossarioDeAssuntosCtrl.confirmarFecharRespostaSemSalvar($event)">
+                        Cancelar
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

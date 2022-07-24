@@ -1,0 +1,29 @@
+{
+    "camadaUrlInvalida": {
+        "nomeInstituicao": "MPOG",
+        "nomeCamada": "CGEO:C07_densidade_domiciliar__morador_dormitorio_2010",
+        "url": "http://www.geoservicos.ibge.gov.br/geoserver/wms?service=WMS&version=2.0.1&request=teste",
+        "descricao": "descrição da camda",
+        "nomeReposanvel": "Nome Usuário Teste",
+        "telefone": "61931254633",
+        "email": "teste@tste.com"
+    },
+    "camadaJaCadastrada": {
+        "nomeInstituicao": "MPOG",
+        "nomeCamada": "ide:loc_setor_censitario",
+        "url": "http://spunet-geoinformacao.tst.basis.com.br/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities",
+        "descricao": "descriçao da camada",
+        "nomeReposanvel": "Nome Usuário Teste",
+        "telefone": "61931254633",
+        "email": "teste@tste.com"
+    },
+    "camadaUrlValida": {
+        "nomeInstituicao": "MPOG",
+        "nomeCamada": "INAFLOR:geo_dados_area_pon",
+        "url": "http://siscom.ibama.gov.br/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities",
+        "descricao": "descriçao da camada",
+        "nomeReposanvel": "Nome Usuário Teste",
+        "telefone": "61931254633",
+        "email": "teste@tste.com"
+    }
+}

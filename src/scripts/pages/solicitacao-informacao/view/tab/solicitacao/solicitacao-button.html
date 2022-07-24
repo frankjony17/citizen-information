@@ -1,0 +1,101 @@
+<div layout="row" layout-align="end end">
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.finalizarEouv()" ng-show="scope.temPermissao('finalizar_e_ouv')">
+        Finalizar e-Ouv
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.editarResposta()" ng-show="scope.temPermissao('editar_resposta_sic')">
+        Editar Resposta SIC
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.encaminhar()"
+               ng-show="scope.temPermissao('encaminhar')">
+        Encaminhar
+    </md-button>
+<!-- Revisão -->
+    <md-button class="md-raised md-primary" ng-click="scope.encaminhar()"
+               ng-show="scope.temPermissao('encaminhar_para_envio')">
+        Encaminhar Para Envio
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.responder('responder')"
+               ng-show="scope.pedidoDetalhadoDTO.possuiRespostaPerfil===false && scope.temPermissao('minuta_resposta')">
+        Minuta de Resposta
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.responder('responder')"
+               ng-show="scope.pedidoDetalhadoDTO.possuiRespostaPerfil===true && scope.temPermissao('editar_minuta_resposta')">
+        Editar Minuta de Resposta
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.responder('responder')" ng-show="scope.temPermissao('responder')">
+        Responder
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click=""
+               ng-show="scope.pedidoDetalhadoDTO.possuiRespostaPerfil===true && scope.temPermissao('cancelar_minuta')">
+        Cancelar Minuta
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="" ng-show="scope.temPermissao('editar_resposta')">
+        Editar Resposta
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.encaminharEouv()" ng-show="scope.temPermissao('e_ouv')">
+        E-Ouv
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.entregarResposta()" ng-show="scope.temPermissao('entregar_resposta')">
+        Entregar Resposta
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.devolverPedido()" ng-show="scope.temPermissao('devolver')">
+        Devolver
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.encaminhar()" ng-show="scope.temPermissao('enviar')">
+        Enviar
+    </md-button>
+<!--  -->
+    <br>
+    <md-button class="md-raised md-primary" ng-click="scope.reencaminharParaOrgao('reencaminhar')" ng-show="scope.temPermissao('reencaminhar_para_orgao')">
+        Reencaminhar para órgão
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.reencaminharParaOrgao('validar')" ng-show="scope.temPermissao('validar_reen_para_orgao')">
+        Validar Reencaminhamento para Órgão
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.prorrogarPrazo()" ng-show="scope.temPermissao('prorrogar') && scope.verificaDataProrrogar">
+        Prorrogar
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.prorrogarPrazo()" ng-show="scope.temPermissao('prorrogado')">
+        Prorrogado
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.prorrogarPrazoEsic()"
+               ng-show="scope.temPermissao('prorrogar_e_sic')">
+       Prorrogar e-SIC
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click = "scope.validarEouv()" ng-show="scope.temPermissao('validar_e_ouv')">
+        Validar e-Ouv
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.prorrogarPrazoEsic()" ng-show="scope.temPermissao('prorrogado_e_sic') ">
+        Prorrogado e-SIC
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.cancelarRespostaPedido()" ng-show="scope.temPermissao('cancelar')">
+        Cancelar
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.cancelarRespostaPedido()" ng-show="scope.temPermissao('cancelar_e_ouv')">
+        Cancelar e-Ouv
+    </md-button>
+<!--  -->
+    <md-button class="md-raised md-primary" ng-click="scope.voltarPedido()" ng-show="scope.temPermissao('voltar')">
+        Voltar
+    </md-button>
+</div>

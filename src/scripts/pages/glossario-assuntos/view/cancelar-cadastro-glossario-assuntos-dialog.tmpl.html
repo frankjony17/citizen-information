@@ -1,0 +1,31 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+        <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancelar()">
+                <md-icon md-svg-src="../../../assets/img/close.svg" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <md-card md-theme-watch>
+                <md-card-content>
+
+                    <div class="md-dialog-content">
+                        <h3>Os dados serão perdidos e não poderão ser recuperados. Deseja confirmar?"</h3>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="voltar()">
+                Sim
+            </md-button>
+            <md-button ng-click="cancelar()">
+                Não
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

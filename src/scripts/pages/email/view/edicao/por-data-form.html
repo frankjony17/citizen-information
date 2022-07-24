@@ -1,0 +1,80 @@
+<md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12); padding: 10px">
+    <div layout="row">
+        <!-- Data de Referência -->
+        <md-input-container class="md-block" flex="50">
+            <label>Data de Referência</label>
+            <md-select name="dataReferencia" ng-model="editarEmailCtrl.dataReferenciaModel"
+                ng-model-options="{trackBy: '$value.id'}" required>
+                <md-option ng-repeat="data in editarEmailCtrl.dataReferenciaList" ng-value="data">
+                    {{ data.nome }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <!-- space -->
+        <span style="width: 20px">&nbsp;</span>
+        <!-- Dias antes da data de referência -->
+        <md-input-container flex="50" ng-if="editarEmailCtrl.dataEnvioEmailModel.id == 22">
+            <label>Dias antes da data de referência</label>
+            <input name="diasAntesDataReferencia" ng-model="editarEmailCtrl.diasAntesDataReferenciaModel" type="number"
+                min="0" step="any" max="10" required />
+        </md-input-container>
+    </div>
+    <!--  -->
+    <div layout="row">
+        <!-- Data de envio do e-mail -->
+        <md-input-container flex="50">
+            <label>Data de envio do e-mail</label>
+            <md-select name="dataEnvioDoEmail" ng-model="editarEmailCtrl.dataEnvioEmailModel"
+                ng-model-options="{trackBy: '$value.id'}" required>
+                <md-option ng-repeat="data in editarEmailCtrl.dataEnvioEmailList" ng-value="data">
+                    {{ data.nome }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <!---->
+        <span style="width: 20px">&nbsp;</span>
+        <!---->
+        <!-- Dias após da data de referência -->
+        <md-input-container flex="20" ng-if="editarEmailCtrl.dataEnvioEmailModel.id == 24">
+            <label>Dias após da data de referência</label>
+            <input name="diasAposDataReferencia" ng-model="editarEmailCtrl.diasAposDataReferenciaModel" type="number"
+                min="0" step="any" max="10" required />
+        </md-input-container>
+        <!-- Reenviar este e-mail até alteração do status -->
+        <md-input-container flex="30" ng-if="editarEmailCtrl.dataEnvioEmailModel.id == 24">
+            <label>&nbsp;</label>
+            <md-checkbox name="reenvioEmailAteAlteracaoStatus"
+                ng-model="editarEmailCtrl.reenvioEmailAteAlteracaoStatusModel">
+                Reenviar este e-mail até alteração do status
+            </md-checkbox>
+        </md-input-container>
+    </div>
+    <!-- Status da Demanda ---  -->
+    <div layout="row">
+        <!-- Status da Demanda -->
+        <md-input-container flex="50">
+            <label>Status da Demanda</label>
+            <md-tooltip md-direction="right" style="font-size: 14px;">Status atual da demanda para que o e-mail seja
+                enviado</md-tooltip>
+            <md-select name="statusDaDemanda" ng-model="editarEmailCtrl.statusDemandaModel"
+                ng-model-options="{trackBy: '$value.id'}" required>
+                <md-option ng-repeat="status in editarEmailCtrl.statusDemandaList" ng-value="status">
+                    {{ status.nome }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <!-- space -->
+        <span style="width: 20px">&nbsp;</span>
+        <!-- Destinatários -->
+        <md-input-container flex="50">
+            <label>Destinatários</label>
+            <md-select name="destinatario" ng-model="editarEmailCtrl.destinatarioModel"
+                ng-model-options="{trackBy: '$value.id'}" data-md-container-class="selectdemoSelectHeader" multiple
+                required>
+                <md-option ng-repeat="dest in editarEmailCtrl.destinatarioList" ng-value="dest">
+                    {{ dest.nome }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+</md-card>

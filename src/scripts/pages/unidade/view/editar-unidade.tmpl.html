@@ -1,0 +1,426 @@
+<md-content>
+    <ng-form name=editarUnidadeCtrl.editarUnidadeForm >
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>{{ editarUnidadeCtrl.title }}</h1>
+                </md-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Órgãos</label>
+                        <md-select ng-model="editarUnidadeCtrl.defaultOrgao" ng-model-options="{trackBy: '$value.id'}" ng-readonly="true" required>
+                            <md-option ng-repeat="orgao in editarUnidadeCtrl.orgaoSiorg" ng-value="orgao">
+                                {{ orgao.nomeUnidade }} <b>({{ orgao.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Unidades</label>
+                        <md-select ng-model="editarUnidadeCtrl.defaultUnidade" ng-readonly="true" required>
+                            <md-option ng-repeat="unidade in editarUnidadeCtrl.unidadeSiorg" ng-value="unidade">
+                                {{ unidade.nomeUnidade }} <b>({{ unidade.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container  class="md-block" flex="100">
+                        <div layout="row">
+                            <div layout="column" flex="95">
+                                <label>Subunidades <b>({{ editarUnidadeCtrl.subunidadeList.length }})</b></label>
+                                <md-select ng-model="editarUnidadeCtrl.defaultSubunidade"
+                                           ng-model-options="{trackBy: '$value.codigoUnidade'}"
+                                           md-on-close="editarUnidadeCtrl.clearSearchTerm()"
+                                           data-md-container-class="selectdemoSelectHeader"
+                                           multiple>
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="editarUnidadeCtrl.searchTerm" type="search" placeholder="Consultar subunidade" class="demo-header-searchbox md-text" style="size:12px;padding:2px;width:100%">
+                                    </md-select-header>
+                                    <md-option ng-repeat="sub in editarUnidadeCtrl.subunidadeList | filter: editarUnidadeCtrl.searchTerm" ng-value="sub">
+                                        {{ sub.nomeUnidade }} <b>({{ sub.siglaUnidade }})</b>
+                                    </md-option>
+                                </md-select>
+                            </div>
+                            <div layout="column" flex>
+                                <label>&nbsp;</label>
+                                <md-switch style="display: inline-grid; "
+                                           class="md-primary"
+                                           ng-model="editarUnidadeCtrl.unidadeEstado"
+                                           ng-change="editarUnidadeCtrl.mudarEstadoUnidade($event)">
+                                </md-switch>
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <br>
+                <!--  -->
+                <!-- Titular 1ª Instância -->
+                <!--  -->
+                <md-card>
+                    <md-card-header>
+                        <h3>Autoridade Hierárquica 1ª Instância</h3>
+                    </md-card-header>
+                    <!-- Form Titular, Usuario (Autoridade Hierárquica) -->
+                    <md-card-content>
+                        <div layout="row">
+                            <div layout="column" flex="10">
+                                <md-input-container class="md-block">
+                                    <md-radio-group
+                                        ng-model="editarUnidadeCtrl.substitutos.primera.value" ng-change="editarUnidadeCtrl.trocarTitularHir()">
+                                        <md-radio-button value="Titular" class="md-primary" ng-disabled="editarUnidadeCtrl.disabledForm" required>Titular</md-radio-button>
+                                    </md-radio-group>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" flex>
+                                <md-input-container class="md-block" flex>
+                                    <label class="tamanho-text" style="padding: 0">Autoridade Hierárquica</label>
+                                    <md-select ng-model="editarUnidadeCtrl.autoridadeHierarquica"
+                                               ng-model-options="{trackBy: '$value.cpf'}"
+                                               ng-change="editarUnidadeCtrl.titularAutoridadeHierarquicaComboChange($event)"
+                                               name="titularAutoridadeHierarquica"
+                                               ng-disabled="editarUnidadeCtrl.disabledForm"
+                                               required>
+                                        <md-option ng-repeat="usuario in editarUnidadeCtrl.usuarioAutoridadeHierarquicaList" ng-value="usuario">
+                                            <div ng-if="editarUnidadeCtrl.colorNoUsuario(usuario.nome) == true">
+                                                <span style='color: red;'>{{ usuario.nome }}</span>
+                                            </div>
+                                            <div ng-if="editarUnidadeCtrl.colorNoUsuario(usuario.nome) == false">
+                                                {{ usuario.nome }}
+                                            </div>
+                                        </md-option>
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <!-- Adicionar Titular -->
+                        <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                        <div ng-if="editarUnidadeCtrl.obterAutoridadeHierarquica == true">
+                            <md-card style="margin-left: 120px">
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">CPF</label>
+                                            <input name="autoridadeHierarquicaCpf" ng-model="editarUnidadeCtrl.autoridadeHierarquica.cpf" maxlength="11" ng-readonly="true" required/>
+                                        </md-input-container>
+
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">E-mail</label>
+                                            <input name="autoridadeHierarquicaEmail" ng-model="editarUnidadeCtrl.autoridadeHierarquica.email" maxlength="120" type="email" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Telefone</label>
+                                            <input name="autoridadeHierarquicaTelefone" ng-model="editarUnidadeCtrl.autoridadeHierarquica.telefone" maxlength="45" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Cargo</label>
+                                            <input name="autoridadeHierarquicaCargo" ng-model="editarUnidadeCtrl.autoridadeHierarquica.cargo" ng-readonly="true"/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Função</label>
+                                            <input name="autoridadeHierarquicaFuncao" ng-model="editarUnidadeCtrl.autoridadeHierarquica.funcao" maxlength="75"/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Assinatura</label>
+                                            <input name="autoridadeHierarquicaAssinatura" ng-model="editarUnidadeCtrl.autoridadeHierarquica.assinatura" maxlength="100" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                            <!-- Button Adicionar substituto -->
+                            <div layout="row" style="margin-left: 110px" ng-if="editarUnidadeCtrl.substitutos.primera.bool == false">
+                                <md-button md-no-ink class="md-primary" ng-click="editarUnidadeCtrl.adicionarSubstitutoPrimeraInstancia()">
+                                    <ng-md-icon icon="add" style="position: absolute; left: 0px; margin: 6px 0px 0px 0px; fill: #3a3a3a"></ng-md-icon>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>Adicionar substituto</u>
+                                </md-button>
+                            </div>
+                        </div>
+                        <!-- Adicionar SubsTituto -->
+                        <!-- Form Substituto, Usuario (Autoridade Hierárquica) -->
+                        <div ng-if="editarUnidadeCtrl.substitutos.primera.bool == true">
+                            <div layout="row">
+                                <div layout="column" flex="10">
+                                    <md-input-container class="md-block">
+                                        <md-radio-group ng-model="editarUnidadeCtrl.substitutos.primera.value" ng-change="editarUnidadeCtrl.trocarSubstitutoHir()">
+                                            <md-radio-button value="Substituto" class="md-primary" ng-disabled="editarUnidadeCtrl.disabledForm" required>Substituto</md-radio-button>
+                                        </md-radio-group>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex="85">
+                                    <md-input-container class="md-block" flex>
+                                        <label class="tamanho-text">Autoridade Hierárquica</label>
+                                        <md-select name="substitutoAutoridadeHierarquica"
+                                                   ng-model="editarUnidadeCtrl.substitutoAutoridadeHierarquica"
+                                                   ng-model-options="{trackBy: '$value.cpf'}"
+                                                   ng-init="editarUnidadeCtrl.oldSubstitutoAutoridadeHierarquica=editarUnidadeCtrl.substitutoAutoridadeHierarquica"
+                                                   md-on-open="editarUnidadeCtrl.oldSubstitutoAutoridadeHierarquica=editarUnidadeCtrl.substitutoAutoridadeHierarquica"
+                                                   ng-change="editarUnidadeCtrl.onOpenComboSubstitutoAutoridadeHierarquica($event)"
+                                                   ng-disabled="editarUnidadeCtrl.disabledForm"
+                                                   required>
+                                            <md-option ng-repeat="usuario in editarUnidadeCtrl.usuarioAutoridadeHierarquicaList" ng-value="usuario">
+                                                <div ng-if="editarUnidadeCtrl.colorNoUsuario(usuario.nome) == true">
+                                                    <span style='color: red;'>{{ usuario.nome }}</span>
+                                                </div>
+                                                <div ng-if="editarUnidadeCtrl.colorNoUsuario(usuario.nome) == false">
+                                                    {{ usuario.nome }}
+                                                </div>
+                                            </md-option>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex>
+                                    <label class="tamanho-text">&nbsp;</label>
+                                    <ng-md-icon class="icon-subacao" icon="delete" style="fill: #3a3a3a"
+                                                ng-click="editarUnidadeCtrl.removeSubstitutoPrimeraInstancia($event)"
+                                                ng-disabled="editarUnidadeCtrl.disabledForm">
+                                        <md-tooltip>Remover Substituto</md-tooltip>
+                                    </ng-md-icon>
+                                </div>
+                            </div>
+                            <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                            <md-card style="margin-left: 120px">
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">CPF</label>
+                                            <input name="substitutoAutoridadeHierarquicaCpf" ng-model="editarUnidadeCtrl.substitutoAutoridadeHierarquica.cpf" maxlength="11" ng-readonly="true" required/>
+                                        </md-input-container>
+
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">E-mail</label>
+                                            <input name="substitutoAutoridadeHierarquicaEmail" ng-model="editarUnidadeCtrl.substitutoAutoridadeHierarquica.email" maxlength="45" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Telefone</label>
+                                            <input name="substitutoAutoridadeHierarquicaTelefone" ng-model="editarUnidadeCtrl.substitutoAutoridadeHierarquica.telefone" maxlength="45" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Cargo</label>
+                                            <input name="substitutoAutoridadeHierarquicaCargo" ng-model="editarUnidadeCtrl.substitutoAutoridadeHierarquica.cargo" ng-readonly="true"/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Função</label>
+                                            <input name="substitutoAutoridadeHierarquicaFuncao" ng-model="editarUnidadeCtrl.substitutoAutoridadeHierarquica.funcao" ng-readonly="true"/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Assinatura</label>
+                                            <input name="substitutoAutoridadeHierarquicaAssinatura" ng-model="editarUnidadeCtrl.substitutoAutoridadeHierarquica.assinatura" maxlength="100" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                <!--  -->
+                <!-- Adicionar Autoridade Máxima 2ª Instância -->
+                <!--  -->
+                <md-card>
+                    <md-card-header>
+                        <h3>Autoridade Máxima 2ª Instância</h3>
+                    </md-card-header>
+                    <!-- Form Titular, Usuario (Autoridade Máxima) -->
+                    <md-card-content>
+                        <div layout="row">
+                            <div layout="column" flex="10">
+                                <md-input-container class="md-block">
+                                    <md-radio-group ng-model="editarUnidadeCtrl.substitutos.segunda.value" ng-change="editarUnidadeCtrl.trocarTitularMax()">
+                                        <md-radio-button value="Titular" class="md-primary" ng-disabled="editarUnidadeCtrl.disabledForm" required>Titular</md-radio-button>
+                                    </md-radio-group>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" flex>
+                                <md-input-container class="md-block" flex>
+                                    <label class="tamanho-text" style="padding: 0">Autoridade Máxima</label>
+                                    <md-select ng-model="editarUnidadeCtrl.autoridadeMaxima"
+                                               ng-model-options="{trackBy: '$value.cpf'}"
+                                               ng-change="editarUnidadeCtrl.titularAutoridadeMaximaComboChange($event)"
+                                               name="titularAutoridadeMaxima"
+                                               ng-disabled="editarUnidadeCtrl.disabledForm"
+                                               required>
+                                        <md-option ng-repeat="usuario in editarUnidadeCtrl.usuarioAutoridadeMaximaList" ng-value="usuario">
+                                            <div ng-if="editarUnidadeCtrl.colorNoUsuario(usuario.nome) == true">
+                                                <span style='color: red;'>{{ usuario.nome }}</span>
+                                            </div>
+                                            <div ng-if="editarUnidadeCtrl.colorNoUsuario(usuario.nome) == false">
+                                                {{ usuario.nome }}
+                                            </div>
+                                        </md-option>
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                        <div ng-if="editarUnidadeCtrl.obterAutoridadeMaxima == true">
+                            <md-card style="margin-left: 120px">
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">CPF</label>
+                                            <input name="autoridadeMaximaCpf" ng-model="editarUnidadeCtrl.autoridadeMaxima.cpf" maxlength="11" ng-readonly="true" required/>
+                                        </md-input-container>
+
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">E-mail</label>
+                                            <input name="autoridadeMaximaEmail" ng-model="editarUnidadeCtrl.autoridadeMaxima.email" maxlength="45" ng-readonly="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Telefone</label>
+                                            <input name="autoridadeMaximaTelefone" ng-model="editarUnidadeCtrl.autoridadeMaxima.telefone" maxlength="45" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Cargo</label>
+                                            <input name="autoridadeMaximaCargo" ng-model="editarUnidadeCtrl.autoridadeMaxima.cargo" ng-readonly="true"/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Função</label>
+                                            <input name="autoridadeMaximaFuncao" ng-model="editarUnidadeCtrl.autoridadeMaxima.funcao" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Assinatura</label>
+                                            <input name="autoridadeMaximaAssinatura" ng-model="editarUnidadeCtrl.autoridadeMaxima.assinatura" maxlength="100" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                            <!-- Button Adicionar substituto -->
+                            <div layout="row" style="margin-left: 110px" ng-if="editarUnidadeCtrl.substitutos.segunda.bool == false">
+                                <md-button md-no-ink class="md-primary" ng-click="editarUnidadeCtrl.adicionarSubstitutoSegundaInstancia()">
+                                    <ng-md-icon icon="add" style="position: absolute; left: 0px; margin: 6px 0px 0px 0px; fill: #3a3a3a"></ng-md-icon>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>Adicionar substituto</u>
+                                </md-button>
+                            </div>
+                        </div>
+                        <!-- Adicionar SubsTituto Autoridade Máxima -->
+                        <!-- Form Substituto, Usuario (Autoridade Máxima) -->
+                        <div ng-if="editarUnidadeCtrl.substitutos.segunda.bool == true">
+                            <div layout="row">
+                                <div layout="column" flex="10">
+                                    <md-input-container class="md-block">
+                                        <md-radio-group
+                                            ng-model="editarUnidadeCtrl.substitutos.segunda.value"
+                                            ng-change="editarUnidadeCtrl.trocarSubstitutoMax()">
+                                            <md-radio-button value="Substituto" class="md-primary" ng-disabled="editarUnidadeCtrl.disabledForm" required>Substituto</md-radio-button>
+                                        </md-radio-group>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex="85">
+                                    <md-input-container class="md-block" flex>
+                                        <label class="tamanho-text">Autoridade Máxima</label>
+                                        <md-select ng-model="editarUnidadeCtrl.substitutoAutoridadeMaxima"
+                                                   ng-model-options="{trackBy: '$value.cpf'}"
+                                                   ng-init="editarUnidadeCtrl.oldSubstitutoAutoridadeMaxima=editarUnidadeCtrl.substitutoAutoridadeMaxima"
+                                                   md-on-open="editarUnidadeCtrl.oldSubstitutoAutoridadeMaxima=editarUnidadeCtrl.substitutoAutoridadeMaxima"
+                                                   ng-change="editarUnidadeCtrl.onOpenComboSubstitutoAutoridadeMaxima($event)"
+                                                   name="substitutoAutoridadeMaxima"
+                                                   ng-disabled="editarUnidadeCtrl.disabledForm"
+                                                   required>
+                                            <md-option ng-repeat="usuario in editarUnidadeCtrl.usuarioAutoridadeMaximaList" ng-value="usuario">
+                                                <div ng-if="editarUnidadeCtrl.colorNoUsuario(usuario.nome) == true">
+                                                    <span style='color: red;'>{{ usuario.nome }}</span>
+                                                </div>
+                                                <div ng-if="editarUnidadeCtrl.colorNoUsuario(usuario.nome) == false">
+                                                    {{ usuario.nome }}
+                                                </div>
+                                            </md-option>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <!-- Button removeSubstituto -->
+                                <div layout="column" flex>
+                                    <label class="tamanho-text">&nbsp;&nbsp;&nbsp;</label>
+                                    <ng-md-icon class="icon-subacao" icon="delete" style="fill: #3a3a3a"
+                                                ng-click="editarUnidadeCtrl.removeSubstitutoSegundaInstancia($event)"
+                                                ng-disabled="editarUnidadeCtrl.disabledForm">
+                                        <md-tooltip>Remover Substituto</md-tooltip>
+                                    </ng-md-icon>
+                                </div>
+                            </div>
+                            <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                            <md-card style="margin-left: 120px">
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">CPF</label>
+                                            <input name="substitutoAutoridadeMaximaCpf" ng-model="editarUnidadeCtrl.substitutoAutoridadeMaxima.cpf" maxlength="11" ng-readonly="true" required/>
+                                        </md-input-container>
+
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">E-mail</label>
+                                            <input name="substitutoAutoridadeMaximaEmail" ng-model="editarUnidadeCtrl.substitutoAutoridadeMaxima.email" maxlength="45" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Telefone</label>
+                                            <input name="substitutoAutoridadeMaximaTelefone" ng-model="editarUnidadeCtrl.substitutoAutoridadeMaxima.telefone" maxlength="45" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Cargo</label>
+                                            <input name="substitutoAutoridadeMaximaCargo" ng-model="editarUnidadeCtrl.substitutoAutoridadeMaxima.cargo" ng-readonly="true"/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Função</label>
+                                            <input name="substitutoAutoridadeMaximaFuncao" ng-model="editarUnidadeCtrl.substitutoAutoridadeMaxima.funcao" ng-readonly="true"/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Assinatura</label>
+                                            <input name="substitutoAutoridadeMaximaAssinatura" ng-model="editarUnidadeCtrl.substitutoAutoridadeMaxima.assinatura" maxlength="100" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                                        </md-input-container>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                <!--  -->
+                <!-- Responsável pelo Recurso de 3ª y 4ª Instância -->
+                <!--  -->
+                <md-card>
+                    <md-card-content>
+                        <div layout="row" flex>
+                            <md-input-container class="md-block" flex>
+                                <label class="tamanho-text">Responsável pelo Recurso de 3ª Instância</label>
+                                <input name="responsavelRecursoTerceiraInstancia" ng-model="editarUnidadeCtrl.responsavelRecursoTerceiraInstancia" maxlength="100" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" flex>
+                            <md-input-container class="md-block" flex>
+                                <label class="tamanho-text">Responsável pelo Recurso de 4ª Instância</label>
+                                <input name="responsavelRecursoQuartaInstancia" ng-model="editarUnidadeCtrl.responsavelRecursoQuartaInstancia" maxlength="100" ng-disabled="editarUnidadeCtrl.disabledForm" required/>
+                            </md-input-container>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                <!-- Button Salvar, Voltar -->
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-raised md-primary" ng-click="editarUnidadeCtrl.voltar()">
+                        Voltar
+                    </md-button>
+                    <md-button id="btn-salvar" class="md-raised md-primary" ng-disabled="editarUnidadeCtrl.disabledForm" ng-click="editarUnidadeCtrl.isValid($event)">
+                        Salvar
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

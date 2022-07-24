@@ -1,0 +1,40 @@
+<md-content>
+    <ng-form name="cadastrarFeriadoCtrl.cadastrarFeriadoForm">
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+                <md-card-content>
+                        <md-content>
+                            <h1>Cadastrar Feriado</h1>
+                        </md-content>
+
+                        <div layout="row">
+
+                            <div layout="row" flex>
+                                <span class="secondary-text" style="position: relative;margin-top: 30px;">Data</span>
+                                <md-datepicker ng-model="cadastrarFeriadoCtrl.cadastroFeriado.dataFeriado" ng-disabled="cadastrarFeriadoCtrl.isDetalhar" style="margin-top: 15px" required></md-datepicker>
+                            </div>
+                        </div>
+                            <md-input-container flex>
+                                <label>Nome</label>
+                                <input ng-model="cadastrarFeriadoCtrl.cadastroFeriado.nome" ng-disabled="cadastrarFeriadoCtrl.isDetalhar" required/>
+                            </md-input-container>
+
+                            <div layout="row">
+                                <md-input-container flex="100">
+                                    <label>Descrição</label>
+                                    <textarea rows="5" ng-model="cadastrarFeriadoCtrl.cadastroFeriado.descricao" ng-disabled="cadastrarFeriadoCtrl.isDetalhar">
+                                    </textarea>
+                                </md-input-container>
+                            </div>
+                    <div layout="row" layout-align="end right">
+                        <md-button class="md-raised md-primary" ng-hide="cadastrarFeriadoCtrl.isDetalhar" ng-click="cadastrarFeriadoCtrl.salvarCadastroFeriado()">
+                            Salvar
+                        </md-button>
+                        <md-button class="md-raised md-primary" ng-click="cadastrarFeriadoCtrl.voltarConsultaFeriado()">
+                            Voltar
+                        </md-button>
+                    </div>
+
+                </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

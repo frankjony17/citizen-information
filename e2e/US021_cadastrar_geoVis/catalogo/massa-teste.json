@@ -1,0 +1,26 @@
+{
+    "catalogoUrlInvalida": {
+        "nomeCatalogo": "IBGE",
+        "url": "http://www.metadados.geo.ibge.gov.br/geonetwork_ibge/srv/por/csw/teste",
+        "descricao": "descrição da catalogo",
+        "nomeReposanvel": "Nome Usuário Teste",
+        "telefone": "61931254633",
+        "email": "teste@tste.com"
+    },
+    "catalogoJaCadastrada": {
+        "nomeCatalogo": "IBGE",
+        "url": "http://www.metadados.geo.ibge.gov.br/geonetwork_ibge/srv/por/csw",
+        "descricao": "descrição da catalogo",
+        "nomeReposanvel": "Nome Usuário Teste",
+        "telefone": "61931254633",
+        "email": "teste@tste.com"
+    },
+    "calogoValido": {
+        "nomeCatalogo": "IBGE",
+        "url": "http://metadados.ana.gov.br/geonetwork/srv/pt/csw",
+        "descricao": "descrição da catalogo",
+        "nomeReposanvel": "Nome Usuário Teste",
+        "telefone": "61931254633",
+        "email": "teste@tste.com"
+    }
+}

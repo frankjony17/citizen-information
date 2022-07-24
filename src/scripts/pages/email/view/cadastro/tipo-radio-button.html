@@ -1,0 +1,40 @@
+<div layout="row" style="padding: 25px" flex>
+
+    <div layout="column" flex="15">
+        <label style="margin-bottom: 20px;">Tipo de Solicitação</label>
+        <md-radio-group ng-model="formularioEmailCtrl.radioTipoSolicitacao"
+            ng-change="formularioEmailCtrl.radioTipoSocilitacao(1)">
+            <md-radio-button value="1" class="md-primary" ng-disabled="formularioEmailCtrl.isDisabled">
+                Pedido
+            </md-radio-button>
+        </md-radio-group>
+    </div>
+
+    <div layout="column" flex="35">
+        <label style="margin-bottom: 20px;">&nbsp;</label>
+        <md-radio-group ng-model="formularioEmailCtrl.radioTipoSolicitacao"
+            ng-change="formularioEmailCtrl.radioTipoSocilitacao(2)">
+            <md-radio-button value="2" class="md-primary" ng-disabled="formularioEmailCtrl.isDisabled">
+                Recurso
+            </md-radio-button>
+        </md-radio-group>
+    </div>
+
+    <div layout="column" flex="15">
+        <label style="margin-bottom: 20px;">Tipo de Alerta</label>
+        <md-radio-group ng-model="formularioEmailCtrl.radioAlerta" ng-change="formularioEmailCtrl.radioAlertaClick(1)">
+            <md-radio-button value="1" class="md-primary" ng-disabled="formularioEmailCtrl.isDisabled">
+                Por data
+            </md-radio-button>
+        </md-radio-group>
+    </div>
+
+    <div layout="column" flex="35">
+        <label style="margin-bottom: 20px;">&nbsp;</label>
+        <md-radio-group ng-model="formularioEmailCtrl.radioAlerta" ng-change="formularioEmailCtrl.radioAlertaClick(2)">
+            <md-radio-button value="2" class="md-primary" ng-disabled="formularioEmailCtrl.isDisabled">
+                Por ação
+            </md-radio-button>
+        </md-radio-group>
+    </div>
+</div>

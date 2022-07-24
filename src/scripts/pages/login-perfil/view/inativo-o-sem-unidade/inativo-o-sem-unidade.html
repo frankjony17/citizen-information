@@ -1,0 +1,25 @@
+<md-content class="md-padding" layout-xs="column" layout="row" layout-align="center center">
+    <ng-form name=inativoCtrl.inativoForm style="width: 65%">
+        <md-card class="card-40-center" style="border-top: 1px solid rgba(0, 0, 0, 0.12); padding: 25px; background-color: rgb(124,174,219)">
+            <md-card-header>
+                <h1 style="color: red">Atenção</h1>
+            </md-card-header>
+            <div layout="column">
+                <div ng-if="!inativoCtrl.content">
+                    <p>
+                    <h3 style="color: red">
+                        Caro usuário, você não possui unidade vinculada.<br>
+                        Entre em contato com o responsável pela sua Unidade ou com o Administrador do sistema.
+                    </h3>
+                    </p>
+                </div>
+                <div ng-if="inativoCtrl.content">
+                    <ng-bind-html
+                        ng-bind-html="inativoCtrl.content"">
+                    </ng-bind-html>
+
+                </div>
+            </div>
+        </md-card>
+    </ng-form>
+</md-content>

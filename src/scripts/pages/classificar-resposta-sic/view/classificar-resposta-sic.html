@@ -1,0 +1,227 @@
+<md-content>
+    <ng-form name="classificarRespostaSicCtrl.classificarRespostaForm">
+        <md-content>
+            <h1>{{classificarRespostaSicCtrl.tituloPagina}}</h1>
+        </md-content>
+        <md-card md-theme-watch>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Dados da Resposta</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Tipo de Resposta </label>
+                        <md-select ng-model="classificarRespostaSicCtrl.classificacaoRespostaSic.tipoResposta"
+                                   ng-change="classificarRespostaSicCtrl.buscarClassificacaoPorTipoResposta()" required>
+                            <md-option ng-repeat="tipoResposta in classificarRespostaSicCtrl.listaTipoResposta"
+                                       ng-value="tipoResposta">
+                                {{tipoResposta.descricao}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" ng-show="classificarRespostaSicCtrl.listaClassificacaoTipoResposta != ''">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Classificação do Tipo e Resposta</label>
+                        <md-select
+                            ng-model="classificarRespostaSicCtrl.classificacaoRespostaSic.classificacaoTipoResposta">
+                            <md-option
+                                ng-repeat="ClassificacaoTiporesposta in classificarRespostaSicCtrl.listaClassificacaoTipoResposta"
+                                ng-value="ClassificacaoTiporesposta">
+                                {{ClassificacaoTiporesposta.descricao}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <br/>
+                <md-card md-theme-watch>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Resposta</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <div layout="row">
+                            <div flex="100" ng-bind-html="classificarRespostaSicCtrl.buscaResposta.resposta">
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <form name="anexosRespostaForm" layout="column" ng-show="classificarRespostaSicCtrl.buscaResposta.resposta != null">
+                            <div layout="row"><label>Anexos da Resposta</label></div>
+                            <div layout="row">
+                                <md-input-container class="md-block" flex="100">
+                                    <lf-ng-md-file-input class="md-block" flex="90" name="anexosResposta"
+                                                         lf-files='anexosResposta00'
+                                                         lf-maxcount="10" lf-totalsize="1MB"
+                                                         lf-placeholder="Selecione os arquivos"
+                                                         lf-remove-label="Remover"
+                                                         lf-browse-label="Procurar..."
+                                                         multiple>
+
+                                    </lf-ng-md-file-input>
+                                </md-input-container>
+                            </div>
+
+                            <div layout="row">
+                                <div ng-messages="anexosRespostaForm.anexosResposta.$error" style="color:red;">
+                                    <div ng-message="maxcount">Quantidade máxima de 10 arquivos anexo excedida.</div>
+                                    <div ng-message="totalsize">Tamanho máximo de 30 mb excedido.</div>
+                                </div>
+                            </div>
+                        </form>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex="100">
+                                <label>Responsável pela Resposta</label>
+                                <input ng-model="" readonly>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex="100">
+                                <label>Destinatário de recurso de primeira Instância</label>
+                                <input ng-model="" readonly>
+                            </md-input-container>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                <div layout="row" layout-align="end end">
+                    <md-button class="md-raised md-primary" ng-click="classificarRespostaSicCtrl.editarResposta()">
+                        Editar Resposta SIC
+                    </md-button>
+                </div>
+                <md-card md-theme-watch ng-show="classificarRespostaSicCtrl.totalElementosConsultaHistorico > 0">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Histórico de Edição</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <md-table-container>
+                            <table md-table>
+                                <thead md-head>
+                                <tr md-row>
+                                    <th md-column>Data</th>
+                                    <th md-column>Responsável pela edição da Resposta</th>
+                                    <th md-column>Tipo de Resposta</th>
+                                    <th md-column>Visualizar</th>
+                                </tr>
+                                </thead>
+                                <tbody md-body>
+                                <tr md-row
+                                    ng-repeat="historicoPedidoDTO in classificarRespostaSicCtrl.listaHistoricoPedidoDTO.content">
+                                    <td md-cell>
+                                        {{historicoPedidoDTO.data | date: 'dd/MM/yyyy HH:mm:ss'}}
+                                    </td>
+                                    <td md-cell>
+                                        {{historicoPedidoDTO.nomeResponsavel}}
+                                    </td>
+                                    <td md-cell>
+                                        {{historicoPedidoDTO.tipoTratamento}}
+                                    </td>
+                                    <td md-cell>
+                                        <ng-md-icon icon="search" ng-click="classificarRespostaSicCtrl.visualizarHistoricoEdicao($event, historicoPedidoDTO.id)">
+                                            <md-tooltip>Detalhar</md-tooltip>
+                                        </ng-md-icon>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-table-container>
+                        <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                             md-on-paginate="classificarRespostaSicCtrl.carregarHistoricoPedido"
+                                             md-limit="classificarRespostaSicCtrl.tabelaConsultaHistorico.limit"
+                                             md-limit-options="classificarRespostaSicCtrl.tabelaConsultaHistorico.limitsPage"
+                                             md-page="classificarRespostaSicCtrl.tabelaConsultaHistorico.page"
+                                             md-total="{{classificarRespostaSicCtrl.totalElementosConsultaHistorico}}"
+                                             md-page-select>
+                        </md-table-pagination>
+                    </md-card-content>
+                </md-card>
+            </md-card-content>
+        </md-card>
+        <md-card md-theme-watch>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Sobre o pedido</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Categoria</label>
+                        <md-select ng-model="classificarRespostaSicCtrl.classificacaoRespostaSic.categoria"
+                                   ng-change="classificarRespostaSicCtrl.buscarSubCategorias()" required>
+                            <md-option ng-repeat="categoria in classificarRespostaSicCtrl.listaCategoria"
+                                       ng-value="categoria">
+                                {{categoria.descricao}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Subcategoria</label>
+                        <md-select ng-model="classificarRespostaSicCtrl.classificacaoRespostaSic.subcategoria">
+                            <md-option ng-repeat="subcategoria in classificarRespostaSicCtrl.listaSubCategoria"
+                                       ng-value="subcategoria">
+                                {{subcategoria.descricao}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                            <label>Palavra Chave</label>
+                            <md-chips ng-model="classificarRespostaSicCtrl.classificacaoRespostaSic.palavrasChaves" readonly="classificarRespostaSicCtrl.readonly" placeholder="Pressione Enter"
+                                      md-transform-chip="classificarRespostaSicCtrl.newPalavraChave($chip)">
+                                <md-chip-template>
+                               <span>
+                               <strong>{{$chip.descricao}}</strong>
+                               </span>
+                                </md-chip-template>
+                            </md-chips>
+                        {{classificarRespostaSicCtrl.palavrasChaves}}
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Número de páginas</label>
+                        <input ng-model="classificarRespostaSicCtrl.classificacaoRespostaSic.numeroPagina" required>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Restrição conteúdo *</label>
+                        <br/>
+                        <p>
+                            Os pedidos e respostas registrados no e-SIC serão disponibilizados para consulta aberta com
+                            o objetivo de ampliar a publicação proativa de informações públicas no Poder Executivo
+                            Federal, desde que não contenha informações pessoais ou protegidas para outras hipóteses de
+                            sigilo. Este pedido de acesso ou respectiva resposta contém informações sujeitas, à
+                            restrição de acesso conforme previsto na lei 12.527/2011?
+                        </p>
+                        <md-radio-group ng-model="classificarRespostaSicCtrl.classificacaoRespostaSic.restricaoConteudo"
+                                        layout="row" required>
+                            <md-radio-button id="radio1" ng-value="true" >
+                                Sim
+                            </md-radio-button>
+                            <md-radio-button id="radio2" ng-value="false" >
+                                Não
+                            </md-radio-button>
+                        </md-radio-group>
+                    </md-input-container>
+                </div>
+            </md-card-content>
+        </md-card>
+        <div layout="row" layout-align="end right">
+            <md-button class="md-primary md-raised" ng-click="classificarRespostaSicCtrl.concluir()">
+                Concluir
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="classificarRespostaSicCtrl.voltarDetalhar()">
+                Voltar
+            </md-button>
+        </div>
+    </ng-form>
+</md-content>

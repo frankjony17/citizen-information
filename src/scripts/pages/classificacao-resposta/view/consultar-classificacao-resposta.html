@@ -1,0 +1,106 @@
+<md-content>
+    <ng-form>
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>Consultar Classificação Resposta</h1>
+                </md-content>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Tipo Classificação Resposta</label>
+                        <md-select ng-model="consultarClassificacaoRespostaCtrl.consultaClassificacaoResposta.idTipoClassificacaoResposta">
+                            <md-option
+                                ng-repeat="tipoClassificacao in consultarClassificacaoRespostaCtrl.listaTipoClassificacaoResposta " ng-value="tipoClassificacao.id">
+                                {{tipoClassificacao.descricao}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container flex="100">
+                        <label>Classificação</label>
+                        <input rows="5"
+                                  ng-model="consultarClassificacaoRespostaCtrl.consultaClassificacaoResposta.nomeClassificacao">
+                                    </input>
+
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="end right">
+                <md-button class="md-raised md-primary" ng-click="consultarClassificacaoRespostaCtrl.consultar()">
+                    Buscar
+                </md-button>
+                <md-button class="md-raised md-primary" ng-click="consultarClassificacaoRespostaCtrl.limpar()">
+                    Limpar
+                </md-button>
+                <md-button class="md-raised md-primary" ng-click="consultarClassificacaoRespostaCtrl.irCadastrar()">
+                    Cadastrar Classificação
+                </md-button>
+                </div>
+                <md-card md-theme-watch>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Resultado</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <md-table-container>
+                            <table md-table>
+                                <thead md-head>
+                                <tr md-row exibir-cor-elemento-consulta>
+                                    <th md-column style="width:35%;">Tipo de classificação</th>
+                                    <th md-column><table md-table><tr><td style="width:80%;background-color: #FFFFFF;">Classificação</td><td style="width:20%; background-color: #FFFFFF">Ação</td></tr></table></th>
+                                </tr>
+                                </thead>
+                                <tbody md-body>
+                                <tr md-row
+                                    ng-repeat="classificacao in consultarClassificacaoRespostaCtrl.classificacoes">
+                                    <td md-cell>
+                                        {{classificacao.descricao}}
+                                    </td>
+                                    <td md-cell>
+                                        <table style="border-collapse: collapse; width: 100%;">
+                                            <tbody>
+                                            <tr data-ng-repeat="claResp in classificacao.classificacaoResposta" >
+                                                <td style="text-align: left; padding: 2px; width: 80%">{{claResp.descricao}}</td>
+                                                <td style="padding: 2px; text-align: center; width: 20%">
+                                                    <ng-md-icon icon="edit" ng-click="consultarClassificacaoRespostaCtrl.irEditar(claResp.id)">
+                                                        <md-tooltip>Editar</md-tooltip>
+                                                    </ng-md-icon>
+                                                    <ng-md-icon icon="delete" ng-click="consultarClassificacaoRespostaCtrl.excluir($event, claResp.id)">
+                                                        <md-tooltip>Excluir</md-tooltip>
+                                                    </ng-md-icon>
+                                                    <md-switch style="display: inline-grid; "
+                                                        class="md-primary"
+                                                        ng-model="claResp.statusClassificacaoResposta"
+                                                        ng-change="consultarClassificacaoRespostaCtrl.ativaInativaClassificacaoResposta(claResp)">
+                                                    </md-switch>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-table-container>
+                        <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                             md-on-paginate="consultarClassificacaoRespostaCtrl.consultar"
+                                             md-limit="consultarClassificacaoRespostaCtrl.tabelaConsulta.limit"
+                                             md-limit-options="consultarClassificacaoRespostaCtrl.tabelaConsulta.limitsPage"
+                                             md-page="consultarClassificacaoRespostaCtrl.tabelaConsulta.page"
+                                             md-total="{{consultarClassificacaoRespostaCtrl.totalElementosConsulta}}"
+                                             md-page-select>
+                        </md-table-pagination>
+                    </md-card-content>
+<!--                    <div layout="row" layout-align="end right">-->
+<!--                        <md-button class="md-raised md-primary" ng-click="consultarClassificacaoRespostaCtrl.gerarRelatorioExcel()">-->
+<!--                            Relatório-->
+<!--                        </md-button>-->
+<!--                    </div>-->
+                </md-card>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

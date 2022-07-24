@@ -1,0 +1,121 @@
+<md-card md-theme-watch>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline">Dados do Pedido</span>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+        <form>
+            <div layout="row">
+                <md-input-container class="md-block" flex="50">
+                    <label>Protocolo</label>
+                    <input ng-model="pedidoDetalhadoDTO.protocolo" readonly/>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container class="md-block" flex="80">
+                    <label>Solicitante</label>
+                    <input ng-model="pedidoDetalhadoDTO.solicitanteDTO.nome" readonly/>
+                </md-input-container>
+                <div>
+                    <md-button class="md-raised md-primary" ng-click="consultarDadosSolicitante()">
+                        Ver Dados
+                    </md-button>
+                </div>
+            </div>
+            <div layout="row">
+                <md-input-container class="md-block" flex="50">
+                    <label>Vencimento e-SIC</label>
+                    <input ng-value="pedidoDetalhadoDTO.vencimentoESic | date: 'dd/MM/yyyy'" readonly/>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container class="md-block" flex="50">
+                    <label>Órgão Regulador Vinculado</label>
+                    <input ng-model="pedidoDetalhadoDTO.orgaoVinculado" readonly/>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container class="md-block" flex="100">
+                    <label>Detalhes da Solicitação</label>
+                    <textarea rows="5" ng-model="pedidoDetalhadoDTO.detalhamentoSolicitacao" readonly>
+                        </textarea>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container class="md-block" flex="100">
+                    <label>Anexos</label>
+                    <input readonly>
+                </md-input-container>
+            </div>
+        </form>
+    </md-card-content>
+</md-card>
+<form name="formulario">
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Dados da Prorrogação</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <div layout="row">
+                <md-input-container class="md-block" flex="50" ng-show="tituloDaPagina == 'Prorrogar Pedido de Informação'">
+                    <label>Motivo da Prorrogação</label>
+                    <md-select id="comboboxTamanho" ng-model="prorrogacaoCadastroDTO.idMotivoProrrogacao" ng-disabled="pedidoDetalhadoDTO.prorrogado == true" required>
+                        <md-option ng-value=""></md-option>
+                        <md-option ng-repeat="motivoProrrogacaoDTO in listaMotivoProrrogacaoDTO" ng-value="motivoProrrogacaoDTO.id">
+                            {{motivoProrrogacaoDTO.nome}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex="50" ng-show="tituloDaPagina == 'Prorrogar Pedido de Informação e-SIC'">
+                    <label>Motivo da Prorrogação</label>
+                    <md-select id="comboboxTamanho" ng-model="prorrogacaoCadastroDTO.idMotivoProrrogacao" ng-disabled="pedidoDetalhadoDTO.prorrogado == true || pedidoDetalhadoDTO.prorrogadoESic == true" required>
+                        <md-option ng-value=""></md-option>
+                        <md-option ng-repeat="motivoProrrogacaoDTO in listaMotivoProrrogacaoDTO" ng-value="motivoProrrogacaoDTO.id">
+                            {{motivoProrrogacaoDTO.nome}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container class="md-block" flex="100" ng-show="tituloDaPagina == 'Prorrogar Pedido de Informação'">
+                    <label>Justificativa da Prorrogação</label>
+                    <textarea ng-model="prorrogacaoCadastroDTO.justificativaProrrogacao" rows="5" md-select-on-focus ng-disabled="pedidoDetalhadoDTO.prorrogado == true" required ng-minlength="80" ng-maxlength="2048" name="textJusticafiva" >
+                        </textarea>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex="100" ng-show="tituloDaPagina == 'Prorrogar Pedido de Informação e-SIC'">
+                    <label>Justificativa da Prorrogação</label>
+                    <textarea ng-model="prorrogacaoCadastroDTO.justificativaProrrogacao" rows="5" md-select-on-focus ng-disabled="pedidoDetalhadoDTO.prorrogado == true || pedidoDetalhadoDTO.prorrogadoESic == true" required ng-minlength="80" ng-maxlength="2048" name="textJusticafiva2" >
+                        </textarea>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container class="md-block" flex="50" ng-show="tituloDaPagina == 'Prorrogar Pedido de Informação'">
+                    <label>Novo Vencimento Unidade</label>
+                    <input ng-value="prorrogacaoCadastroDTO.novoVencimentoUnidade | date: 'dd/MM/yyyy'" readonly>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container class="md-block" flex="50" ng-show="tituloDaPagina == 'Prorrogar Pedido de Informação e-SIC'">
+                    <label>Novo Vencimento e-SIC</label>
+                    <input ng-value="novoVencimentoESic | date: 'dd/MM/yyyy'" readonly>
+                </md-input-container>
+            </div>
+        </md-card-content>
+    </md-card>
+    <div layout="row" layout-align="end right">
+        <md-button class="md-raised md-primary" ng-click="salvarProrrogacao()" ng-show="pedidoDetalhadoDTO.prorrogado == false && tituloDaPagina == 'Prorrogar Pedido de Informação'">
+            Concluir
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="salvarProrrogacao()" ng-show="pedidoDetalhadoDTO.prorrogadoESic == false && tituloDaPagina == 'Prorrogar Pedido de Informação e-SIC'">
+            Concluir
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="voltar()">
+            Voltar
+        </md-button>
+    </div>
+</form>

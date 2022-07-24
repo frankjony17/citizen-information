@@ -1,0 +1,61 @@
+<md-content>
+    <md-content>
+        <h1>Devolver Recurso</h1>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Devolver</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <ng-form name="devolverRecursoCtrl.devolverRecursoForm">
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Justificativa</label>
+                        <textarea ng-model="devolverRecursoCtrl.devolverRecursoDTO.justificativa" rows="5" name="textJusticafiva" minlength="30"
+                                  md-select-on-focus required></textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Status da Solicitação</label>
+                        <input ng-model="devolverRecursoCtrl.devolverRecursoDTO.nomeStatusSolicitacao" readonly>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50" ng-if="">
+                        <label>Unidade</label>
+                        <input ng-model="devolverRecursoCtrl.ultimaUnidade.nomeUnidade" ng-disabled="true">
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50" ng-if="devolverRecursoCtrl.instanciaRecurso == 1">
+                        <label>Autoridade Hierarquica</label>
+                        <input ng-model="devolverRecursoCtrl.nomeUsuario" ng-disabled="true">
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50" ng-if="devolverRecursoCtrl.instanciaRecurso == 2">
+                        <label>Autoridade Máxima</label>
+                        <input ng-model="devolverRecursoCtrl.nomeUsuario" ng-disabled="true">
+                    </md-input-container>
+                </div>
+
+                <div layout="row" layout-align="end center">
+                    <md-button class="md-raised md-primary" ng-click="devolverRecursoCtrl.devolver(devolverRecursoDTO)">
+                        Devolver
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="devolverRecursoCtrl.voltar()">
+                        Voltar
+                    </md-button>
+                </div>
+            </ng-form>
+        </md-card-content>
+    </md-card>
+</md-content>
+
+

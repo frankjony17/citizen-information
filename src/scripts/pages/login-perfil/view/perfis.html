@@ -1,0 +1,28 @@
+<md-content class="md-padding" layout-xs="column" layout="row" layout-align="center center">
+    <ng-form name=loginCtrl.perfisForm style="width: 45%">
+        <md-card class="card-40-center" style="border-top: 1px solid rgba(0, 0, 0, 0.12); padding: 25px">
+            <md-card-header>
+                <h3>Selecione o perfil de acesso</h3>
+            </md-card-header>
+
+            <div layout="column">
+                <md-input-container class="md-block" flex>
+                    <label class="tamanho-text" style="padding: 0">[Lista de perfis do usuário]</label>
+                    <md-select ng-model="loginCtrl.perfilUsuario"
+                               ng-change="loginCtrl.boolPerfil = false">
+                        <md-option ng-repeat="perfil in loginCtrl.perfisUsuario.perfis" ng-value="perfil">
+                            {{ perfil.nome }}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <br>
+            <!-- Button Salvar -->
+            <div layout="row" layout-align="center center">
+                <md-button ng-disabled="loginCtrl.boolPerfil" id="btn-salvar" class="md-raised md-primary" ng-click="loginCtrl.entrar()">
+                    Confirmar
+                </md-button>
+            </div>
+        </md-card>
+    </ng-form>
+</md-content>

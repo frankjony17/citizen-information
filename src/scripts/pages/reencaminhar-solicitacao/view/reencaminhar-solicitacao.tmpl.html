@@ -1,0 +1,114 @@
+<md-content>
+    <ng-form  name="reencaminharSolicitacaoCtrl.reencaminharForm">
+        <md-content>
+            <h1>Reencaminhar Solicitação</h1>
+        </md-content>
+        <md-card md-theme-watch>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Dados do Pedido</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Protocolo</label>
+                        <input ng-model="reencaminharSolicitacaoCtrl.reencaminharSolicitacao.pedido.protocolo" readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="80">
+                        <label>Solicitante</label>
+                        <input ng-model="reencaminharSolicitacaoCtrl.reencaminharSolicitacao.pedido.solicitanteDTO.nome" readonly>
+                    </md-input-container>
+                    <div flex="20">
+                        <md-button class="md-raised md-primary" ng-click="reencaminharSolicitacaoCtrl.consultarDadosSolicitante()">
+                            Ver Dados
+                        </md-button>
+                    </div>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Vencimento e-SIC</label>
+                        <input ng-value="reencaminharSolicitacaoCtrl.reencaminharSolicitacao.pedido.vencimentoESic | date: 'dd/MM/yyyy'" readonly/>
+                    </md-input-container>
+                </div>
+                
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Recebimento da Resposta</label>
+                        <input ng-model="reencaminharSolicitacaoCtrl.reencaminharSolicitacao.pedido.formaRecebimento" readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Resumo da Solicitação</label>
+                        <textarea rows="5" ng-model="reencaminharSolicitacaoCtrl.reencaminharSolicitacao.pedido.resumoSolicitacao" readonly>
+                        </textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Detalhes da Solicitação</label>
+                        <textarea rows="5" ng-model="reencaminharSolicitacaoCtrl.reencaminharSolicitacao.pedido.detalhamentoSolicitacao" readonly>
+                        </textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Anexos</label>
+                        <input readonly/>
+                    </md-input-container>
+                </div>
+            </md-card-content>
+        </md-card>
+
+        <md-card md-theme-watch>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Dados do Reencaminhamento</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100" required>
+                        <label>Orgão Destinatário</label>
+                        <md-select ng-model=" reencaminharSolicitacaoCtrl.orgao"  required>
+                            <md-option ng-repeat="orgao in reencaminharSolicitacaoCtrl.listaOrgao" ng-value="orgao">
+                                {{orgao.descricao}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100" required>
+                        <label>Notificação enviada ao solicitante</label>
+                            <textarea rows="5" ng-model="reencaminharSolicitacaoCtrl.reencaminharSolicitacao.notificacaoEnviadaSolicitante">
+                        </textarea>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100" required>
+                        <label>Notificação enviada ao destinatário</label>
+                        <textarea rows="5" ng-model="reencaminharSolicitacaoCtrl.reencaminharSolicitacao.notificacaoEnviadaDestinatario">
+                        </textarea>
+                    </md-input-container>
+                </div>
+
+            </md-card-content>
+        </md-card>
+
+        <div layout="row" layout-align="end right">
+            <md-button class="md-raised md-primary" ng-click="reencaminharSolicitacaoCtrl.salvarReencaminhar()">
+                Concluir
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="reencaminharSolicitacaoCtrl.voltarDetalhar()">
+                Voltar
+            </md-button>
+        </div>
+    </ng-form>
+</md-content>
+

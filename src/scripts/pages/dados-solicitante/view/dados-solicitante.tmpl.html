@@ -1,0 +1,145 @@
+<md-content>
+    <md-content>
+        <h1>Dados do Solicitante</h1>
+    </md-content>
+    <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+        <md-card-content>
+            <div layout="row">
+                <md-input-container flex="25">
+                    <label>Protocolo</label>
+                    <input ng-model="scope.pedidoDetalhadoDTO.protocolo" readonly>
+                </md-input-container>
+                <md-input-container flex="25">
+                    <label>Status da Solicitação</label>
+                    <input ng-model="scope.pedidoDetalhadoDTO.nomeStatusSolicitacao" readonly/>
+                </md-input-container>
+                <md-input-container flex="25">
+                    <label>Data Abertura</label>
+                    <input ng-value="scope.pedidoDetalhadoDTO.dataAbertura | date: 'dd/MM/yyyy'" readonly/>
+                </md-input-container>
+                <md-input-container flex="25">
+                    <label>Vencimento Unidade</label>
+                    <input ng-value="scope.pedidoDetalhadoDTO.vencimentoUnidade | date: 'dd/MM/yyyy'" readonly/>
+                </md-input-container>
+            </div>
+            <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Solicitante</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <form>
+                        <div layout="row">
+                            <md-input-container flex="50">
+                                <label>Login</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.login" readonly/>
+                            </md-input-container>
+                            <md-input-container flex="50">
+                                <label>País</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.pais" readonly/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container flex="50" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'F'">
+                                <label>CPF</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.cpfOuCnpj" readonly/>
+                            </md-input-container>
+                            <md-input-container flex="50" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'J'">
+                                <label>CNPJ</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.cpfOuCnpj" readonly/>
+                            </md-input-container>
+                            <md-input-container flex="50">
+                                <label>Endereço</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.endereco" readonly/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container flex="50" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'F'">
+                                <label>Nome</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.nome" readonly/>
+                            </md-input-container>
+                            <md-input-container flex="50" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'J'">
+                                <label>Razão Social</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.nome" readonly/>
+                            </md-input-container>
+                            <md-input-container flex="50">
+                                <label>UF</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.uf" readonly/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container flex="50" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'F'">
+                                <label>Data de Nascimento</label>
+<!--                                <input ng-model="" readonly/>-->
+                            </md-input-container>
+                            <md-input-container flex="50" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'J'">
+                                <label>Nome do Representante</label>
+<!--                                <input ng-model="" readonly/>-->
+                            </md-input-container>
+                            <md-input-container flex="50">
+                                <label>Cidade</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.cidade" readonly/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container flex="50" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'F'">
+
+                            </md-input-container>
+                            <md-input-container flex="50">
+                                <label>CEP</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.cep" readonly/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container flex="50" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'F'">
+                                <label>Sexo</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.sexo" readonly/>
+                            </md-input-container>
+                            <md-input-container flex="50" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'J'">
+                                <label>Tipo de Instituição</label>
+<!--                                <input ng-model="" readonly/>-->
+                            </md-input-container>
+                            <md-input-container flex="50">
+                                <label>Telefone</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.telefone" readonly/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container flex="50" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'F'">
+                                <label>Escolaridade</label>
+<!--                                <input ng-model="" readonly/>-->
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container flex="50" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'F'">
+                                <label>Profissão</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.profissao" readonly/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" ng-show="scope.pedidoDetalhadoDTO.solicitanteDTO.tipoPessoa == 'J'">
+                            <md-input-container flex="50">
+                                <label>Área de Atuação</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.profissao" readonly/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container flex="50">
+                                <label>E-mail</label>
+                                <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.email" readonly/>
+                            </md-input-container>
+                        </div>
+                    </form>
+                </md-card-content>
+            </md-card>
+        </md-card-content>
+        <md-content>
+            <div layout="row" layout-align="end right">
+                <md-button class="md-raised md-primary" ng-click="scope.voltar()">
+                    Voltar
+                </md-button>
+            </div>
+        </md-content>
+    </md-card>
+</md-content>
+

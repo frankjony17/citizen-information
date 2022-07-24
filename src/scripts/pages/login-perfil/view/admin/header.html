@@ -1,0 +1,63 @@
+<md-toolbar>
+    <div class="container-fluid" id="sdsic" layout="row" style="padding-top: 1%">
+        <div style="color:white" layout="column" >
+            <sgr-glossario termo="Sistema de Demandas do Serviços de Informações ao Cidadão - FKSOLUTIONS"></sgr-glossario>
+        </div>
+    </div>
+    <div>
+        <a href="/#/logout"
+           style="text-align: right;
+           font-size: medium;color: white;text-decoration: none; float: right; margin-top: -30px; margin-right: 10px"
+           layout="column">Encerrar sessão</a>
+    </div>
+    <div>
+        <a style="font-size: 13px; text-align: right;
+            font-size: medium;color: white;text-decoration: none; margin-right: 10px;"
+            layout="column">
+            Olá, {{usuarioLogadoV2.nome}} - {{diaSemana}}  {{date | date:'dd/MM/yyyy'}}
+        </a>
+    </div>
+</md-toolbar>
+<md-toolbar style="min-height: 25px !important;background: #0f4098 !important;">
+    <div id="breadcrumb">
+        <span class="breadcrumb" style="padding: 1px 0 2px 2%;">
+            <div class="dropdown">
+              <span> <a href="#">
+                  <ng-md-icon icon="home" style="fill: white; position:absolute; bottom: -7px;" size="26" ></ng-md-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </a></span>
+            </div>
+        </span>
+
+        <span class="breadcrumb" style="padding: 1px 0 2px 2%;" ng-if="session.usuario.unidade != null && session.perfil.isAtivo == true">
+        <div class="dropdown">
+          <span>Consultar</span>
+          <div class="dropdown-content">
+                <a href="/#/solicitacaoInformacao">Pedido</a>
+                <a href="/#/consultarRecurso">Recurso</a>
+          </div>
+        </div>
+        </span>
+
+        <span class="breadcrumb" style="padding: 1px 0 2px 2%;">
+            <div class="dropdown">
+              <span>Administração</span>
+              <div class="dropdown-content">
+                  <a href="/#/consultarFeriado">Feriado</a>
+                  <a href="/#/consultarClassificacaoResposta">Classificação de Resposta</a>
+                  <a href="/#/consultarUnidade"> Unidade/Subunidade</a>
+                  <a href="/#/consultarUsuario">Consultar Usuários</a>
+                  <a href="/#/consultaGlossarioDeAssuntos">Glossário de Assuntos </a>
+                  <a href="/#/TelaAdministrativa">Tela Administrativa</a>
+                  <a href="/#/alertaUsuarioSemUnidade">Alerta de Usuário sem Unidade</a>
+                  <a href="/#/emailAlerta">E-mails de Alerta</a>
+              </div>
+            </div>
+        </span>
+
+        <span class="breadcrumb" style="padding: 1px 0 2px 2%;">
+          <div class="dropdown">
+              <span ng-href="#"><a href="/#/dadosDoUsuario" style="color: white; text-decoration: none;">Dados do Usuário</a></span>
+          </div>
+        </span>
+    </div>
+</md-toolbar>

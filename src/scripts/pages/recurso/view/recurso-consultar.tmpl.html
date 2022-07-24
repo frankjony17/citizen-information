@@ -1,0 +1,389 @@
+<md-content>
+    <md-content>
+        <h1>Consultar Recurso</h1>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Filtro</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <form name="formulario">
+
+                <div layout="row">
+                    <div layout="column" flex="50">
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Demandas Comigo</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idDemandasComigo">
+                                <md-option ng-repeat="demandasComigo in consultarRecursoCtrl.listaDemandasComigo"
+                                           ng-value="demandasComigo.id">
+                                    {{demandasComigo.descricao}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+
+
+                <div layout="row">
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Status da Tramitação</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idStatusTramitacao">
+                                <md-option ng-value="">Todos</md-option>
+                                <md-option ng-repeat="statusTramitacaoRecursoDTO in consultarRecursoCtrl.listaStatusTramitacaoRecursoDTO"
+                                           ng-value="statusTramitacaoRecursoDTO.id">
+                                    {{statusTramitacaoRecursoDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label>Status da Solicitação</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idStatusSolicitacao">
+                                <md-option ng-value="">Todos</md-option>
+                                <md-option ng-repeat="statusSolicitacaoDTO in consultarRecursoCtrl .listaStatusSolicitacaoDTO"
+                                           ng-value="statusSolicitacaoDTO.id">
+                                    {{statusSolicitacaoDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+
+
+                <div layout="row">
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Protocolo</label>
+                            <input ng-model="consultarRecursoCtrl.filtroRecursoDTO.protocolo" maxlength="17"/>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Tipo de Resposta</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idTipoResposta">
+                                <md-option ng-value="">Todos</md-option>
+                                <md-option ng-repeat="tipoRespotaDTO in consultarRecursoCtrl.listaTipoRespostaDTO"
+                                           ng-value="tipoRespotaDTO.id">
+                                    {{tipoRespotaDTO.descricao}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                </div>
+
+                <div layout="row">
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Unidade</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idUnidade">
+                                <md-option ng-repeat="unidadeDTO in consultarRecursoCtrl.listaUnidadeDTO" ng-value="unidadeDTO.id">
+                                    {{unidadeDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label>Tipo de Recurso</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idTipoRecurso">
+                                <md-option ng-repeat="tipoRecursoDTO in consultarRecursoCtrl.listaTipoRecursoDTO"
+                                           ng-value="tipoRecursoDTO.id">
+                                    {{tipoRecursoDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout="row">
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Subunidade</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idSubunidade">
+                                <md-option ng-repeat="subUnidadeDTO in consultarRecursoCtrl.listaSubUnidadeDTO" ng-value="subUnidadeDTO.id">
+                                    {{subUnidadeDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex="50">
+                        <md-input-container class="md-block" flex>
+                            <label>Situação do Recurso</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idSituacaoRecurso">
+                                <md-option ng-value="">Todos</md-option>
+                                <md-option ng-repeat="situacaoRecursoDTO in consultarRecursoCtrl.listaSituacaoRecursoDTO"
+                                           ng-value="situacaoRecursoDTO.id">
+                                    {{situacaoRecursoDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                </div>
+
+                <div layout="row">
+
+                    <div layout="row" flex>
+                        <span class="secondary-text" style="position: relative;margin-top: 30px;">Data da Abertura</span>
+                        <md-datepicker ng-model="consultarRecursoCtrl.filtroRecursoDTO.periodoInicialDataAbertura" style="margin-top: 15px"></md-datepicker>
+                        <label style="position: relative;margin-top: 30px;padding-left: 16px;">a</label>
+                        <md-datepicker ng-model="consultarRecursoCtrl.filtroRecursoDTO.periodoFinalDataAbertura" style="margin-top: 15px"></md-datepicker>
+                    </div>
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Instância do Recurso</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idInstanciaRecurso">
+                                <md-option ng-value="">Todos</md-option>
+                                <md-option ng-repeat="instanciaRecursoDTO in consultarRecursoCtrl.listaInstanciaRecursoDTO"
+                                           ng-value="instanciaRecursoDTO.id">
+                                    {{instanciaRecursoDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                </div>
+
+                <div layout="row">
+
+                    <div layout="row" flex>
+                        <span class="secondary-text" style="position: relative;margin-top: 30px;">Vencimento Unidade</span>
+                        <md-datepicker ng-model="consultarRecursoCtrl.filtroRecursoDTO.periodoInicialPrazoAtendimento" style="margin-top: 15px"></md-datepicker>
+                        <label style="position: relative;margin-top: 30px;padding-left: 16px;">a</label>
+                        <md-datepicker ng-model="consultarRecursoCtrl.filtroRecursoDTO.periodoFinalPrazoAtendimento" style="margin-top: 15px"></md-datepicker>
+                    </div>
+
+                    <div layout="row" flex>
+                        <span class="secondary-text" style="position: relative;margin-top: 30px;">Denúncia de Descumprimento de Decisão CGU</span>
+                        <md-datepicker ng-model="" style="margin-top: 15px"></md-datepicker>
+                        <label style="position: relative;margin-top: 30px;padding-left: 16px;">a</label>
+                        <md-datepicker ng-model="" style="margin-top: 15px"></md-datepicker>
+                    </div>
+
+                </div>
+
+                <div layout="row">
+                    <div layout="row" flex>
+                        <md-input-container class="md-block" flex>
+                            <md-checkbox ng-model="consultarRecursoCtrl.prazoVencidoSdsic">
+                                Prazo Expirado
+                            </md-checkbox>
+                    </div>
+
+                    <div layout="row" flex>
+                        <span class="secondary-text" style="position: relative;margin-top: 30px;">Denúncia de Descumprimento de Decisão CMRI</span>
+                        <md-datepicker ng-model="" style="margin-top: 15px"></md-datepicker>
+                        <label style="position: relative;margin-top: 30px;padding-left: 16px;">a</label>
+                        <md-datepicker ng-model="" style="margin-top: 15px"></md-datepicker>
+                    </div>
+                </div>
+
+                <div layout="row">
+
+                    <div layout="row" flex>
+                        <span class="secondary-text" style="position: relative;margin-top: 30px;">Vencimento e-SIC</span>
+                        <md-datepicker ng-model="consultarRecursoCtrl.filtroRecursoDTO.periodoInicialVencimentoEsic" style="margin-top: 15px"></md-datepicker>
+                        <label style="position: relative;margin-top: 30px;padding-left: 16px;">a</label>
+                        <md-datepicker ng-model="consultarRecursoCtrl.filtroRecursoDTO.periodoFinalVencimentoEsic" style="margin-top: 15px"></md-datepicker>
+                    </div>
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Assunto</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idTema">
+                                <md-option ng-repeat="temaDTO in consultarRecursoCtrl.listaTemaDTO" ng-value="temaDTO.id">
+                                    {{temaDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                    </div>
+                </div>
+
+                <div layout="row">
+
+                    <div layout="row" flex>
+                        <md-input-container class="md-block" flex>
+                            <md-checkbox ng-model="consultarRecursoCtrl.prazoVencidoEsic">
+                                Prazo Expirado
+                            </md-checkbox>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text" >Subassunto</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idSubTema">
+                                <md-option ng-repeat="subTemaDTO in consultarRecursoCtrl.listaSubTemaDTO" ng-value="subTemaDTO.id">
+                                    {{subTemaDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                </div>
+
+                <div layout="row">
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Nome do Solicitante</label>
+                            <input ng-model="consultarRecursoCtrl.filtroRecursoDTO.nomeSolicitante" maxlength="100"/>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Palavra-chave</label>
+                            <md-select ng-model="consultarRecursoCtrl.filtroRecursoDTO.idSubTema">
+                                <md-option ng-repeat="subTemaDTO in consultarRecursoCtrl.listaSubTemaDTO" ng-value="subTemaDTO.id">
+                                    {{subTemaDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                </div>
+
+
+                <div layout="row">
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <md-radio-group ng-model="consultarRecursoCtrl.filtroRecursoDTO.tipoPessoa" layout="row">
+                                <md-radio-button id="radio1" ng-value="">
+                                    Todos
+                                </md-radio-button>
+                                <md-radio-button id="radio2" ng-value="'F'">
+                                    Pessoa Física
+                                </md-radio-button>
+                                <md-radio-button id="radio3" ng-value="'J'">
+                                    Pessoa Jurídica
+                                </md-radio-button>
+                            </md-radio-group>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Atendente</label>
+                            <md-select ng-model="">
+                                <md-option ng-repeat=""
+                                           ng-value="">
+                                    {{}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                </div>
+
+                <div layout="row">
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label>Texto na Justificativa</label>
+                            <input ng-model="consultarRecursoCtrl.filtroRecursoDTO.descricaoJustificativa">
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label>Texto na Resposta</label>
+                            <input ng-model="consultarRecursoCtrl.filtroRecursoDTO.textoSolicitacao">
+                        </md-input-container>
+                    </div>
+
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+    <div layout="row" layout-align="end right">
+        <md-button class="md-raised md-primary" ng-click="consultarRecursoCtrl.consultar()">
+            Buscar
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="consultarRecursoCtrl.limpar()">
+            Limpar
+        </md-button>
+    </div>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Resultado</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <md-table-container>
+                <table md-table>
+                    <thead md-head>
+                    <tr md-row exibir-cor-elemento-consulta>
+                        <th md-column>Detalhar</th>
+                        <th md-column>Protocolo</th>
+                        <th md-column>Tipo de Recurso</th>
+                        <th md-column>Data de abertura do recurso</th>
+                        <th md-column>Vencimento Unidade do recurso</th>
+                        <th md-column>Situação</th>
+                        <th md-column>Data da Resposta</th>
+                        <th md-column>Nome do Solicitante</th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row
+                        ng-repeat="consultaRecursoDTO in consultarRecursoCtrl.listaConsultaRecursoDTO">
+                        <td md-cell>
+                            <ng-md-icon icon="search" ng-click="consultarRecursoCtrl.detalhar(consultaRecursoDTO.idPedido)">
+                                <md-tooltip>Detalhar</md-tooltip>
+                            </ng-md-icon>
+                        </td>
+                        <td md-cell >
+                            {{consultaRecursoDTO.protocolo}}
+                        </td>
+                        <td md-cell>
+                            {{consultaRecursoDTO.nomeTipoRecurso}}
+                        </td>
+                        <td md-cell>
+                            {{consultaRecursoDTO.dataAbertura | date: 'dd/MM/yyyy HH:mm:ss'}}
+                        </td>
+                        <td md-cell>
+                            {{consultaRecursoDTO.prazoAtendimento | date: 'dd/MM/yyyy HH:mm:ss'}}
+                        </td>
+                        <td md-cell>
+                            {{consultaRecursoDTO.nomeSituacaoRecurso}}
+                        </td>
+                        <td md-cell>
+                            {{consultaRecursoDTO.dataResposta | date: 'dd/MM/yyyy HH:mm:ss'}}
+                        </td>
+                        <td md-cell>
+                            {{consultaRecursoDTO.nomeSolicitante}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                 md-on-paginate="consultarRecursoCtrl.consultar"
+                                 md-limit="consultarRecursoCtrl.tabelaConsulta.limit"
+                                 md-limit-options="consultarRecursoCtrl.tabelaConsulta.limitsPage"
+                                 md-page="consultarRecursoCtrl.tabelaConsulta.page"
+                                 md-total="{{consultarRecursoCtrl.totalElementosConsulta}}"
+                                 md-page-select>
+            </md-table-pagination>
+        </md-card-content>
+    </md-card>
+    <div layout="row" layout-align="end right">
+        <md-button class="md-raised md-primary" ng-click="consultarRecursoCtrl.gerarRelatorioExcel()">
+            Relatório
+        </md-button>
+    </div>
+</md-content>
+

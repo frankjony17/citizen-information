@@ -1,0 +1,95 @@
+<md-content>
+    <md-content>
+        <h1>Encaminhar Pedido de Informação</h1>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Encaminhar</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <form name="formulario">
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Observação</label>
+                        <textarea ng-model="scope.propostaRespostaDTO.observacao" rows="5"
+                                  md-select-on-focus></textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Status da solicitação</label>
+                        <input ng-model="scope.propostaRespostaDTO.nomeStatusSolicitacao" required readonly>
+                    </md-input-container>
+                </div>
+                <div layout="row" flex="50" ng-if="scope.propostaRespostaDTO.nomeStatusSolicitacaoPedido == 'Triagem SIC'
+                    || scope.propostaRespostaDTO.nomeStatusSolicitacaoPedido == 'Sugestão de Reencaminhamento'">
+                    <md-input-container class="md-block" flex>
+                        <label>Unidade *</label>
+                        <md-select name="unidade" ng-model="scope.propostaRespostaDTO.listaUnidade" ng-click="scope.valideFormulario()">
+                            <md-option ng-repeat="unidade in scope.copiaUnidade"
+                                       ng-value="unidade">
+                                {{unidade.nomeUnidade}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" ng-if="scope.propostaRespostaDTO.nomeStatusSolicitacaoPedido == 'Produção de Resposta'
+                    || scope.propostaRespostaDTO.nomeStatusSolicitacaoPedido == 'Sugestão de Reencaminhamento'">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Técnico</label>
+                        <md-select ng-model="scope.propostaRespostaDTO.listaUsuarioAcessos"
+                                   ng-disabled="scope.propostaRespostaDTO.idStatusSolicitacao === 2"
+                                   ng-change="scope.addTabelaTecnico()"
+                                   required>
+                            <md-option ng-value="tecnico" ng-repeat="tecnico in scope.listaTecnico">{{tecnico.nomeUsuario}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div layout="row" ng-if="scope.propostaRespostaDTO.nomeStatusSolicitacaoPedido == 'Distribuição PF'">
+                    <div layout="row" flex="50">
+                        <md-input-container class="md-block" flex>
+                            <label>Subunidade</label>
+                            <md-select ng-model="scope.propostaRespostaDTO.listaSubunidade"
+                                       ng-change="scope.buscarUsuarioPontoFocalPorSubunidade(subunidade.id)"
+                                       ng-disabled="scope.propostaRespostaDTO.idStatusSolicitacao === 2"
+                                       required>
+                                <md-option ng-repeat="subunidade in scope.listaSubunidade"
+                                           ng-value="subunidade">
+                                    {{subunidade.nomeSubunidade}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <md-input-container class="md-block" flex="50">
+                        <label>Respondente</label>
+                        <md-select ng-model="scope.propostaRespostaDTO.listaUsuarioAcessos"
+                                   ng-disabled="scope.propostaRespostaDTO.idStatusSolicitacao === 2"
+                                   required>
+                            <md-option ng-value="respondente" ng-repeat="respondente in scope.respondente">{{respondente.nomeUsuario}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <br/>
+                <div layout="row" layout-align="end center">
+                    <md-button class="md-raised md-primary" ng-show="scope.editarResposta.resposta == null" ng-click="scope.escreverPropostaResposta()">
+                        Escrever Proposta Resposta
+                    </md-button>
+                    <md-button ng-show="scope.editarResposta.resposta != null" class="md-raised md-primary" ng-click="scope.escreverPropostaResposta()">
+                        Editar Proposta Resposta
+                    </md-button>
+                    <md-button type="button" class="md-raised md-primary" ng-click="scope.enviar()">
+                        Enviar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="scope.voltar()">
+                        Voltar
+                    </md-button>
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+</md-content>
+
+

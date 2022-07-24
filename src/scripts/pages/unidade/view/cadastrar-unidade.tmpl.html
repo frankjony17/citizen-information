@@ -1,0 +1,406 @@
+<md-content>
+    <ng-form name=cadastrarUnidadeCtrl.cadastrarUnidadeForm >
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>Cadastrar Unidade/Subunidade</h1>
+                </md-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Órgãos <b>({{ cadastrarUnidadeCtrl.orgaoLength }})</b></label>
+                        <md-select ng-model="cadastrarUnidadeCtrl.defaultOrgao"
+                                   ng-model-options="{trackBy: '$value.codigoUnidade'}"
+                                   ng-change="cadastrarUnidadeCtrl.loadUnidadesSiorg(cadastrarUnidadeCtrl.defaultOrgao)"
+                                   md-on-close="cadastrarUnidadeCtrl.clearSearchTerm()"
+                                   name="orgao"
+                                   required>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="cadastrarUnidadeCtrl.searchTerm" type="search" placeholder="Consultar Órgão" class="demo-header-searchbox md-text" style="size:12px;padding:2px;width:100%">
+                            </md-select-header>
+                            <md-option ng-repeat="orgao in cadastrarUnidadeCtrl.orgaosSiorg | filter: cadastrarUnidadeCtrl.searchTerm" ng-value="orgao">
+                                {{ orgao.nomeUnidade }} <b>({{ orgao.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Unidades <b>({{ cadastrarUnidadeCtrl.unidadeLength }})</b></label>
+                        <md-select ng-model="cadastrarUnidadeCtrl.defaultUnidade"
+                                   ng-change="cadastrarUnidadeCtrl.loadSubUnidadesSiorg(cadastrarUnidadeCtrl.defaultUnidade)"
+                                   md-on-close="cadastrarUnidadeCtrl.clearSearchTerm()"
+                                   name="unidade"
+                                   required>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="cadastrarUnidadeCtrl.searchTerm" type="search" placeholder="Consultar Unidade" class="demo-header-searchbox md-text" style="size:12px;padding:2px;width:100%">
+                            </md-select-header>
+                            <md-option ng-repeat="unidade in cadastrarUnidadeCtrl.unidadeSiorg | filter: cadastrarUnidadeCtrl.searchTerm" ng-value="unidade">
+                                {{ unidade.nomeUnidade }} <b>({{ unidade.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container  class="md-block" flex="100">
+                        <label>Subunidades <b>({{ cadastrarUnidadeCtrl.subunidadeLength }})</b></label>
+                        <md-select ng-model="cadastrarUnidadeCtrl.defaultSubunidade"
+                                   md-on-close="cadastrarUnidadeCtrl.clearSearchTerm()"
+                                   data-md-container-class="selectdemoSelectHeader"
+                                   multiple>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="cadastrarUnidadeCtrl.searchTerm" type="search" placeholder="Consultar subunidade" class="demo-header-searchbox md-text" style="size:12px;padding:2px;width:100%">
+                            </md-select-header>
+                            <md-option ng-repeat="sub in cadastrarUnidadeCtrl.subunidadesSiorg | filter: cadastrarUnidadeCtrl.searchTerm"
+                                       ng-value="sub">
+                                {{ sub.nomeUnidade }} <b>({{ sub.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <br>
+                <!--  -->
+                <!-- Titular 1ª Instância -->
+                <!--  -->
+                <md-card>
+                    <md-card-header>
+                        <h3>Autoridade Hierárquica 1ª Instância</h3>
+                    </md-card-header>
+                    <!-- Form Titular, Usuario (Autoridade Hierárquica) -->
+                    <md-card-content>
+                        <div layout="row">
+                            <div layout="column" flex="10">
+                                <md-input-container class="md-block">
+                                    <md-radio-group ng-model="cadastrarUnidadeCtrl.substitutos.primera.value">
+                                        <md-radio-button value="Titular" class="md-primary" required>Titular</md-radio-button>
+                                    </md-radio-group>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" flex>
+                                <md-input-container class="md-block" flex>
+                                    <label class="tamanho-text" style="padding: 0">Autoridade Hierárquica</label>
+                                    <md-select ng-model="cadastrarUnidadeCtrl.autoridadeHierarquica"
+                                               ng-change="cadastrarUnidadeCtrl.autoridadeHierarquicaComboChange($event)"
+                                               name="titularAutoridadeHierarquica"
+                                               required>
+                                        <md-option ng-repeat="usuario in cadastrarUnidadeCtrl.usuarioAutoridadeHierarquica" ng-value="usuario">
+                                            <div ng-if="cadastrarUnidadeCtrl.colorNoUsuario(usuario.nome) == true">
+                                                <span style='color: red;'>{{ usuario.nome }}</span>
+                                            </div>
+                                            <div ng-if="cadastrarUnidadeCtrl.colorNoUsuario(usuario.nome) == false">
+                                                {{ usuario.nome }}
+                                            </div>
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <!-- Adicionar Titular -->
+                        <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                        <div ng-if="cadastrarUnidadeCtrl.obterAutoridadeHierarquica == true">
+                            <md-card style="margin-left: 120px">
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">CPF</label>
+                                            <input ng-model="cadastrarUnidadeCtrl.autoridadeHierarquica.cpf" maxlength="11" ng-readonly="true" required/>
+                                        </md-input-container>
+
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">E-mail</label>
+                                            <input name="autoridadeHierarquicaEmail" ng-model="cadastrarUnidadeCtrl.autoridadeHierarquica.email" maxlength="120" type="email" required/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Telefone</label>
+                                            <input name="autoridadeHierarquicaTelefone" ng-model="cadastrarUnidadeCtrl.autoridadeHierarquica.telefone" maxlength="45" required/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Cargo</label>
+                                            <input id="cargo-pessoa" ng-model="cadastrarUnidadeCtrl.autoridadeHierarquica.cargo" ng-readonly="cadastrarUnidadeCtrl.isReadonlyAutoridadeHierarquica"/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Função</label>
+                                            <input ng-model="cadastrarUnidadeCtrl.autoridadeHierarquica.funcao" ng-readonly="true"/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Assinatura</label>
+                                            <input name="autoridadeHierarquicaAssinatura" ng-model="cadastrarUnidadeCtrl.autoridadeHierarquica.assinatura" maxlength="100" required/>
+                                        </md-input-container>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                            <!-- Button Adicionar substituto -->
+                            <div layout="row" style="margin-left: 110px" ng-if="cadastrarUnidadeCtrl.substitutos.primera.bool == false">
+                                <md-button md-no-ink class="md-primary" ng-click="cadastrarUnidadeCtrl.adicionarSubstitutoPrimeraInstancia()">
+                                    <ng-md-icon icon="add" style="position: absolute; left: 0px; margin: 6px 0px 0px 0px; fill: #3a3a3a"></ng-md-icon>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>Adicionar substituto</u>
+                                </md-button>
+                            </div>
+                        </div>
+                        <!-- Adicionar SubsTituto -->
+                        <!-- Form Substituto, Usuario (Autoridade Hierárquica) -->
+                        <div ng-if="cadastrarUnidadeCtrl.substitutos.primera.bool == true">
+                            <div layout="row">
+                                <div layout="column" flex="10">
+                                    <md-input-container class="md-block">
+                                        <md-radio-group ng-model="cadastrarUnidadeCtrl.substitutos.primera.value">
+                                            <md-radio-button value="Substituto" class="md-primary" required>Substituto</md-radio-button>
+                                        </md-radio-group>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex="85">
+                                    <md-input-container class="md-block" flex>
+                                        <label class="tamanho-text">Autoridade Hierárquica</label>
+                                        <md-select name="substitutoAutoridadeHierarquica"
+                                                   ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeHierarquica"
+                                                   ng-change="cadastrarUnidadeCtrl.substitutoAutoridadeHierarquicaComboChange($event)"
+                                                   required>
+                                            <md-option ng-repeat="usuario in cadastrarUnidadeCtrl.usuarioSubstitutoAutoridadeHierarquica" ng-value="usuario">
+                                                <div ng-if="cadastrarUnidadeCtrl.colorNoUsuario(usuario.nome) == true">
+                                                    <span style='color: red;'>{{ usuario.nome }}</span>
+                                                </div>
+                                                <div ng-if="cadastrarUnidadeCtrl.colorNoUsuario(usuario.nome) == false">
+                                                    {{ usuario.nome }}
+                                                </div>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex>
+                                    <label class="tamanho-text">&nbsp;</label>
+                                    <ng-md-icon class="icon-subacao" icon="delete" style="fill: #3a3a3a" ng-click="cadastrarUnidadeCtrl.removeSubstitutoPrimeraInstancia($event)">
+                                        <md-tooltip>Remover Substituto</md-tooltip>
+                                    </ng-md-icon>
+                                </div>
+                            </div>
+                            <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                            <md-card style="margin-left: 120px">
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">CPF</label>
+                                            <input ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeHierarquica.cpf" maxlength="11" ng-readonly="true" required/>
+                                        </md-input-container>
+
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">E-mail</label>
+                                            <input name="substitutoAutoridadeHierarquicaEmail" ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeHierarquica.email" maxlength="45" required/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Telefone</label>
+                                            <input name="substitutoAutoridadeHierarquicaTelefone" ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeHierarquica.telefone" maxlength="45" required/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Cargo</label>
+                                            <input ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeHierarquica.cargo" ng-readonly="cadastrarUnidadeCtrl.isReadonlyAutoridadeHierarquicaSub" />
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Função</label>
+                                            <input ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeHierarquica.funcao" ng-readonly="true"/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Assinatura</label>
+                                            <input name="substitutoAutoridadeHierarquicaAssinatura" ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeHierarquica.assinatura" maxlength="100" required/>
+                                        </md-input-container>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                <!--  -->
+                <!-- Adicionar Autoridade Máxima 2ª Instância -->
+                <!--  -->
+                <md-card>
+                    <md-card-header>
+                        <h3>Autoridade Máxima 2ª Instância</h3>
+                    </md-card-header>
+                    <!-- Form Titular, Usuario (Autoridade Máxima) -->
+                    <md-card-content>
+                            <div layout="row">
+                                <div layout="column" flex="10">
+                                    <md-input-container class="md-block">
+                                        <md-radio-group ng-model="cadastrarUnidadeCtrl.substitutos.segunda.value">
+                                            <md-radio-button value="Titular" class="md-primary" required>Titular</md-radio-button>
+                                        </md-radio-group>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex>
+                                    <md-input-container class="md-block" flex>
+                                        <label class="tamanho-text" style="padding: 0">Autoridade Máxima</label>
+                                        <md-select ng-model="cadastrarUnidadeCtrl.autoridadeMaxima"
+                                                   ng-change="cadastrarUnidadeCtrl.autoridadeMaximaComboChange()"
+                                                   name="titularAutoridadeMaxima"
+                                                   required>
+                                            <md-option ng-repeat="usuario in cadastrarUnidadeCtrl.usuarioAutoridadeMaxima" ng-value="usuario">
+                                                <div ng-if="cadastrarUnidadeCtrl.colorNoUsuario(usuario.nome) == true">
+                                                    <span style='color: red;'>{{ usuario.nome }}</span>
+                                                </div>
+                                                <div ng-if="cadastrarUnidadeCtrl.colorNoUsuario(usuario.nome) == false">
+                                                    {{ usuario.nome }}
+                                                </div>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                            <div ng-if="cadastrarUnidadeCtrl.obterAutoridadeMaxima == true">
+                                <md-card style="margin-left: 120px">
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">CPF</label>
+                                            <input ng-model="cadastrarUnidadeCtrl.autoridadeMaxima.cpf" maxlength="11" ng-readonly="true" required/>
+                                        </md-input-container>
+
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">E-mail</label>
+                                            <input name="autoridadeMaximaEmail" ng-model="cadastrarUnidadeCtrl.autoridadeMaxima.email" maxlength="45" required/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Telefone</label>
+                                            <input name="autoridadeMaximaTelefone" ng-model="cadastrarUnidadeCtrl.autoridadeMaxima.telefone" maxlength="45" required/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Cargo</label>
+                                            <input ng-model="cadastrarUnidadeCtrl.autoridadeMaxima.cargo" ng-readonly="cadastrarUnidadeCtrl.isReadonlyAutoridadeMaxima"/>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Função</label>
+                                            <input ng-model="cadastrarUnidadeCtrl.autoridadeMaxima.funcao" ng-readonly="true"/>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Assinatura</label>
+                                            <input name="autoridadeMaximaAssinatura" ng-model="cadastrarUnidadeCtrl.autoridadeMaxima.assinatura" maxlength="100" required/>
+                                        </md-input-container>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                            <!-- Button Adicionar substituto -->
+                                <div layout="row" style="margin-left: 110px" ng-if="cadastrarUnidadeCtrl.substitutos.segunda.bool == false">
+                                <md-button md-no-ink class="md-primary" ng-click="cadastrarUnidadeCtrl.adicionarSubstitutoSegundaInstancia()">
+                                    <ng-md-icon icon="add" style="position: absolute; left: 0px; margin: 6px 0px 0px 0px; fill: #3a3a3a"></ng-md-icon>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>Adicionar substituto</u>
+                                </md-button>
+                            </div>
+                            </div>
+                            <!-- Adicionar SubsTituto Autoridade Máxima -->
+                            <!-- Form Substituto, Usuario (Autoridade Máxima) -->
+                            <div ng-if="cadastrarUnidadeCtrl.substitutos.segunda.bool == true">
+                                <div layout="row">
+                                    <div layout="column" flex="10">
+                                        <md-input-container class="md-block">
+                                            <md-radio-group ng-model="cadastrarUnidadeCtrl.substitutos.segunda.value">
+                                                <md-radio-button value="Substituto" class="md-primary" required>Substituto</md-radio-button>
+                                            </md-radio-group>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="column" flex="85">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Autoridade Máxima</label>
+                                        <md-select name="substitutoAutoridadeMaxima"
+                                                   ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeMaxima"
+                                                   ng-change="cadastrarUnidadeCtrl.substitutoAutoridadeMaximaComboChange($event)"
+                                                   required>
+                                                <md-option ng-repeat="usuario in cadastrarUnidadeCtrl.usuarioSubstitutoAutoridadeMaxima" ng-value="usuario">
+                                                    <div ng-if="cadastrarUnidadeCtrl.colorNoUsuario(usuario.nome) == true">
+                                                        <span style='color: red;'>{{ usuario.nome }}</span>
+                                                    </div>
+                                                    <div ng-if="cadastrarUnidadeCtrl.colorNoUsuario(usuario.nome) == false">
+                                                        {{ usuario.nome }}
+                                                    </div>
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    <!-- Button removeSubstituto -->
+                                    <div layout="column" flex>
+                                        <label class="tamanho-text">&nbsp;&nbsp;&nbsp;</label>
+                                        <ng-md-icon class="icon-subacao" icon="delete" style="fill: #3a3a3a" ng-click="cadastrarUnidadeCtrl.removeSubstitutoSegundaInstancia($event)">
+                                            <md-tooltip>Remover Substituto</md-tooltip>
+                                        </ng-md-icon>
+                                    </div>
+                                </div>
+                                <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                                <md-card style="margin-left: 120px">
+                                    <md-card-content>
+                                        <div layout="row">
+                                            <md-input-container class="md-block" flex>
+                                                <label class="tamanho-text">CPF</label>
+                                                <input ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeMaxima.cpf" maxlength="11" ng-readonly="true" required/>
+                                            </md-input-container>
+
+                                            <md-input-container class="md-block" flex>
+                                                <label class="tamanho-text">E-mail</label>
+                                                <input name="substitutoAutoridadeMaximaEmail" ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeMaxima.email" maxlength="45" required/>
+                                            </md-input-container>
+                                        </div>
+                                        <div layout="row">
+                                            <md-input-container class="md-block" flex>
+                                                <label class="tamanho-text">Telefone</label>
+                                                <input name="substitutoAutoridadeMaximaTelefone" ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeMaxima.telefone" maxlength="45" required/>
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex>
+                                                <label class="tamanho-text">Cargo</label>
+                                                <input ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeMaxima.cargo" ng-readonly="cadastrarUnidadeCtrl.isReadonlyAutoridadeMaximaSub"/>
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex>
+                                                <label class="tamanho-text">Função</label>
+                                                <input ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeMaxima.funcao" ng-readonly="true"/>
+                                            </md-input-container>
+                                        </div>
+                                        <div layout="row">
+                                            <md-input-container class="md-block" flex>
+                                                <label class="tamanho-text">Assinatura</label>
+                                                <input name="substitutoAutoridadeMaximaAssinatura" ng-model="cadastrarUnidadeCtrl.substitutoAutoridadeMaxima.assinatura" maxlength="100" required/>
+                                            </md-input-container>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                        </md-card-content>
+                </md-card>
+                <!--  -->
+                <!-- Responsável pelo Recurso de 3ª y 4ª Instância -->
+                <!--  -->
+                <md-card>
+                    <md-card-content>
+                        <div layout="row" flex>
+                            <md-input-container class="md-block" flex>
+                                <label class="tamanho-text">Responsável pelo Recurso de 3ª Instância</label>
+                                <input name="responsavelRecursoTerceiraInstancia" ng-model="cadastrarUnidadeCtrl.responsavelRecursoTerceiraInstancia" maxlength="100" required/>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" flex>
+                            <md-input-container class="md-block" flex>
+                                <label class="tamanho-text">Responsável pelo Recurso de 4ª Instância</label>
+                                <input name="responsavelRecursoQuartaInstancia" ng-model="cadastrarUnidadeCtrl.responsavelRecursoQuartaInstancia" maxlength="100" required/>
+                            </md-input-container>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                <!-- Button Salvar, Voltar -->
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-raised md-primary" ng-click="cadastrarUnidadeCtrl.voltar()">
+                        Voltar
+                    </md-button>
+                    <md-button id="btn-salvar" class="md-raised md-primary" ng-click="cadastrarUnidadeCtrl.isValid($event)">
+                        Salvar
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

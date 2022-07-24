@@ -1,0 +1,139 @@
+<md-tab id="tabSolicitacao" ng-click="scope.verificaNumeroDaAba(scope.abas.selectedIndex)">
+    <md-tab-label>Solicitação</md-tab-label>
+    <md-tab-body>
+        <div style="border-left: 1px solid rgba(0, 0, 0, 0.2); border-bottom: 1px solid rgba(0, 0, 0, 0.2); border-right: 1px solid rgba(0, 0, 0, 0.2);">
+            <md-content>
+                <div layout="row">
+                    <md-input-container flex>
+                        <label>Forma de Recebimento</label>
+                        <input ng-model="scope.pedidoDetalhadoDTO.formaRecebimento" readonly/>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container flex="50">
+                        <label>Situação</label>
+                        <input ng-model="scope.pedidoDetalhadoDTO.nomeSituacaoPedido" readonly/>
+                    </md-input-container>
+                    <md-input-container flex="50">
+                        <label>Vencimento e-SIC</label>
+                        <input ng-value="scope.pedidoDetalhadoDTO.vencimentoESic | date: 'dd/MM/yyyy'" readonly/>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container flex="33">
+                        <label>Solicitante</label>
+                        <input ng-model="scope.pedidoDetalhadoDTO.solicitanteDTO.nome" readonly/>
+                    </md-input-container>
+                    <div flex="20">
+                        <md-button class="md-raised md-primary" ng-click="scope.consultarDadosSolicitante('pedido')"
+                                   ng-show="scope.temPermissao('ver_dados')">
+                            Ver Dados
+                        </md-button>
+                        <md-button class="md-raised md-primary" ng-click="scope.consultarPedidosDuplicados(scope.pedidoDetalhadoDTO.idPedido)"
+                                   ng-show="scope.temPermissao('pedidos_solicitante')">
+                            Pedidos do Solicitante
+                        </md-button>
+                    </div>
+                </div>
+                <tema-subtema onsuccess="scope.liberaCampos"></tema-subtema>
+                <div layout="row" class="metadeComprimentoTab">
+                    <md-input-container flex="100">
+                        <label>Resumo da Solicitação</label>
+                        <textarea rows="1" ng-model="scope.pedidoDetalhadoDTO.resumoSolicitacao" readonly></textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row" class="metadeComprimentoTab">
+                    <md-input-container flex="100">
+                        <label>Detalhamento da Solicitação</label>
+                        <textarea rows="5" ng-model="scope.pedidoDetalhadoDTO.detalhamentoSolicitacao" readonly></textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row" class="metadeComprimentoTab">
+                    <md-input-container flex="100">
+                        <label>Observação</label>
+                        <textarea rows="5" ng-model="scope.pedidoDetalhadoDTO.observacao" readonly></textarea>
+                    </md-input-container>
+                </div>
+                <!-- Documento -->
+                <div layout="row" class="metadeComprimentoTab" ng-if="scope.pedidoDetalhadoDTO.anexos.length > 0">
+                    <md-card style="width: 100%">
+                        <table md-table>
+                            <thead md-head>
+                            <tr md-row>
+                                <th md-column>Documento</th>
+                                <th md-column></th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row ng-repeat="anexo in scope.pedidoDetalhadoDTO.anexos">
+                                <td md-cell>
+                                    {{anexo.nome}}
+                                </td>
+                                <td md-cell>
+                                    <ng-md-icon icon="file_download" ng-click="scope.downloadAnexo(anexo.nome)" ng-show="scope.temPermissao('upload_button')">
+                                        <md-tooltip>Baixar archivo</md-tooltip>
+                                    </ng-md-icon>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-card>
+                </div>
+                <!-- Resposta -->
+                <div ng-include="'scripts/pages/solicitacao-informacao/view/tab/solicitacao/resposta.html'"></div>
+                <!-- Button -->
+                <div ng-include="'scripts/pages/solicitacao-informacao/view/tab/solicitacao/solicitacao-button.html'"></div>
+            </md-content>
+        </div>
+        <!-- Histórico de Edição -->
+        <md-card md-theme-watch ng-show="scope.totalElementosConsultaHistorico > 0">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Histórico de Edição</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                        <tr md-row>
+                            <th md-column>Data</th>
+                            <th md-column>Responsável pela edição da Resposta</th>
+                            <th md-column>Tipo de Resposta</th>
+                            <th md-column>Visualizar</th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row
+                            ng-repeat="historicoPedidoDTO in scope.listaHistoricoPedidoDTO.content">
+                            <td md-cell>
+                                {{historicoPedidoDTO.data | date: 'dd/MM/yyyy HH:mm:ss'}}
+                            </td>
+                            <td md-cell>
+                                {{historicoPedidoDTO.nomeResponsavel}}
+                            </td>
+                            <td md-cell>
+                                {{historicoPedidoDTO.tipoTratamento}}
+                            </td>
+                            <td md-cell>
+                                <ng-md-icon icon="search"
+                                            ng-click="scope.visualizarHistoricoPedido($event, historicoPedidoDTO.id)">
+                                    <md-tooltip>Detalhar</md-tooltip>
+                                </ng-md-icon>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+                <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                     md-on-paginate="scope.carregarHistoricoPedido"
+                                     md-limit="scope.tabelaConsultaHistorico.limit"
+                                     md-limit-options="scope.tabelaConsultaHistorico.limitsPage"
+                                     md-page="scope.tabelaConsultaHistorico.page"
+                                     md-total="{{scope.totalElementosConsultaHistorico}}"
+                                     md-page-select>
+                </md-table-pagination>
+            </md-card-content>
+        </md-card>
+    </md-tab-body>
+</md-tab>

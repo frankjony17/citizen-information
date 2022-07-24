@@ -1,0 +1,396 @@
+<md-content>
+    <md-content>
+        <h1>Detalhar Dados do Recurso</h1>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-content>
+            <div layout="row">
+                <md-input-container flex="25">
+                    <label>Protocolo</label>
+                    <input ng-model="detalheRecursoCtrl.recursoDetalhadoDTO.protocolo" readonly>
+                </md-input-container>
+                <md-input-container flex="25">
+                    <label>Status da Solicitação</label>
+                    <input ng-model="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao" readonly/>
+                </md-input-container>
+                <md-input-container flex="25">
+                    <label>Data Abertura</label>
+                    <input readonly ng-value="detalheRecursoCtrl.recursoDetalhadoDTO.dataAbertura | date: 'dd/MM/yyyy'"/>
+                </md-input-container>
+                <md-input-container flex="25">
+                    <label>Vencimento Unidade</label>
+                    <input ng-value="detalheRecursoCtrl.recursoDetalhadoDTO.vencimentoUnidade | date: 'dd/MM/yyyy'" readonly/>
+                </md-input-container>
+            </div>
+            <md-tabs md-selected="detalheRecursoCtrl.abas.selectedIndex" md-dynamic-height md-border-bottom>
+                <md-tab id="tabSolicitacao">
+                    <md-tab-label>Recurso 1ª Instância</md-tab-label>
+                    <md-tab-body>
+                        <div style="border-left: 1px solid rgba(0, 0, 0, 0.2); border-bottom: 1px solid rgba(0, 0, 0, 0.2); border-right: 1px solid rgba(0, 0, 0, 0.2);">
+                            <md-content>
+                                <div layout="row">
+
+                                    <md-input-container flex="50">
+                                        <label>Vencimento e-SIC</label>
+                                        <input ng-value="detalheRecursoCtrl.recursoDetalhadoDTO.dataPrazoAtendimento | date: 'dd/MM/yyyy'" readonly/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row">
+                                    <md-input-container flex="50">
+                                        <label>Situação do Recurso</label>
+                                        <input ng-model="detalheRecursoCtrl.recursoDetalhadoDTO.nomeSituacaoRecurso" readonly/>
+                                    </md-input-container>
+                                    <md-input-container flex="50">
+                                        <label>Prazo Limite para Recurso</label>
+                                        <input ng-value="detalheRecursoCtrl.recursoDetalhadoDTO.dataLimiteRecurso | date: 'dd/MM/yyyy'" readonly/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row">
+                                    <md-input-container flex="80">
+                                        <label>Solicitante</label>
+                                        <input ng-value="detalheRecursoCtrl.recursoDetalhadoDTO.solicitanteDTO.nome" readonly/>
+                                    </md-input-container>
+                                    <div flex="20">
+                                        <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.consultarDadosSolicitante()">
+                                            Ver Dados
+                                        </md-button>
+                                    </div>
+                                </div>
+                                <div layout="row">
+                                    <md-input-container flex="100">
+                                        <label>Tipo de Recurso</label>
+                                        <input ng-model="detalheRecursoCtrl.recursoDetalhadoDTO.nomeTipoRecurso" readonly/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row">
+                                    <md-input-container class="md-block" flex="100">
+                                        <label>Justificativa</label>
+                                        <textarea rows="5" ng-model="detalheRecursoCtrl.recursoDetalhadoDTO.justificativa" readonly>
+                                        </textarea>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row" layout-align="end end">
+                                    <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.encaminharRecurso()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Triagem' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Distribuição PF' && detalheRecursoCtrl.recursoDetalhadoDTO.propostaResposta == null">
+                                        Encaminhar
+                                    </md-button>
+                                    <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.responder()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Produção' && detalheRecursoCtrl.recursoDetalhadoDTO.respostaESic == null">
+                                        Responder
+                                    </md-button>
+                                    <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.voltar()" ng-hide="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Distribuição PF' && detalheRecursoCtrl.recursoDetalhadoDTO.propostaResposta != null || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Produção' && detalheRecursoCtrl.recursoDetalhadoDTO.respostaESic != null || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Respondido' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Para Revisão' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Para Envio'">
+                                        Voltar
+                                    </md-button>
+                                </div>
+                            </md-content>
+                            <hr/>
+                            <div ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Distribuição PF' && detalheRecursoCtrl.recursoDetalhadoDTO.propostaResposta != null || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Produção' && detalheRecursoCtrl.recursoDetalhadoDTO.respostaESic != null || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Respondido' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Para Revisão' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Para Envio'">
+                                <md-content>
+                                    <h1>Resposta do Recurso - 1ª Instância</h1>
+                                </md-content>
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container flex="25">
+                                            <label>Tipo de Resposta</label>
+                                            <input readonly>
+                                        </md-input-container>
+                                        <md-input-container flex="25">
+                                            <label>Data da Resposta</label>
+                                            <input readonly ng-value="detalheRecursoCtrl.dataRespostaRecurso | date: 'dd/MM/yyyy'"/>
+                                        </md-input-container>
+                                    </div>
+                                    <md-card md-theme-watch>
+                                        <md-card-title>
+                                            <md-card-title-text>
+                                                <span class="md-headline">Resposta</span>
+                                            </md-card-title-text>
+                                        </md-card-title>
+                                        <md-card-content>
+                                            <div layout="row">
+                                                <div flex="100" ng-bind-html="detalheRecursoCtrl.recursoDetalhadoDTO.propostaResposta">
+                                                </div>
+                                            </div>
+                                            <div layout="row">
+                                                <md-input-container class="md-block" flex="100">
+                                                    <label>Responsável pela resposta</label>
+                                                    <input ng-model="scope.responsavelResposta" readonly/>
+                                                </md-input-container>
+                                            </div>
+                                            <div layout="row">
+                                                <md-input-container class="md-block" flex="100">
+                                                    <label>Destinatário de recurso de primeira instância</label>
+                                                    <input ng-model="scope.destinatarioRecursoPrimeiraInstancia" readonly/>
+                                                </md-input-container>
+                                            </div>
+                                            <div layout="row" layout-align="end right">
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.encaminharRecurso()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Para Revisão'">
+                                                    Encaminhar Para Envio
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.enviarResposta()" ng-hide="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Respondido' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Para Revisão' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Para Envio'">
+                                                    Enviar
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.enviarResposta()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Para Envio'">
+                                                    Enviar e-SIC
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.enviarResposta()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Respondido'">
+                                                    Enviar Para Revisão
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.devolver()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Distribuição PF' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Respondido' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Para Revisão'">
+                                                    Devolver
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.responder()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Distribuição PF' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Produção' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Respondido' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 1ª Para Revisão'">
+                                                    Editar Resposta PF
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.voltar()">
+                                                    Voltar
+                                                </md-button>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                </md-card-content>
+                            </div>
+                        </div>
+                        <md-card md-theme-watch ng-show="detalheRecursoCtrl.totalElementosConsultaHistorico > 0">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">Histórico de Edição</span>
+                                </md-card-title-text>
+                            </md-card-title>
+                            <md-card-content>
+                                <md-table-container>
+                                    <table md-table>
+                                        <thead md-head>
+                                        <tr md-row>
+                                            <th md-column>Data</th>
+                                            <th md-column>Responsável pela edição da Resposta</th>
+                                            <th md-column>Tipo de Resposta</th>
+                                            <th md-column>Visualizar</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody md-body>
+                                        <tr md-row
+                                            ng-repeat="historicoRecursoDTO in detalheRecursoCtrl.listaHistoricoRecursoDTO.content">
+                                            <td md-cell>
+                                                {{historicoRecursoDTO.data | date: 'dd/MM/yyyy HH:mm:ss'}}
+                                            </td>
+                                            <td md-cell>
+                                                {{historicoRecursoDTO.nomeResponsavel}}
+                                            </td>
+                                            <td md-cell>
+                                                {{historicoRecursoDTO.tipoTratamentoRecurso}}
+                                            </td>
+                                            <td md-cell>
+                                                <ng-md-icon icon="search" ng-click="detalheRecursoCtrl.visualizarHistoricoRecurso($event, historicoRecursoDTO.id)">
+                                                    <md-tooltip>Detalhar</md-tooltip>
+                                                </ng-md-icon>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </md-table-container>
+                                <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                                     md-on-paginate="detalheRecursoCtrl.carregarHistoricoPedido"
+                                                     md-limit="detalheRecursoCtrl.tabelaConsultaHistorico.limit"
+                                                     md-limit-options="detalheRecursoCtrl.tabelaConsultaHistorico.limitsPage"
+                                                     md-page="detalheRecursoCtrl.tabelaConsultaHistorico.page"
+                                                     md-total="{{detalheRecursoCtrl.totalElementosConsultaHistorico}}"
+                                                     md-page-select>
+                                </md-table-pagination>
+                            </md-card-content>
+                        </md-card>
+                    </md-tab-body>
+                </md-tab>
+                <md-tab id="tabRecursos" ng-disabled="">
+                    <md-tab-label>Recurso 2ª Instância</md-tab-label>
+                    <md-tab-body>
+                        <div style="border-left: 1px solid rgba(0, 0, 0, 0.2); border-bottom: 1px solid rgba(0, 0, 0, 0.2); border-right: 1px solid rgba(0, 0, 0, 0.2);">
+                            <md-content>
+                                <div layout="row">
+                                    <md-input-container flex="50">
+                                        <label>Protocolo</label>
+                                        <input ng-model="detalheRecursoCtrl.recursoDetalhadoDTO.protocolo" readonly/>
+                                    </md-input-container>
+                                    <md-input-container flex="50">
+                                        <label>Vencimento e-SIC</label>
+                                        <input ng-value="detalheRecursoCtrl.recursoDetalhadoDTO.dataPrazoAtendimento | date: 'dd/MM/yyyy'" readonly/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row">
+                                    <md-input-container flex="50">
+                                        <label>Situação do Recurso</label>
+                                        <input ng-model="detalheRecursoCtrl.recursoDetalhadoDTO.nomeSituacaoRecurso" readonly/>
+                                    </md-input-container>
+                                    <md-input-container flex="50">
+                                        <label>Prazo Limite para Recurso</label>
+                                        <input ng-value="detalheRecursoCtrl.recursoDetalhadoDTO.dataLimiteRecurso | date: 'dd/MM/yyyy'" readonly/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row">
+                                    <md-input-container flex="80">
+                                        <label>Solicitante</label>
+                                        <input ng-model="detalheRecursoCtrl.recursoDetalhadoDTO.solicitanteDTO.nome" readonly/>
+                                    </md-input-container>
+                                    <div flex="20">
+                                        <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.consultarDadosSolicitante()">
+                                            Ver Dados
+                                        </md-button>
+                                    </div>
+                                </div>
+                                <div layout="row">
+                                    <md-input-container flex="100">
+                                        <label>Tipo de Recurso</label>
+                                        <input ng-model="detalheRecursoCtrl.recursoDetalhadoDTO.nomeTipoRecurso" readonly/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row">
+                                    <md-input-container class="md-block" flex="100">
+                                        <label>Justificativa</label>
+                                        <textarea rows="5" ng-model="detalheRecursoCtrl.recursoDetalhadoDTO.justificativa" readonly>
+                                        </textarea>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row" layout-align="end end">
+                                    <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.encaminharRecurso()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Triagem' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Distribuição PF' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Distribuição PF' && detalheRecursoCtrl.recursoDetalhadoDTO.propostaResposta == null">
+                                        Encaminhar
+                                    </md-button>
+                                    <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.responder()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Produção' && detalheRecursoCtrl.recursoDetalhadoDTO.respostaESic == null">
+                                        Responder
+                                    </md-button>
+                                    <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.voltar()" ng-hide="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Distribuição PF' && detalheRecursoCtrl.recursoDetalhadoDTO.propostaResposta != null || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Produção' && detalheRecursoCtrl.recursoDetalhadoDTO.respostaESic != null || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Envio'">
+                                        Voltar
+                                    </md-button>
+                                </div>
+                            </md-content>
+                            <hr/>
+                            <div ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Distribuição PF' && detalheRecursoCtrl.recursoDetalhadoDTO.propostaResposta != null || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Produção' && detalheRecursoCtrl.recursoDetalhadoDTO.respostaESic != null || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Envio'">
+                                <md-content>
+                                    <h1>Resposta do Recurso - 2ª Instância</h1>
+                                </md-content>
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container flex="25">
+                                            <label>Tipo de Resposta</label>
+                                            <input readonly>
+                                        </md-input-container>
+                                        <md-input-container flex="25">
+                                            <label>Data da Resposta</label>
+                                            <input readonly ng-value="detalheRecursoCtrl.dataRespostaRecurso | date: 'dd/MM/yyyy'"/>
+                                        </md-input-container>
+                                    </div>
+                                    <md-card md-theme-watch>
+                                        <md-card-title>
+                                            <md-card-title-text>
+                                                <span class="md-headline">Resposta</span>
+                                            </md-card-title-text>
+                                        </md-card-title>
+                                        <md-card-content>
+                                            <div layout="row">
+                                                <div flex="100" ng-bind-html="detalheRecursoCtrl.recursoDetalhadoDTO.propostaResposta">
+                                                </div>
+                                            </div>
+                                            <div layout="row">
+                                                <md-input-container class="md-block" flex="100">
+                                                    <label>Responsável pela resposta</label>
+                                                    <input ng-model="scope.responsavelResposta" readonly/>
+                                                </md-input-container>
+                                            </div>
+                                            <div layout="row">
+                                                <md-input-container class="md-block" flex="100">
+                                                    <label>Destinatário de recurso de primeira instância</label>
+                                                    <input ng-model="scope.destinatarioRecursoPrimeiraInstancia" readonly/>
+                                                </md-input-container>
+                                            </div>
+                                            <div layout="row" layout-align="end right">
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.encaminharRecurso()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão'">
+                                                    Encaminhar Para Envio
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.enviarResposta()" ng-hide="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Envio'">
+                                                    Enviar
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.enviarResposta()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Envio'">
+                                                    Enviar e-SIC
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.enviarResposta()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido'">
+                                                    Enviar Para Revisão
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.devolver()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Distribuição PF' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão'">
+                                                    Devolver
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.responder()" ng-show="detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Distribuição PF' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Produção' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Respondido' || detalheRecursoCtrl.recursoDetalhadoDTO.nomeStatusSolicitacao == 'Recurso 2ª Para Revisão'">
+                                                    Editar Resposta PF
+                                                </md-button>
+                                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.voltar()">
+                                                    Voltar
+                                                </md-button>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                </md-card-content>
+                            </div>
+                        </div>
+                    </md-tab-body>
+                </md-tab>
+                <md-tab id="tabAndamento">
+                    <md-tab-label>Andamento</md-tab-label>
+                    <md-tab-body>
+                        <md-content>
+                            <md-card md-theme-watch>
+                                <md-card-content>
+                                    <md-table-container>
+                                        <table md-table>
+                                            <thead md-head>
+                                            <tr md-row>
+                                                <th md-column>Status</th>
+                                                <th md-column>Setor</th>
+                                                <th md-column>Início</th>
+                                                <th md-column>Fim</th>
+                                                <th md-column>Responsável</th>
+                                                <th md-column>Observação</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody md-body>
+                                            <tr md-row
+                                                ng-repeat="andamentoRecursoDTO in detalheRecursoCtrl.listaAndamentoRecursoDTO.content">
+                                                <td md-cell>
+                                                    {{andamentoRecursoDTO.statusTramitacao}}
+                                                </td>
+                                                <td md-cell>
+                                                    {{andamentoRecursoDTO.unidade}}
+                                                </td>
+                                                <td md-cell>
+                                                    {{andamentoRecursoDTO.dataInicio | date: 'dd/MM/yyyy'}}
+                                                </td>
+                                                <td md-cell>
+                                                    {{andamentoRecursoDTO.dataFim | date: 'dd/MM/yyyy'}}
+                                                </td>
+                                                <td md-cell>
+                                                    {{andamentoRecursoDTO.responsavel}}
+                                                </td>
+                                                <td md-cell>
+                                                    {{andamentoRecursoDTO.observacao}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </md-table-container>
+                                    <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                                         md-on-paginate="detalheRecursoCtrl.carregarAndamentoPedido"
+                                                         md-limit="detalheRecursoCtrl.tabelaConsultaAndamento.limit"
+                                                         md-limit-options="detalheRecursoCtrl.tabelaConsultaAndamento.limitsPage"
+                                                         md-page="detalheRecursoCtrl.tabelaConsultaAndamento.page"
+                                                         md-total="{{detalheRecursoCtrl.totalElementosConsultaAndamento}}"
+                                                         md-page-select>
+                                    </md-table-pagination>
+                                </md-card-content>
+                            </md-card>
+                            <div layout="row" layout-align="end right">
+                                <md-button class="md-raised md-primary" ng-click="detalheRecursoCtrl.voltarAbaRecurso()" >
+                                    Voltar
+                                </md-button>
+                            </div>
+                        </md-content>
+                    </md-tab-body>
+                </md-tab>
+            </md-tabs>
+        </md-card-content>
+    </md-card>
+</md-content>
+

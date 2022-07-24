@@ -1,0 +1,33 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+
+        <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Histórico de Edição</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancelar()">
+                <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <md-card md-theme-watch>
+                <md-card-content>
+                    <md-input-container flex="100">
+                        <div layout="row">
+                            <div flex="100" ng-bind-html="resposta">
+                            </div>
+                        </div>
+                    </md-input-container>
+                </md-card-content>
+            </md-card>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="cancelar()">
+                Fechar
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

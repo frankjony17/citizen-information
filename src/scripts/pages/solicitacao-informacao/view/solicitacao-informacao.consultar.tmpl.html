@@ -1,0 +1,347 @@
+<md-content>
+    <md-content>
+        <h1>Consultar Pedido de Informação</h1>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Filtro</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <form name="formulario">
+                <div layout="row">
+                    <div layout="column" flex="50">
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Demandas Comigo</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idDemandasComigo">
+                                <md-option ng-repeat="demandasComigo in scope.listaDemandasComigo" ng-value="demandasComigo.id">
+                                    {{demandasComigo.descricao}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout="row">
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Status da tramitação</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idStatusTramitacao">
+                                <md-option ng-value="">Todos</md-option>
+                                <md-option ng-repeat="statusTramitacaoDTO in scope.listaStatusTramitacaoDTO" ng-value="statusTramitacaoDTO.id">
+                                    {{statusTramitacaoDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label>Status da Solicitação</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idStatusSolicitacao">
+                                <md-option ng-value="">Todos</md-option>
+                                <md-option ng-repeat="statusSolicitacaoDTO in scope.listaStatusSolicitacaoDTO" ng-value="statusSolicitacaoDTO.id">
+                                    {{statusSolicitacaoDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout="row">
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Protocolo</label>
+                            <input ng-model="scope.filtroPedidoDTO.protocolo" maxlength="17"/>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Origem da Solicitação</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idOrigemSolicitacao">
+                                <md-option ng-value="">Todos</md-option>
+                                <md-option ng-repeat="origemSolicitacaoDTO in scope.listaOrigemSolicitacaoDTO" ng-value="origemSolicitacaoDTO.id">
+                                    {{origemSolicitacaoDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout="row">
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Unidade</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idUnidade">
+                                <md-option ng-repeat="unidadeDTO in scope.listaUnidadeDTO" ng-value="unidadeDTO.id">
+                                    {{unidadeDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Situações</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idSituacaoPedido">
+                                <md-option ng-value="">Todos</md-option>
+                                <md-option ng-repeat="situacaoPedidoDTO in scope.listaSituacaoPedidoDTO" ng-value="situacaoPedidoDTO.id">
+                                    {{situacaoPedidoDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout="row">
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Sub-Unidade</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idSubUnidade">
+                                <md-option ng-repeat="subUnidadeDTO in scope.listaSubUnidadeDTO" ng-value="subUnidadeDTO.id">
+                                    {{subUnidadeDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Status da Situação</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idStatusSituacao">
+                                <md-option ng-value="">Todos</md-option>
+                                <md-option ng-repeat="statusSituacaoDTO in scope.listaStatusSituacaoDTO"
+                                           ng-value="statusSituacaoDTO.id">
+                                    {{statusSituacaoDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout="row">
+                    <div layout="row" flex>
+                        <span class="secondary-text" style="position: relative;margin-top: 30px;">Data da Abertura</span>
+                        <md-datepicker ng-model="scope.filtroPedidoDTO.periodoInicialDataAbertura" style="margin-top: 15px"></md-datepicker>
+                        <label style="position: relative;margin-top: 30px;padding-left: 16px;">a</label>
+                        <md-datepicker ng-model="scope.filtroPedidoDTO.periodoFinalDataAbertura" style="margin-top: 15px"></md-datepicker>
+                    </div>
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text">Assunto</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idTema" ng-change="scope.buscarPorSubtema()">
+                                <md-option ng-repeat=" tema in  scope.listaTodosTemas " ng-value="tema.id">
+                                    {{tema.nomeTema}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout="row">
+                    <div layout="row" flex>
+                        <span class="secondary-text" style="position: relative;margin-top: 30px;">Vencimento Unidade</span>
+                        <md-datepicker ng-model="scope.filtroPedidoDTO.periodoInicialPrazoAtendimento" style="margin-top: 15px"></md-datepicker>
+                        <label style="position: relative;margin-top: 30px;padding-left: 16px;">a</label>
+                        <md-datepicker ng-model="scope.filtroPedidoDTO.periodoFinalPrazoAtendimento" style="margin-top: 15px"></md-datepicker>
+                    </div>
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label class="tamanho-text" >Subassunto</label>
+                            <md-select ng-model="scope.subTemas" >
+                                <md-option ng-repeat="subTema in scope.listaSubtemas" ng-value="subTema">
+                                    {{subTema.nomeSubtema}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout="row">
+                    <div layout="row" flex>
+                        <md-input-container class="md-block" flex>
+                            <md-checkbox ng-model="scope.prazoVencidoSdsicCheckbox">
+                                Prazo Expirado
+                            </md-checkbox>
+                            <md-checkbox ng-model="scope.filtroPedidoDTO.prazoProrrogadoSdsic">
+                                Prazo Prorrogado
+                            </md-checkbox>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" flex>
+                        <md-input-contassiner class="md-block" flex>
+                            <label class="tamanho-text " >Palavra-chave</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idPalavraChave">
+                                <md-option ng-repeat="palavraChave in scope.subTemas.palavrasChaves" ng-value="palavraChave.id">
+                                    {{palavraChave.descricao}}
+                                </md-option>
+                            </md-select>
+                        </md-input-contassiner>
+                    </div>
+                </div>
+                <div layout="row">
+
+                    <div layout="row" flex>
+                        <span class="secondary-text" style="position: relative;margin-top: 30px;">Vencimento e-SIC</span>
+                        <md-datepicker ng-model="scope.filtroPedidoDTO.periodoInicialVencimentoEsic" style="margin-top: 15px"></md-datepicker>
+                        <label style="position: relative;margin-top: 30px;padding-left: 16px;">a</label>
+                        <md-datepicker ng-model="scope.filtroPedidoDTO.periodoFinalVencimentoEsic" style="margin-top: 15px"></md-datepicker>
+                    </div>
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label>Atendente</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idAtendente">
+                                <md-option ng-repeat="atendenteDTO in scope.listaAtendenteDTO" ng-value="atendenteDTO.id">
+                                    {{atendenteDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div layout="row" flex>
+                        <md-input-container class="md-block" flex>
+                            <md-checkbox ng-model="scope.prazoVencidoEsicCheckbox">
+                                Prazo Expirado
+                            </md-checkbox>
+                            <md-checkbox ng-model="scope.filtroPedidoDTO.prazoProrrogadoEsic">
+                                Prazo Prorrogado
+                            </md-checkbox>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label>Classificação de Conteúdo</label>
+                            <md-select ng-model="scope.filtroPedidoDTO.idClassificacaoConteudo">
+                                <md-option ng-repeat="classificacaoConteudoDTO in scope.listaClassificacaoConteudoDTO" ng-value="classificacaoConteudoDTO.id">
+                                    {{classificacaoConteudoDTO.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label>Nome do Solicitante</label>
+                            <input ng-model="scope.filtroPedidoDTO.nomeSolicitante">
+                        </md-input-container>
+                    </div>
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label>Texto da Solicitação</label>
+                            <input ng-model="scope.filtroPedidoDTO.textoSolicitacao">
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <md-radio-group ng-model="scope.filtroPedidoDTO.tipoPessoa" layout="row">
+                                <md-radio-button id="radio1" ng-value="">
+                                    Todos
+                                </md-radio-button>
+                                <md-radio-button id="radio2" ng-value="'F'">
+                                    Pessoa Física
+                                </md-radio-button>
+                                <md-radio-button id="radio3" ng-value="'J'">
+                                    Pessoa Jurídica
+                                </md-radio-button>
+                                <md-radio-button id="radio4" ng-value="'I'">
+                                    Identidade Preservada
+                                </md-radio-button>
+                            </md-radio-group>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" flex>
+                        <md-input-container class="md-block" flex>
+                            <label>Texto na Resposta</label>
+                            <input ng-model="scope.filtroPedidoDTO.textoResposta">
+                        </md-input-container>
+                    </div>
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+    <div layout="row" layout-align="end right">
+        <md-button class="md-raised md-primary" ng-click="scope.consultar()">
+            Buscar
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="scope.limpar()">
+            Limpar
+        </md-button>
+    </div>
+    <md-card md-theme-watch>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Resultado</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <md-table-container>
+                <table md-table>
+                    <thead md-head>
+                    <tr md-row exibir-cor-elemento-consulta>
+                        <th md-column>Detalhar</th>
+                        <th md-column>Protocolo</th>
+                        <th md-column>Solicitante</th>
+                        <th md-column>Assunto</th>
+                        <th md-column>Status</th>
+                        <th md-column>Data da Abertura</th>
+                        <th md-column>Vencimento Unidade</th>
+                        <th md-column>Vencimento e-SIC</th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row
+                        ng-repeat="consultaPedidoDTO in scope.listaConsultaPedidoDTO" class="{{scope.defineClasseConsulta(consultaPedidoDTO)}}">
+                        <td md-cell>
+                            <ng-md-icon icon="search" ng-click="scope.detalhar(consultaPedidoDTO.idPedido)">
+                                <md-tooltip>Detalhar</md-tooltip>
+                            </ng-md-icon>
+                        </td>
+                        <td md-cell >
+                            {{consultaPedidoDTO.protocolo}}
+                        </td>
+                        <td md-cell>
+                            {{consultaPedidoDTO.nomeSolicitante}}
+                        </td>
+                        <td md-cell>
+                            {{consultaPedidoDTO.nomeTema}}
+                        </td>
+                        <td md-cell>
+                            {{consultaPedidoDTO.nomeStatusTramitacao}}
+                        </td>
+                        <td md-cell>
+                            {{consultaPedidoDTO.dataAbertura | date: 'dd/MM/yyyy HH:mm:ss'}}
+                        </td>
+                        <td md-cell>
+                            {{consultaPedidoDTO.prazoVencimento | date: 'dd/MM/yyyy HH:mm:ss'}}
+                        </td>
+                        <td md-cell>
+                            {{consultaPedidoDTO.prazoVencimentoESic | date: 'dd/MM/yyyy HH:mm:ss'}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                 md-on-paginate="scope.consultar"
+                                 md-limit="scope.tabelaConsulta.limit"
+                                 md-limit-options="scope.tabelaConsulta.limitsPage"
+                                 md-page="scope.tabelaConsulta.page"
+                                 md-total="{{scope.totalElementosConsulta}}"
+                                 md-page-select>
+            </md-table-pagination>
+        </md-card-content>
+    </md-card>
+    <div layout="row" layout-align="end right">
+        <md-button class="md-raised md-primary" ng-click="">
+            Cadastrar Nova Solicitação
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="scope.gerarRelatorioExcel()">
+            Relatório
+        </md-button>
+    </div>
+</md-content>
+

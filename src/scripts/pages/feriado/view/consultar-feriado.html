@@ -1,0 +1,97 @@
+<md-content>
+    <ng-form>
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-card-content>
+                    <md-content>
+                        <h1>Consultar Feriado</h1>
+                    </md-content>
+
+                    <div layout="row">
+                        <div layout="row" flex>
+                            <span class="secondary-text" style="position: relative;margin-top: 30px;">Periodo</span>
+                            <md-datepicker ng-model="consultarFeriadoCtrl.consultarFeriado.periodoInicialFeriado" style="margin-top: 15px"></md-datepicker>
+                            <label style="position: relative;margin-top: 30px;padding-left: 16px;">a</label>
+                            <md-datepicker ng-model="consultarFeriadoCtrl.consultarFeriado.periodoFinalFeriado" style="margin-top: 15px"></md-datepicker>
+                        </div>
+                    </div>
+                    <div layout="column" flex="15">
+                        <md-input-container>
+                            <label>Ano</label>
+                            <input ng-model="consultarFeriadoCtrl.consultarFeriado.ano"/>
+                        </md-input-container>
+                    </div>
+
+                </md-card-content>
+            </md-card-content>
+            <div layout="row" layout-align="end right">
+                <md-button class="md-raised md-primary" ng-click="consultarFeriadoCtrl.consultar()">
+                    Buscar
+                </md-button>
+                <md-button class="md-raised md-primary" ng-click="consultarFeriadoCtrl.limpar()">
+                    Limpar
+                </md-button>
+                <md-button class="md-raised md-primary" ng-click="consultarFeriadoCtrl.irParaCadastrar()">
+                    Cadastrar Feriado
+                </md-button>
+            </div>
+
+            <md-card md-theme-watch>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Resultado</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <md-table-container>
+                        <table md-table>
+                            <thead md-head>
+                            <tr md-row>
+                                <th md-column>Data</th>
+                                <th md-column>Nome</th>
+                                <th md-column>Ações</th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row
+                                ng-repeat="consultaFeriado in consultarFeriadoCtrl.listaConsultaFeriadoDTO">
+                                <td md-cell>
+                                    {{consultaFeriado.dataFeriado | date :'dd/MM/yyyy'}}
+                                </td>
+                                <td md-cell>
+                                    {{consultaFeriado.nome}}
+                                </td>
+
+                                <td md-cell>
+
+                                    <ng-md-icon icon="search" ng-click="consultarFeriadoCtrl.irEditar(consultaFeriado.id, consultarFeriadoCtrl.isDestalhar = true)">
+                                        <md-tooltip>Detalhar</md-tooltip>
+                                    </ng-md-icon>
+
+                                    <ng-md-icon icon="mode_edit" ng-click="consultarFeriadoCtrl.irEditar(consultaFeriado.id, consultarFeriadoCtrl.isDestalhar = false)" ng-show="!consultarFeriadoCtrl.validaData(consultaFeriado.dataFeriado)">
+                                        <md-tooltip>Editar</md-tooltip>
+                                    </ng-md-icon>
+
+                                    <ng-md-icon icon="delete" ng-click="consultarFeriadoCtrl.deletar(consultaFeriado.id)" ng-show="!consultarFeriadoCtrl.validaData(consultaFeriado.dataFeriado)">
+                                        <md-tooltip>Deletar</md-tooltip>
+                                    </ng-md-icon>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                    <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                         md-on-paginate="consultarFeriadoCtrl.consultar"
+                                         md-limit="consultarFeriadoCtrl.tabelaConsulta.limit"
+                                         md-limit-options="consultarFeriadoCtrl.tabelaConsulta.limitsPage"
+                                         md-page="consultarFeriadoCtrl.tabelaConsulta.page"
+                                         md-total="{{consultarFeriadoCtrl.totalElementosConsulta}}"
+                                         md-page-select>
+                    </md-table-pagination>
+                </md-card-content>
+            </md-card>
+
+        </md-card>
+    </ng-form>
+</md-content>

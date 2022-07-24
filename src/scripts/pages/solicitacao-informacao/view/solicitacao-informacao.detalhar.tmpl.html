@@ -1,0 +1,54 @@
+<md-content>
+    <md-content id="titulo">
+        <h1 ng-show="scope.pedidoDetalhadoDTO.idPedido != undefined">Detalhamento do Pedido de Informação</h1>
+        <h1 ng-show="scope.pedidoDetalhadoDTO.idPedido == undefined">Detalhar Dados do Recurso</h1>
+    </md-content>
+    <md-card md-theme-watch>
+        <md-card-content>
+            <div layout="row">
+                <md-input-container flex="25">
+                    <label>Protocolo</label>
+                    <input ng-model="scope.pedidoDetalhadoDTO.protocolo" readonly>
+                </md-input-container>
+                <md-input-container flex="25">
+                    <label>Status da Solicitação</label>
+                    <input ng-model="scope.pedidoDetalhadoDTO.nomeStatusSolicitacao" readonly/>
+                </md-input-container>
+                <md-input-container flex="25">
+                    <label>Data Abertura</label>
+                    <input ng-value="scope.pedidoDetalhadoDTO.dataAbertura | date: 'dd/MM/yyyy'" readonly/>
+                </md-input-container>
+                <md-input-container flex="25">
+                    <label>Vencimento Unidade</label>
+                    <input ng-value="scope.pedidoDetalhadoDTO.vencimentoUnidade | date: 'dd/MM/yyyy'" readonly/>
+                </md-input-container>
+            </div>
+            <md-tabs md-selected="scope.abas.selectedIndex" md-dynamic-height md-border-bottom>
+                <!-- Pedido -->
+                <div ng-include="'scripts/pages/solicitacao-informacao/view/tab/solicitacao/tab-solicitacao.html'"></div>
+                <!-- Recurso 1ª Instância -->
+                <div ng-if="scope.recursoDetalhadoDTO.idRecurso !== undefined"
+                     ng-include="'scripts/pages/solicitacao-informacao/view/tab/tab-recurso-um.html'">
+                </div>
+                <div ng-if="scope.recursoDetalhadoDTO.idRecurso === undefined">
+                    <md-tab id="tabRecursos1" ng-disabled="true">
+                        <md-tab-label>Recurso 1ª Instância</md-tab-label>
+                        <md-tab-body></md-tab-body>
+                    </md-tab>
+                </div>
+                <!-- Recurso 2ª Instância -->
+                <div ng-if="scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso !== undefined"
+                     ng-include="'scripts/pages/solicitacao-informacao/view/tab/tab-recurso-dois.html'">
+                </div>
+                <div ng-if="scope.recursoDetalhadoSegundaInstanciaDTO.idRecurso === undefined">
+                    <md-tab id="tabRecursos2" ng-disabled="true">
+                        <md-tab-label>Recurso 2ª Instância</md-tab-label>
+                        <md-tab-body></md-tab-body>
+                    </md-tab>
+                </div>
+                <!-- Andamento -->
+                <div ng-include="'scripts/pages/solicitacao-informacao/view/tab/tab-andamento.html'"></div>
+            </md-tabs>
+        </md-card-content>
+    </md-card>
+</md-content>

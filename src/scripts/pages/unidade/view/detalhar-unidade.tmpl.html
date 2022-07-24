@@ -1,0 +1,355 @@
+<md-content>
+    <ng-form name=detalharUnidadeCtrl.detalharUnidadeForm >
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>{{ detalharUnidadeCtrl.title }}</h1>
+                </md-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Órgãos</label>
+                        <md-select ng-model="detalharUnidadeCtrl.defaultOrgao" ng-model-options="{trackBy: '$value.id'}" ng-disabled="true" >
+                            <md-option ng-repeat="orgao in [detalharUnidadeCtrl.defaultOrgao]" ng-value="orgao">
+                                {{ orgao.nomeUnidade }} <b>({{ orgao.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Unidades</label>
+                        <md-select ng-model="detalharUnidadeCtrl.defaultUnidade" ng-disabled="true" >
+                            <md-option ng-repeat="unidade in [detalharUnidadeCtrl.defaultUnidade]" ng-value="unidade">
+                                {{ unidade.nomeUnidade }} <b>({{ unidade.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container  class="md-block" flex="100">
+                        <label>Subunidades <b>({{ detalharUnidadeCtrl.defaultSubunidade.length }})</b></label>
+                        <md-select ng-model="detalharUnidadeCtrl.defaultSubunidade"
+                                   ng-disabled="true"
+                                   multiple>
+                            <md-option ng-repeat="sub in detalharUnidadeCtrl.defaultSubunidade" ng-value="sub">
+                                {{ sub.nomeUnidade }} <b>({{ sub.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <br>
+                <!--  -->
+                <!-- Titular 1ª Instância -->
+                <!--  -->
+                <md-card>
+                    <md-card-header>
+                        <h3>Autoridade Hierárquica 1ª Instância</h3>
+                    </md-card-header>
+                    <!-- Form Titular, Usuario (Autoridade Hierárquica) -->
+                    <md-card-content>
+                        <div layout="row">
+                            <div layout="column" flex="10">
+                                <md-input-container class="md-block">
+                                    <md-radio-group
+                                        ng-model="detalharUnidadeCtrl.substitutos.primera.value">
+                                        <md-radio-button value="Titular" class="md-primary" ng-disabled="true" >Titular</md-radio-button>
+                                    </md-radio-group>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" flex>
+                                <md-input-container class="md-block" flex>
+                                    <label class="tamanho-text" style="padding: 0">Autoridade Hierárquica</label>
+                                    <md-select ng-model="detalharUnidadeCtrl.autoridadeHierarquica"
+                                               ng-disabled="true"
+                                               >
+                                        <md-option ng-repeat="usuario in [detalharUnidadeCtrl.autoridadeHierarquica]" ng-value="usuario">
+                                            {{ usuario.nome }}
+                                        </md-option>
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <!-- Adicionar Titular -->
+                        <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                        <div ng-if="detalharUnidadeCtrl.obterAutoridadeHierarquica == true">
+                            <md-card style="margin-left: 120px">
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">CPF</label>
+                                            <input name="autoridadeHierarquicaCpf" ng-model="detalharUnidadeCtrl.autoridadeHierarquica.cpf" maxlength="11" ng-readonly="true" />
+                                        </md-input-container>
+
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">E-mail</label>
+                                            <input name="autoridadeHierarquicaEmail" ng-model="detalharUnidadeCtrl.autoridadeHierarquica.email" maxlength="120" type="email" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Telefone</label>
+                                            <input name="autoridadeHierarquicaTelefone" ng-model="detalharUnidadeCtrl.autoridadeHierarquica.telefone" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Cargo</label>
+                                            <input name="autoridadeHierarquicaCargo" ng-model="detalharUnidadeCtrl.autoridadeHierarquica.cargo" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Função</label>
+                                            <input name="autoridadeHierarquicaFuncao" ng-model="detalharUnidadeCtrl.autoridadeHierarquica.funcao" ng-readonly="true" maxlength="75" />
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Assinatura</label>
+                                            <input name="autoridadeHierarquicaAssinatura" ng-model="detalharUnidadeCtrl.autoridadeHierarquica.assinatura" maxlength="100" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                            <!-- Button Adicionar substituto -->
+                            <div layout="row" style="margin-left: 110px" ng-if="detalharUnidadeCtrl.substitutos.primera.bool == false">
+                                <md-button md-no-ink class="md-primary" ng-click="detalharUnidadeCtrl.adicionarSubstitutoPrimeraInstancia()" ng-disabled="true">
+                                    <ng-md-icon icon="add" style="position: absolute; left: 0px; margin: 6px 0px 0px 0px; fill: #3a3a3a"></ng-md-icon>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>Adicionar substituto</u>
+                                </md-button>
+                            </div>
+                        </div>
+                        <!-- Adicionar SubsTituto -->
+                        <!-- Form Substituto, Usuario (Autoridade Hierárquica) -->
+                        <div ng-if="detalharUnidadeCtrl.substitutos.primera.bool == true">
+                            <div layout="row">
+                                <div layout="column" flex="10">
+                                    <md-input-container class="md-block">
+                                        <md-radio-group ng-model="detalharUnidadeCtrl.substitutos.primera.value">
+                                            <md-radio-button value="Substituto" class="md-primary" ng-disabled="true" >Substituto</md-radio-button>
+                                        </md-radio-group>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex="90">
+                                    <md-input-container class="md-block" flex>
+                                        <label class="tamanho-text">Autoridade Hierárquica</label>
+                                        <md-select ng-model="detalharUnidadeCtrl.substitutoAutoridadeHierarquica"
+                                                   ng-disabled="true"
+                                                   >
+                                            <md-option ng-repeat="usuario in [detalharUnidadeCtrl.substitutoAutoridadeHierarquica]" ng-value="usuario">
+                                                {{ usuario.nome }}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                            <md-card style="margin-left: 120px">
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">CPF</label>
+                                            <input name="substitutoAutoridadeHierarquicaCpf" ng-model="detalharUnidadeCtrl.substitutoAutoridadeHierarquica.cpf" maxlength="11" ng-readonly="true" />
+                                        </md-input-container>
+
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">E-mail</label>
+                                            <input name="substitutoAutoridadeHierarquicaEmail" ng-model="detalharUnidadeCtrl.substitutoAutoridadeHierarquica.email" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Telefone</label>
+                                            <input name="substitutoAutoridadeHierarquicaTelefone" ng-model="detalharUnidadeCtrl.substitutoAutoridadeHierarquica.telefone" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Cargo</label>
+                                            <input name="substitutoAutoridadeHierarquicaCargo" ng-model="detalharUnidadeCtrl.substitutoAutoridadeHierarquica.cargo" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Função</label>
+                                            <input name="substitutoAutoridadeHierarquicaFuncao" ng-model="detalharUnidadeCtrl.substitutoAutoridadeHierarquica.funcao" maxlength="75" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Assinatura</label>
+                                            <input name="substitutoAutoridadeHierarquicaAssinatura" ng-model="detalharUnidadeCtrl.substitutoAutoridadeHierarquica.assinatura" maxlength="100" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                <!--  -->
+                <!-- Adicionar Autoridade Máxima 2ª Instância -->
+                <!--  -->
+                <md-card>
+                    <md-card-header>
+                        <h3>Autoridade Máxima 2ª Instância</h3>
+                    </md-card-header>
+                    <!-- Form Titular, Usuario (Autoridade Máxima) -->
+                    <md-card-content>
+                        <div layout="row">
+                            <div layout="column" flex="10">
+                                <md-input-container class="md-block">
+                                    <md-radio-group
+                                        ng-model="detalharUnidadeCtrl.substitutos.segunda.value">
+                                        <md-radio-button value="Titular" class="md-primary" ng-disabled="true" >Titular</md-radio-button>
+                                    </md-radio-group>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" flex>
+                                <md-input-container class="md-block" flex>
+                                    <label class="tamanho-text" style="padding: 0">Autoridade Máxima</label>
+                                    <md-select ng-model="detalharUnidadeCtrl.autoridadeMaxima"
+                                               ng-disabled="true"
+                                               >
+                                        <md-option ng-repeat="usuario in [detalharUnidadeCtrl.autoridadeMaxima]" ng-value="usuario">
+                                            {{ usuario.nome }}
+                                        </md-option>
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                        <div ng-if="detalharUnidadeCtrl.obterAutoridadeMaxima == true">
+                            <md-card style="margin-left: 120px">
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">CPF</label>
+                                            <input name="autoridadeMaximaCpf" ng-model="detalharUnidadeCtrl.autoridadeMaxima.cpf" maxlength="11" ng-readonly="true" />
+                                        </md-input-container>
+
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">E-mail</label>
+                                            <input name="autoridadeMaximaEmail" ng-model="detalharUnidadeCtrl.autoridadeMaxima.email" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Telefone</label>
+                                            <input name="autoridadeMaximaTelefone" ng-model="detalharUnidadeCtrl.autoridadeMaxima.telefone" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Cargo</label>
+                                            <input name="autoridadeMaximaCargo" ng-model="detalharUnidadeCtrl.autoridadeMaxima.cargo" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Função</label>
+                                            <input name="autoridadeMaximaFuncao" ng-model="detalharUnidadeCtrl.autoridadeMaxima.funcao" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Assinatura</label>
+                                            <input name="autoridadeMaximaAssinatura" ng-model="detalharUnidadeCtrl.autoridadeMaxima.assinatura" maxlength="100" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                            <!-- Button Adicionar substituto -->
+                            <div layout="row" style="margin-left: 110px" ng-if="detalharUnidadeCtrl.substitutos.segunda.bool == false">
+                                <md-button md-no-ink class="md-primary" ng-disabled="true">
+                                    <ng-md-icon icon="add" style="position: absolute; left: 0px; margin: 6px 0px 0px 0px; fill: #3a3a3a"></ng-md-icon>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>Adicionar substituto</u>
+                                </md-button>
+                            </div>
+                        </div>
+                        <!-- Adicionar SubsTituto Autoridade Máxima -->
+                        <!-- Form Substituto, Usuario (Autoridade Máxima) -->
+                        <div ng-if="detalharUnidadeCtrl.substitutos.segunda.bool == true">
+                            <div layout="row">
+                                <div layout="column" flex="10">
+                                    <md-input-container class="md-block">
+                                        <md-radio-group
+                                            ng-model="detalharUnidadeCtrl.substitutos.segunda.value">
+                                            <md-radio-button value="Substituto" class="md-primary" ng-disabled="true" >Substituto</md-radio-button>
+                                        </md-radio-group>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex="90">
+                                    <md-input-container class="md-block" flex>
+                                        <label class="tamanho-text">Autoridade Máxima</label>
+                                        <md-select ng-model="detalharUnidadeCtrl.substitutoAutoridadeMaxima"
+                                                   ng-disabled="true"
+                                                   >
+                                            <md-option ng-repeat="usuario in [detalharUnidadeCtrl.substitutoAutoridadeMaxima]" ng-value="usuario">
+                                                {{ usuario.nome }}
+                                            </md-option>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <!-- Form CPF, E-mail, Telefone, Cargo, Função, Assinatura -->
+                            <md-card style="margin-left: 120px">
+                                <md-card-content>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">CPF</label>
+                                            <input name="substitutoAutoridadeMaximaCpf" ng-model="detalharUnidadeCtrl.substitutoAutoridadeMaxima.cpf" maxlength="11" ng-readonly="true" />
+                                        </md-input-container>
+
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">E-mail</label>
+                                            <input name="substitutoAutoridadeMaximaEmail" ng-model="detalharUnidadeCtrl.substitutoAutoridadeMaxima.email" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Telefone</label>
+                                            <input name="substitutoAutoridadeMaximaTelefone" ng-model="detalharUnidadeCtrl.substitutoAutoridadeMaxima.telefone" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Cargo</label>
+                                            <input name="substitutoAutoridadeMaximaCargo" ng-model="detalharUnidadeCtrl.substitutoAutoridadeMaxima.cargo" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Função</label>
+                                            <input name="substitutoAutoridadeMaximaFuncao" ng-model="detalharUnidadeCtrl.substitutoAutoridadeMaxima.funcao" maxlength="45" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label class="tamanho-text">Assinatura</label>
+                                            <input name="substitutoAutoridadeMaximaAssinatura" ng-model="detalharUnidadeCtrl.substitutoAutoridadeMaxima.assinatura" maxlength="100" ng-readonly="true" />
+                                        </md-input-container>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                <!--  -->
+                <!-- Responsável pelo Recurso de 3ª y 4ª Instância -->
+                <!--  -->
+                <md-card>
+                    <md-card-content>
+                        <div layout="row" flex>
+                            <md-input-container class="md-block" flex>
+                                <label class="tamanho-text">Responsável pelo Recurso de 3ª Instância</label>
+                                <input name="responsavelRecursoTerceiraInstancia" ng-model="detalharUnidadeCtrl.responsavelRecursoTerceiraInstancia" maxlength="100" ng-readonly="true" />
+                            </md-input-container>
+                        </div>
+                        <div layout="row" flex>
+                            <md-input-container class="md-block" flex>
+                                <label class="tamanho-text">Responsável pelo Recurso de 4ª Instância</label>
+                                <input name="responsavelRecursoQuartaInstancia" ng-model="detalharUnidadeCtrl.responsavelRecursoQuartaInstancia" maxlength="100" ng-readonly="true" />
+                            </md-input-container>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                <!-- Button Salvar, Voltar -->
+                <div layout="row" layout-align="end right">
+                    <md-button id="btn-salvar" class="md-raised md-primary" ng-click="detalharUnidadeCtrl.editar()">
+                        Editar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="detalharUnidadeCtrl.voltar()">
+                        Voltar
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

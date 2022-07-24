@@ -1,0 +1,30 @@
+<div layout="row" style="padding: 25px" flex>
+    <div layout="column" flex="15">
+        <label style="margin-bottom: 20px;">Tipo de Solicitação</label>
+        <md-radio-group ng-model="editarEmailCtrl.radioTipoSolicitacao.pedido">
+            <md-radio-button value="Pedido" class="md-primary" ng-click="editarEmailCtrl.radioRecursoClick('P')">Pedido
+            </md-radio-button>
+        </md-radio-group>
+    </div>
+    <div layout="column" flex="35">
+        <label style="margin-bottom: 20px;">&nbsp;</label>
+        <md-radio-group ng-model="editarEmailCtrl.radioTipoSolicitacao.recurso">
+            <md-radio-button value="Recurso" class="md-primary" ng-click="editarEmailCtrl.radioRecursoClick('R')">
+                Recurso</md-radio-button>
+        </md-radio-group>
+    </div>
+    <div layout="column" flex="15">
+        <label style="margin-bottom: 20px;">Tipo de Alerta</label>
+        <md-radio-group ng-model="editarEmailCtrl.radioAlerta.data">
+            <md-radio-button value="Data" class="md-primary" ng-click="editarEmailCtrl.radioAlertaClick('Data')">Por
+                data</md-radio-button>
+        </md-radio-group>
+    </div>
+    <div layout="column" flex="35">
+        <label style="margin-bottom: 20px;">&nbsp;</label>
+        <md-radio-group ng-model="editarEmailCtrl.radioAlerta.acao">
+            <md-radio-button value="Acao" class="md-primary" ng-click="editarEmailCtrl.radioAlertaClick('Acao')">Por
+                ação</md-radio-button>
+        </md-radio-group>
+    </div>
+</div>

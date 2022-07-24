@@ -1,0 +1,35 @@
+<md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12); padding: 10px">
+    <!-- Ação Executada ---  -->
+    <div layout="row">
+        <!-- Status da Demanda -->
+        <md-input-container flex="50">
+            <label>Ação Executada</label>
+            <md-tooltip md-direction="right" style="font-size: 14px;">Quando a ação for executada este será o novo status da demanda</md-tooltip>
+            <md-select name="statusDaDemanda"
+                       ng-model="formularioEmailCtrl.acaoExecutadaModel"
+                       ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="formularioEmailCtrl.isDisabled"
+                       required>
+                <md-option ng-repeat="status in formularioEmailCtrl.acaoExecutadaList" ng-value="status">
+                    {{ status.nome }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <!-- space -->
+        <span style="width: 20px">&nbsp;</span>
+        <!-- Destinatários -->
+        <md-input-container flex="50">
+            <label>Destinatários</label>
+            <md-select name="destinatario"
+                       ng-model="formularioEmailCtrl.destinatarioModel"
+                       ng-model-options="{trackBy: '$value.id'}"
+                       data-md-container-class="selectdemoSelectHeader"
+                       ng-disabled="formularioEmailCtrl.isDisabled"
+                       multiple required>
+                <md-option ng-repeat="dest in formularioEmailCtrl.destinatarioList" ng-value="dest">
+                    {{ dest.nome }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+</md-card>

@@ -1,0 +1,139 @@
+<md-content>
+    <ng-form name = atribuirUnidadeCtrl.atribuirUnidadeForm >
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1 ng-if="!editarUsuarioCtrl.autoridades.length == 0">Editar Usuário</h1>
+                    <h1 ng-if="editarUsuarioCtrl.autoridades.length == 0">Atribuir Unidade/Subunidade</h1>
+                </md-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">Usuário</label>
+                        <input ng-model="editarUsuarioCtrl.detalharUsuario.nome" maxlength="11" ng-readonly="true"/>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">Perfil</label>
+                        <input ng-model="editarUsuarioCtrl.detalharUsuario.perfil" ng-readonly="true"/>
+                    </md-input-container>
+                </div>    
+                <div layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">CPF</label>
+                        <input ng-model="editarUsuarioCtrl.detalharUsuario.cpf" maxlength="11" ng-readonly="true"/>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">Email</label>
+                        <input ng-model="editarUsuarioCtrl.detalharUsuario.email" maxlength="120" type="email" ng-readonly="true"/>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" style="margin-right: 20px;" flex="100">
+                        <label>Cargo</label>
+                        <input type="text" ng-model="editarUsuarioCtrl.detalharUsuario.cargo" md-maxlength="30">
+                    </md-input-container>
+                    <md-input-container class="md-block" style="margin-right: 20px;" flex="100">
+                        <label>Função</label>
+                        <input ng-model="editarUsuarioCtrl.detalharUsuario.funcao" type="text" md-maxlength="30">
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label class="tamanho-text">Telefone</label>
+                        <input ng-model="editarUsuarioCtrl.detalharUsuario.telefone" required/>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100">
+                        <label class="tamanho-text">Assinatura</label>
+                        <input ng-model="editarUsuarioCtrl.detalharUsuario.assinatura" required/>
+                    </md-input-container>
+                </div>
+                <!-- SEM ATRIBUIÇÂO -->
+                <div layout="row">
+                    <md-input-container ng-if="!editarUsuarioCtrl.bool && editarUsuarioCtrl.perfis" class="md-block" flex="100">
+                        <label>Órgãos<b> ({{ editarUsuarioCtrl.detalharUsuario.orgao.length }})</b></label>
+                        <md-select ng-model="editarUsuarioCtrl.defaultOrgao" ng-model-options="{trackBy: '$value.codigoUnidade'}" ng-change="editarUsuarioCtrl.loadUnidadesSiorg(editarUsuarioCtrl.defaultOrgao)" required>
+                            <md-option ng-repeat="orgao in editarUsuarioCtrl.detalharUsuario.orgao" ng-value="orgao">
+                                {{ orgao.nomeUnidade }} <b>({{ orgao.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <!-- Unidades all -->
+                    <md-input-container ng-if="!editarUsuarioCtrl.bool && editarUsuarioCtrl.perfis" class="md-block" flex="80">
+                        <label>Unidades <b>({{ editarUsuarioCtrl.detalharUsuario.unidade.length }})</b></label>
+                        <md-select ng-model="editarUsuarioCtrl.defaultUnidade" ng-change="editarUsuarioCtrl.loadSubUnidadesSiorg(editarUsuarioCtrl.defaultUnidade)" required>
+                            <md-option ng-repeat="unidade in editarUsuarioCtrl.detalharUsuario.unidade" ng-value="unidade">
+                                {{ unidade.nomeUnidade }} <b>({{ unidade.siglaUnidade }})</b>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <!-- COM ATRIBUIÇÂO -->
+                    <md-input-container ng-if="editarUsuarioCtrl.bool && editarUsuarioCtrl.perfis" class="md-block" flex="80">
+                        <label>Orgão</label>
+                        <input ng-model="editarUsuarioCtrl.detalharUsuario.orgao[0].nomeUnidade" ng-readonly="true"/>
+                    </md-input-container>
+                    <!-- Unidade -->
+                    <md-input-container ng-if="editarUsuarioCtrl.bool && editarUsuarioCtrl.perfis" class="md-block" flex="100">
+                        <label>Unidade</label>
+                        <input ng-model="editarUsuarioCtrl.detalharUsuario.unidade[0].nomeUnidade" ng-readonly="true"/>
+                    </md-input-container>
+                    <!-- Subunidades -->
+                    <md-input-container class="md-block" flex="100" ng-if="editarUsuarioCtrl.perfis">
+                        <label>Subunidades <b>({{ editarUsuarioCtrl.detalharUsuario.subunidades.length }})</b></label>
+                        <md-select ng-model="editarUsuarioCtrl.defaultSubunidade" ng-model-options="{trackBy: '$value.id'}" data-md-container-class="selectdemoSelectHeader" ng-disabled="editarUsuarioCtrl.show()" ng-readonly="!editarUsuarioCtrl.bool" multiple>
+                            <md-option ng-repeat="sub in editarUsuarioCtrl.detalharUsuario.unidadeSubunidades" ng-value="sub">
+                                {{ sub.nomeUnidade }} ({{ sub.siglaUnidade }})
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <!-- ADMIN-ATENDENTE -->
+                    <md-input-container ng-if="editarUsuarioCtrl.perfis===false" class="md-block" flex="80">
+                        <label>Orgão</label>
+                        <input ng-model="editarUsuarioCtrl.defaultOrgao.nomeUnidade" ng-readonly="true"/>
+                    </md-input-container>
+                    <!-- Unidade -->
+                    <md-input-container ng-if="!editarUsuarioCtrl.perfis" class="md-block" flex="100">
+                        <label>Unidade</label>
+                        <input ng-model="editarUsuarioCtrl.unidadeSIC.nomeUnidade" ng-readonly="true"/>
+                    </md-input-container>
+                    <!-- Subunidades -->
+                    <md-input-container class="md-block" flex="100" ng-if="!editarUsuarioCtrl.perfis">
+                        <label>Subunidades <b>(0)</b></label>
+                        <md-select ng-model="editarUsuarioCtrl.defaultSubunidade" ng-model-options="{trackBy: '$value.id'}" data-md-container-class="selectdemoSelectHeader" ng-disabled="true" multiple>
+                            <md-option ng-repeat="sub in editarUsuarioCtrl.detalharUsuario.unidadeSubunidades" ng-value="sub">
+                                {{ sub.nomeUnidade }} ({{ sub.siglaUnidade }})
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <br/>
+                <md-input-container class="md-block" flex>
+                    <label class="tamanho-text" style="padding: 0">Autoridade Hierárquica 1º instância</label>
+                    <input ng-model="editarUsuarioCtrl.detalharUsuario.autoridadeHier" ng-readonly="true"/>
+                </md-input-container>
+                <md-input-container class="md-block" flex>
+                    <label class="tamanho-text" style="padding: 0">Autoridade Máxima 2º instância</label>
+                    <input ng-model="editarUsuarioCtrl.detalharUsuario.autoridadeMaxi" ng-readonly="true"/>
+                </md-input-container>
+                <div layout="row" flex>
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">Responsável pelo Recurso de 3ª Instância</label>
+                        <input name="responsavelRecursoTerceiraInstancia" ng-model="editarUsuarioCtrl.detalharUsuario.responsavelRecurso3" ng-readonly="true"/>
+                    </md-input-container>
+                </div>
+                <div layout="row" flex>
+                    <md-input-container class="md-block" flex>
+                        <label class="tamanho-text">Responsável pelo Recurso de 4ª Instância</label>
+                        <input name="responsavelRecursoQuartaInstancia" ng-model="editarUsuarioCtrl.detalharUsuario.responsavelRecurso4" ng-readonly="true"/>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-raised md-primary" ng-click="editarUsuarioCtrl.isValid($event)">
+                        Salvar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="editarUsuarioCtrl.voltar()">
+                        Voltar
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

@@ -1,0 +1,109 @@
+<md-card md-theme-watch>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline">Resposta</span>
+        </md-card-title-text>
+    </md-card-title>
+
+    <md-card-content>
+        <div layout="row">
+            <div flex="100" ng-bind-html="scope.pedidoDetalhadoDTO.respostaSdsic">
+            </div>
+        </div>
+        <md-card md-theme-watch>
+            <md-card-content>
+                <md-table-container>
+                    <table md-table>
+                        <thead md-head>
+                        <tr md-row>
+                            <th md-column>Documento</th>
+                            <th md-column>Tamanho (MB)</th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row ng-repeat="arquivo in scope.arquivos">
+                            <td md-cell>
+                                <a id="file_pedido"  ng-click="scope.downloadFile(arquivo)" target="_blank">{{arquivo.nome}}</a>
+                            </td>
+                            <td md-cell>
+                                {{(arquivo.size)/1024 /1024 | number : 2}}
+                            </td>
+                            <td md-cell ng-show="scope.pedidoDetalhadoDTO.idRecurso.length == undefined">
+                                <ng-md-icon icon="delete" ng-click="scope.confirmarDelete($event, $index, arquivo)" ng-show="scope.temPermissao('upload_button')">
+                                    <md-tooltip>Excluir</md-tooltip>
+                                </ng-md-icon>
+                            </td>
+                        </tr>
+                        <tr md-row>
+                            <td  md-cell>
+                                <b>Quantidade de Arquivos: {{scope.arquivos.length}}</b>
+                            </td>
+                            <td md-cell>
+                                <b>Total(MB): {{scope.totalMbFile | number : 2}}</b>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <div id="upload_button" ng-show="scope.pedidoDetalhadoDTO.idRecurso.length == undefined">
+                            <label>
+                                <input ng-model="scope.new_file" ngf-select ng-change="scope.adicionarArquivo()" id="file" name="file" type="file"  file-model="file"  enctype="multipart/form-data"
+                                       accept=".bmp ,.csv ,.doc ,.docx,.gif ,.jpg ,.pdf ,.png ,.ppt ,.pptx,.rtf ,.odt ,.ods ,.odp ,.sxw ,.tif ,.txt ,.xlm ,.xls ,.xlsx,.Zip"/>
+                                <ng-md-icon icon="cloud_upload" ng-show="scope.temPermissao('upload_button')">
+                                    <md-tooltip>Upload</md-tooltip>
+                                </ng-md-icon>
+                            </label>
+                        </div>
+                    </table>
+                </md-table-container>
+            </md-card-content>
+        </md-card>
+
+        <div layout="row" layout-align="end right"
+             ng-show="scope.pedidoDetalhadoDTO.dataRespostaEsic && !scope.pedidoDetalhadoDTO.possuiTratamentoFinal">
+            <md-button class="md-raised md-primary" ng-click="" >
+                Editar Resposta
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="scope.encaminharPropostaResposta()">
+                Proposta de resposta
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="scope.confirmarAssinatura()">
+                Confirmar Assinatura
+            </md-button>
+        </div>
+
+        <div layout="row" layout-align="end right">
+            <md-button class="md-raised md-primary" ng-click="scope.classificarRespostaSic()" ng-show="scope.temPermissao('classificar_r_e_sic')">
+                Classificar Resposta e-SIC
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="scope.classificarResposta()" ng-show="scope.temPermissao('classificar_r')">
+                Classificar Resposta
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="scope.classificarRespostaSic()" ng-show="scope.temPermissao('r_editar_cla_resposta_sic')">
+                Editar Classificação
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="scope.classificarResposta()" ng-show="scope.temPermissao('r_editar_cla_resposta')">
+                Editar Classificação
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="scope.editarResposta()" ng-show="scope.temPermissao('r_editar_resposta_sic')">
+                Editar Resposta SIC
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="scope.enviarPedidoRevisao()" ng-show="scope.temPermissao('enviar_para_revisao')">
+                Enviar Para Revisão
+            </md-button>
+        </div>
+
+        <div layout="row" ng-show="scope.pedidoDetalhadoDTO.possuiRespostaPerfil == true">
+            <md-input-container class="md-block" flex="100">
+                <label>Responsável pela resposta</label>
+                <input ng-model="scope.responsavelResposta" readonly/>
+            </md-input-container>
+        </div>
+        <div layout="row" ng-show="scope.pedidoDetalhadoDTO.possuiRespostaPerfil == true">
+            <md-input-container class="md-block" flex="100">
+                <label>Destinatário de recurso de primeira instância</label>
+                <input ng-model="scope.destinatarioRecursoPrimeiraInstancia" readonly/>
+            </md-input-container>
+        </div>
+    </md-card-content>
+</md-card>

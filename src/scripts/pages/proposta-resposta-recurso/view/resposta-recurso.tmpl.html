@@ -1,0 +1,36 @@
+<md-content>
+    <md-content>
+        <h1>Resposta/Justificativa</h1>
+    </md-content>
+    <form name="formulario">
+        <md-card md-theme-watch>
+            <md-card-content>
+                <textarea name="editor1" id="editor1" ng-model="propostaRespostaRecursoCtrl.propostaRespostaRecursoDTO.propostaResposta" >
+                </textarea>
+            </md-card-content>
+        </md-card>
+        <div layout="row" layout-align="end right" ng-controller="PropostaRespostaRecursoController as propostaRespostaRecursoCtrl" ng-show="propostaRespostaRecursoCtrl.fluxo == 'propostaRespostaRecurso'">
+            <md-button class="md-primary md-raised" ng-click="" ng-disabled="true">
+                Selecionar proposta do Catálogo
+            </md-button> <md-button class="md-primary md-raised" ng-click="propostaRespostaRecursoCtrl.salvarPropostaRespostaRecurso()">
+                Salvar
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="propostaRespostaRecursoCtrl.confirmarFecharRespostaSemSalvar($event)">
+                Voltar
+            </md-button>
+        </div>
+    </form>
+</md-content>
+<script>
+    CKEDITOR.replace( 'editor1', {
+        on: {
+            instanceReady: function (ev) {
+
+            }
+        }
+    });
+    CKEDITOR.config.browserContextMenuOnCtrl = true;
+    CKEDITOR.config.disableNativeSpellChecker = false;
+    CKEDITOR.config.removePlugins='scayt,wsc';
+</script>
+

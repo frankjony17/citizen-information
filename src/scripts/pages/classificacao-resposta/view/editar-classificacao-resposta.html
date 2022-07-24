@@ -1,0 +1,40 @@
+<md-content>
+    <ng-form name = cadastrarClassificacaoRespostaCtrl.editarGlossarioTemasForm >
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>Editar Classificação Resposta</h1>
+                </md-content>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Tipo Classificação Resposta</label>
+                        <md-select ng-model="cadastrarClassificacaoRespostaCtrl.classificacao.tipoClassificacaoResposta" required>
+                            <md-option
+                                ng-repeat="tipoClassificacao in cadastrarClassificacaoRespostaCtrl.listaTipoClassificacaoResposta" ng-value="tipoClassificacao">
+                                {{tipoClassificacao.descricao}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container flex="50">
+                        <label>Classificação</label>
+                        <input rows="5" ng-model="cadastrarClassificacaoRespostaCtrl.classificacao.descricao" required>
+                    </md-input-container>
+                </div>
+
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-raised md-primary"
+                               ng-click="cadastrarClassificacaoRespostaCtrl.editar()">
+                        Salvar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="cadastrarClassificacaoRespostaCtrl.voltarConsultarClassificacao()">
+                        Voltar
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

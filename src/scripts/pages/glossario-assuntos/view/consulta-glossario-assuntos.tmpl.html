@@ -1,0 +1,134 @@
+<md-content>
+    <ng-form name="consultaGlossarioAssuntosCtrl.glossarioDeTemasForm" ng-init="nbspLocal=consultaGlossarioAssuntosCtrl.nbsp">
+        <md-card>
+            <md-card-content>
+                <md-content>
+                    <h1>Consulta Glossário de Assuntos </h1>
+                </md-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Assunto</label>
+                        <md-select id="select-assunto" ng-model="consultaGlossarioAssuntosCtrl.consultaGlossarioDeTema.tema.idTema" ng-change="consultaGlossarioAssuntosCtrl.buscarPorSubtema()">
+                            <md-option
+                                ng-repeat="tema in consultaGlossarioAssuntosCtrl.listaTodosTemas " ng-value="tema.id" >
+                                {{tema.nomeTema}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Subassunto</label>
+                        <md-select id="select-sub-assunto" ng-model="consultaGlossarioAssuntosCtrl.consultaGlossarioDeTema.nomeSubtema"  ng-change="consultaGlossarioAssuntosCtrl.buscarPorPalavraChave()">
+                            <md-option
+                                ng-repeat="subtema in consultaGlossarioAssuntosCtrl.listaSubtemas" ng-value="subtema">
+                                {{subtema.nomeSubtema}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Palavra-chave</label>
+                        <md-select id="select-palavra" ng-model="consultaGlossarioAssuntosCtrl.consultaGlossarioDeTema.palavrasChaves">
+                            <md-option
+                                ng-repeat="palavraChave in consultaGlossarioAssuntosCtrl.palavrasChaves" ng-value="palavraChave">
+                                {{palavraChave.descricao}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="end right">
+                    <md-button id="btn-buscar" class="md-raised md-primary" ng-click="consultaGlossarioAssuntosCtrl.consultar()">
+                        Pesquisar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="consultaGlossarioAssuntosCtrl.limpar()">
+                        Limpar
+                    </md-button>
+                    <md-button  id="btn-cadastrar" class="md-raised md-primary" ng-click="consultaGlossarioAssuntosCtrl.irCadastrar()">
+                        Cadastrar
+                    </md-button>
+                </div>
+                <md-card md-theme-watch>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Resultado</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <md-table-container>
+                            <table md-table style="border: 2px solid #cccccc;" id="table-head-sub-table">
+                                <thead md-head>
+                                <tr md-row exibir-cor-elemento-consulta>
+                                    <th md-column id="column-head-sub-assunto">Assunto</th>
+                                    <th md-column><table md-table><tr><td style="width:40%;background-color: #FFFFFF;">Subassunto</td><td style="width:53%;background-color: #FFFFFF">Palavras-chave</td><td style="width:9%; background-color: #FFFFFF">Ação</td></tr></table></th>
+                                </tr>
+                                </thead>
+                                <tbody md-body>
+                                <tr md-row ng-repeat="tema in consultaGlossarioAssuntosCtrl.listaTemas">
+                                    <td md-cell>
+                                        {{ tema.tema.nomeTema }}
+                                    </td>
+                                    <td md-cell>
+                                        <table style="border-collapse: collapse; width: 100%;">
+                                            <tbody>
+                                            <tr data-ng-repeat="sub in tema.subtema" >
+                                                <td style="text-align: left; padding: 2px; width: 40%">{{sub.nomeSubtema}}</td>
+                                                <td style="padding: 2px; width: 53%">
+                                                    <table style="width: 100%">
+                                                        <tr data-ng-repeat="pch in sub.palavrasChaves">
+                                                            <td style="padding: 2px; width: 88%">
+                                                                {{pch.descricao}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="padding: 2px; text-align: center; width: 7%">
+                                                    <ng-md-icon class="icon-subacao" icon="edit" ng-click="consultaGlossarioAssuntosCtrl.editar(sub.idSubtemaDTO, tema.tema.nomeTema, sub.nomeSubtema, sub.palavrasChaves)">
+                                                        <md-tooltip>Editar</md-tooltip>
+                                                    </ng-md-icon>
+                                                    <ng-md-icon class="icon-subacao" icon="search" ng-click="consultaGlossarioAssuntosCtrl.detalharGlossarioTemas(sub.idSubtemaDTO, tema.tema.nomeTema, sub.nomeSubtema, sub.palavrasChaves)">
+                                                        <md-tooltip>Detalhar</md-tooltip>
+                                                    </ng-md-icon>
+                                                </td>
+                                            </tr>
+                                            <tr ng-if="tema.subtema.length === 0">
+                                                <td style="text-align: left; padding: 2px; width: 40%"></td>
+                                                <td style="padding: 2px; width: 53%"></td>
+                                                <td style="padding: 2px; text-align: center; width: 7%">
+                                                    <ng-md-icon class="icon-subacao" icon="edit" ng-click="consultaGlossarioAssuntosCtrl.editar(null, tema.tema.nomeTema, null, [])">
+                                                        <md-tooltip>Editar</md-tooltip>
+                                                    </ng-md-icon>
+                                                    <ng-md-icon class="icon-subacao" icon="search" ng-click="consultaGlossarioAssuntosCtrl.detalharGlossarioTemas(null, tema.tema.nomeTema, null, [])">
+                                                        <md-tooltip>Detalhar</md-tooltip>
+                                                    </ng-md-icon>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-table-container>
+                        <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                             md-on-paginate="consultaGlossarioAssuntosCtrl.consultar"
+                                             md-limit="consultaGlossarioAssuntosCtrl.tabelaConsulta.limit"
+                                             md-limit-options="consultaGlossarioAssuntosCtrl.tabelaConsulta.limitsPage"
+                                             md-page="consultaGlossarioAssuntosCtrl.tabelaConsulta.page"
+                                             md-total="{{consultaGlossarioAssuntosCtrl.totalElementosConsulta}}"
+                                             md-page-select>
+                        </md-table-pagination>
+                    </md-card-content>
+<!--                    <div layout="row" layout-align="end right">-->
+<!--                        <md-button class="md-raised md-primary" ng-click="consultaGlossarioAssuntosCtrl.gerarRelatorioExcel()">-->
+<!--                            Relatório-->
+<!--                        </md-button>-->
+<!--                    </div>-->
+                </md-card>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

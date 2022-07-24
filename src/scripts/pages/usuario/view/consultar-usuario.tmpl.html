@@ -1,0 +1,174 @@
+<md-content>
+    <ng-form name = consultarUsuarioCtrl.consultarUsuarioForm >
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>Consultar Usuários</h1>
+                </md-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100" style="margin-right: 20px;">
+                        <label>Perfil</label>
+                        <md-select ng-model="consultarUsuarioCtrl.filtroUsuarioDTO.nomePerfil">
+                            <md-select-header class="demo-select-header">                    
+                                <input ng-model="consultarUsuarioCtrl.searchTerm" type="search" placeholder="Consultar Perfil" class="demo-header-searchbox md-text">
+                            </md-select-header> 
+                            <md-option ng-repeat="perfil in consultarUsuarioCtrl.listaPerfil" ng-value="perfil.perfil">
+                                <span>{{perfil.descricao}}</span>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>                       
+                    <md-input-container class="md-block" flex="100" style="margin-right: 20px;" >
+                        <label>Usuario</label>
+                        <md-select ng-model="consultarUsuarioCtrl.usuario">
+                            <md-option ng-repeat="usuario in consultarUsuarioCtrl.listaUsuario" ng-value="usuario">
+                                {{usuario.nome}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="row" style="margin-bottom: 20px;">
+                    <md-input-container class="md-block" flex="100" style="margin-right: 20px;">
+                        <label>Unidade</label>
+                        <md-select ng-model="consultarUsuarioCtrl.unidade" ng-change="consultarUsuarioCtrl.loadSubunidade(consultarUsuarioCtrl.unidade)">
+                            <md-option ng-repeat="unidade in consultarUsuarioCtrl.listaUnidade"
+                                       ng-value="unidade">
+                                {{ unidade.nomeUnidade }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" style="margin-right: 20px;">
+                        <label>Subunidade</label>
+                        <md-select ng-model="consultarUsuarioCtrl.subunidades">
+                            <md-option ng-repeat="subunidade in consultarUsuarioCtrl.listaSubunidades"
+                                       ng-value="subunidade">
+                                {{subunidade.nomeSubunidade}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Status</label>
+                        <md-select ng-model="consultarUsuarioCtrl.filtroUsuarioDTO.statusUsuario">
+                                <md-option ng-repeat="status in consultarUsuarioCtrl.statusUsuario" ng-value="status.nome">
+                                    {{ status.nome }}
+                                </md-option>
+                            </md-select>
+                    </md-input-container>
+                </div>
+
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-raised md-primary" ng-click="consultarUsuarioCtrl.buscar()">
+                        Buscar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="consultarUsuarioCtrl.limpar()">
+                        Limpar
+                    </md-button>
+                </div>
+
+                <md-card md-theme-watch>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Resultado</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <md-table-container style="max-height: 450px;">
+                            <table md-table style="border: 2px solid #cccccc;">
+                                <thead md-head>
+                                    <tr md-row exibir-cor-elemento-consulta>
+                                        <th md-column width="20%">Usuário</th>
+                                        <th md-column>
+                                            <table md-table>
+                                                <tr>
+                                                    <td style="width:25%;background-color: #FFFFFF;">Perfil</td>
+                                                    <td style="width:15%;background-color: #FFFFFF;">Unidade</td>
+                                                    <td style="width:20%;background-color: #FFFFFF">Subunidade</td>
+                                                    <td style="width:10%;background-color: #FFFFFF; text-align: center">Status</td>
+                                                    <td style="width:10%;background-color: #FFFFFF; text-align: center">Ações</td>
+                                                </tr>
+                                            </table>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody md-body>
+                                <tr md-row ng-repeat="usuario in consultarUsuarioCtrl.listaConsultaUsuario | orderBy:'-nome':true">
+                                    <td md-cell width="20%">
+                                        {{usuario.nome}}
+                                    </td>
+                                    <td md-cell >
+                                        <table style="border-collapse: collapse; width: 100%;">
+                                            <tr data-ng-repeat="us in usuario.perfil">
+                                                <!--- existeAcessos===true --->
+                                                <td ng-show="us.perfil.existeAcessos" style="text-align: left; padding: 2px; width: 25%;">
+                                                    {{ us.perfil.nome }}
+                                                </td>
+                                                <td ng-show="us.perfil.existeAcessos && us.perfil.unidade !== null" style="text-align: left; padding: 2px; width: 15%;">
+                                                    {{ us.perfil.unidade.nomeUnidade }}
+                                                </td>
+                                                <td ng-show="us.perfil.existeAcessos && us.perfil.unidade === null" style="text-align: left; padding: 2px; width: 15%;">
+                                                    <p ng-bind-html="'Sem atribuição.'"></p>
+                                                </td>
+                                                <td ng-show="us.perfil.existeAcessos" style="text-align: left; padding: 2px; width: 20%;">
+                                                    <p ng-bind-html="consultarUsuarioCtrl.getSubunidades(us.perfil.unidade.nomeUnidade, us.perfil.subunidades)"></p>
+                                                </td>
+                                                <td ng-show="us.perfil.existeAcessos" style="text-align: center; padding: 2px; width: 10%;">
+                                                    <span style="color: green" ng-if="us.perfil.ativo">Ativo</span>
+                                                    <span style="color: red" ng-if="!us.perfil.ativo">Inativo</span>
+                                                </td>
+                                                <td ng-show="us.perfil.existeAcessos" style="text-align: center; padding: 2px; width: 10%;">
+                                                    <ng-md-icon icon="search" ng-click="consultarUsuarioCtrl.detalharUsuario(usuario.cpf, us.perfil.nome, us.perfil.unidade)"></ng-md-icon>
+                                                    <ng-md-icon icon="mode_edit" ng-show="us.perfil.ativo" ng-click="consultarUsuarioCtrl.editarUsuario(usuario.cpf, us.perfil.nome)"></ng-md-icon>
+                                                    <md-switch ng-model="us.perfil.ativo" ng-change="consultarUsuarioCtrl.atualizaPerfil(usuario.cpf, us.perfil.nome, $even)" style="display: inline-block;height: 0px;margin-top: -13px;">
+                                                    </md-switch>
+                                                </td>
+                                                <!--- existeAcessos===false --->
+                                                <td ng-show="!us.perfil.existeAcessos" style="color: red; text-align: left; padding: 2px; width: 25%; background-color: #c8787a">
+                                                    {{ us.perfil.nome }}
+                                                </td>
+                                                <td ng-show="!us.perfil.existeAcessos && us.perfil.unidade !== null" style="color: red; text-align: left; padding: 2px; width: 15%; background-color: #c8787a">
+                                                    {{ us.perfil.unidade.nomeUnidade }}
+                                                </td>
+                                                <td ng-show="!us.perfil.existeAcessos && us.perfil.unidade === null" style="color: red; text-align: left; padding: 2px; width: 15%; background-color: #c8787a">
+                                                    <p ng-bind-html="'Sem atribuição.'"></p>
+                                                </td>
+                                                <td ng-show="!us.perfil.existeAcessos" style="color: red; text-align: left; padding: 2px; width: 20%; background-color: #c8787a">
+                                                    <p ng-bind-html="consultarUsuarioCtrl.getSubunidades(us.perfil.unidade.nomeUnidade, us.perfil.subunidades)"></p>
+                                                </td>
+                                                <td ng-show="!us.perfil.existeAcessos" style="color: red; text-align: center; padding: 2px; width: 10%; background-color: #c8787a">
+                                                    <span ng-if="us.perfil.ativo">Ativo<br>Dado inexistente no Acessos</span>
+                                                    <span ng-if="!us.perfil.ativo">Inativo<br>Dado inexistente no Acessos</span>
+                                                </td>
+                                                <td ng-show="!us.perfil.existeAcessos" style="text-align: center; padding: 2px; width: 10%; background-color: #c8787a">
+                                                    <ng-md-icon icon="search" ng-click="consultarUsuarioCtrl.detalharUsuario(usuario.cpf, us.perfil.nome, us.perfil.unidade)"></ng-md-icon>
+                                                    <md-switch ng-model="us.perfil.ativo" ng-change="consultarUsuarioCtrl.atualizaPerfil(usuario.cpf, us.perfil.nome, $even)" style="display: inline-block;height: 0px;margin-top: -13px;">
+                                                    </md-switch>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-table-container>
+
+                        <md-table-pagination style="margin: auto; background-color: #D8F8E1;"
+                                             md-on-paginate="consultarUsuarioCtrl.buscarAll"
+                                             md-limit="consultarUsuarioCtrl.tabelaConsulta.limit"
+                                             md-limit-options="consultarUsuarioCtrl.tabelaConsulta.limitsPage"
+                                             md-page="consultarUsuarioCtrl.tabelaConsulta.page"
+                                             md-total="{{consultarUsuarioCtrl.totalElementosConsulta}}"
+                                             md-page-select>
+                        </md-table-pagination>
+                    </md-card-content>
+                </md-card>
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-raised md-primary" ng-click="consultarUsuarioCtrl.gerarRelatorioExcel()">
+                        Relatório
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

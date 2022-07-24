@@ -1,0 +1,31 @@
+<script src="path/to/nanospell/autoload.js"></script>
+<md-content>
+    <md-content>
+        <h1>Resposta/Justificativa</h1>
+    </md-content>
+    <form name="formulario">
+        <md-card md-theme-watch>
+            <md-card-content>
+                <textarea name="editor1" id="editor1" ng-model="">
+                </textarea>
+            </md-card-content>
+        </md-card>
+        <div layout="row" layout-align="end right" ng-controller="RespostaAssinadaController as scope" ng-show="scope.fluxo == 'propostaResposta'">
+            <md-button class="md-primary md-raised" ng-click="" ng-disabled="true">
+                Selecionar proposta do Catálogo
+            </md-button> <md-button class="md-primary md-raised" ng-click="scope.salvarPropostaResposta()">
+                Salvar
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="scope.confirmarFecharRespostaSemSalvar($event)">
+                Voltar
+            </md-button>
+        </div>
+    </form>
+</md-content>
+<script>
+    CKEDITOR.replace( 'editor1' );
+    CKEDITOR.config.browserContextMenuOnCtrl = true;
+    CKEDITOR.config.disableNativeSpellChecker = false;
+    CKEDITOR.config.removePlugins='scayt,wsc';
+</script>
+

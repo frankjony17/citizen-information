@@ -1,0 +1,58 @@
+<form name="formulario">
+<div style="width: 400px ; height: 400px; margin-left: 55%; position: absolute; ">
+    <div layout="row">
+        <md-input-container class="md-block" flex="100">
+            <label>Assunto</label>
+            <md-select ng-model="tema" ng-change="buscarPorSubtema()" ng-disabled="!isEditar && TemasSubtemasPalavraChavePedido.tema != null"  required>
+                <md-option
+                    ng-repeat="tema in listaTodosTemas " ng-value="tema.id" >
+                    {{tema.nomeTema}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+
+    <div layout="row">
+        <md-input-container class="md-block" flex="100">
+            <label>SubAssunto</label>
+            <md-select ng-model="subtemas"   ng-disabled="!isEditar && TemasSubtemasPalavraChavePedido.tema != null"  multiple required>
+                <md-optgroup label="subtemas" >
+                    <md-option
+                        ng-repeat="subtema in listaSubtemas" ng-value="subtema" >
+                        {{subtema.nomeSubtema}}
+                    </md-option>
+                </md-optgroup>
+            </md-select>
+        </md-input-container>
+    </div>
+
+    <div layout="row">
+        <md-input-container class="md-block" flex="100">
+            <label>Palavra-chave</label>
+            <md-select ng-model="palavras"   ng-disabled="!isEditar && TemasSubtemasPalavraChavePedido.tema != null" multiple required>
+                <md-optgroup label="palavrasChaves">
+                    <div ng-repeat="subtema in subtemas">
+                        <md-option
+                            ng-repeat="palavraChave in subtema.palavrasChaves " ng-value="palavraChave">
+                            {{palavraChave.descricao}}
+                        </md-option>
+                    </div>
+                </md-optgroup>
+            </md-select>
+        </md-input-container>
+    </div>
+    <md-button style="float: right" class="md-raised md-primary" ng-disabled="!isEditar && TemasSubtemasPalavraChavePedido.tema != null" ng-click="associar(tema,pedidoDetalhadoDTO.idPedido,subtemas,palavras)"
+               ng-show="temPermissaoTema('assunto_subassunto_s')">
+        Salvar
+    </md-button>
+    <md-button style="float: right" class="md-raised md-primary" ng-click="alterarIsEditar('editar')"
+               ng-show="!isEditar && TemasSubtemasPalavraChavePedido.tema != null && temPermissaoTema('assunto_subassunto_e')">
+        Editar
+    </md-button>
+    <md-button style="float: right" class="md-raised md-primary" ng-click="alterarIsEditar('cancelar')"
+               ng-show="isEditar && temPermissaoTema('assunto_subassunto_c')">
+        Cancelar
+    </md-button>
+
+</div>
+</form>

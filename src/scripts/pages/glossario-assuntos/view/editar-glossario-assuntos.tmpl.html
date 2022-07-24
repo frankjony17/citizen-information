@@ -1,0 +1,45 @@
+<md-content>
+    <ng-form name="editarGlossarioDeAssuntosCtrl.editarGlossarioTemasForm">
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>Editar Glossário de Assuntos </h1>
+                </md-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Assunto</label>
+                        <input ng-model="editarGlossarioDeAssuntosCtrl.temaSubtemaPalavraCahve.nomeTema" disabled required>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Subassunto</label>
+                        <input ng-model="editarGlossarioDeAssuntosCtrl.temaSubtemaPalavraCahve.nomeSubtema" required/>
+                    </md-input-container>
+                </div>
+                <label>Palavra-chave</label>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <md-chips ng-model="editarGlossarioDeAssuntosCtrl.temaSubtemaPalavraCahve.palavrasChaves"
+                                  readonly="editarGlossarioDeAssuntosCtrl.readonly"
+                                  md-transform-chip="editarGlossarioDeAssuntosCtrl.newPalavraChave($chip)" required>
+                            <md-chip-template >
+                                   <span>
+                                   <strong>{{$chip.descricao}}</strong>
+                                   </span>
+                            </md-chip-template >
+                        </md-chips>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-primary md-raised" ng-click="editarGlossarioDeAssuntosCtrl.editar()">
+                        Salvar
+                    </md-button>
+                    <md-button class="md-primary md-raised" ng-click="editarGlossarioDeAssuntosCtrl.voltar()">
+                        Cancelar
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

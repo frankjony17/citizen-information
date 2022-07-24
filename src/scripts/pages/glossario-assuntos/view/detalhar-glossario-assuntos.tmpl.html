@@ -1,0 +1,46 @@
+<md-content>
+    <ng-form name="detalharGlossarioDeAssuntosCtrl.detalharGlossarioTemasForm">
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>Detalhar Glossário de Assunto </h1>
+                </md-content>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Assunto</label>
+                        <input ng-model="detalharGlossarioDeAssuntosCtrl.temaSubtemaPalavraCahve.nomeTema" readonly required>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+                        <label>Subassunto</label>
+                        <input ng-model="detalharGlossarioDeAssuntosCtrl.temaSubtemaPalavraCahve.nomeSubtema" readonly required>
+                    </md-input-container>
+                </div>
+                <label>Palavra-chave</label>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="100">
+
+                        <md-chips ng-model="detalharGlossarioDeAssuntosCtrl.temaSubtemaPalavraCahve.palavrasChaves"
+                                  readonly="detalharGlossarioDeAssuntosCtrl.readonly"
+                                  md-transform-chip="detalharGlossarioDeAssuntosCtrl.newPalavraChave($chip)" required>
+                            <md-chip-template >
+                                   <span>
+                                   <strong>{{$chip.descricao}}</strong>
+                                   </span>
+                            </md-chip-template >
+                        </md-chips>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-primary md-raised" ng-click="detalharGlossarioDeAssuntosCtrl.editar()">
+                        Editar
+                    </md-button>
+                    <md-button class="md-primary md-raised" ng-click="detalharGlossarioDeAssuntosCtrl.voltar()">
+                        Fechar
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

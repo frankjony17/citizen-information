@@ -1,0 +1,105 @@
+<md-content>
+    <ng-form name ="classificarRespostaCtrl.classificarRespostaForm">
+        <md-card md-theme-watch style="border-top: 1px solid rgba(0, 0, 0, 0.12)">
+            <md-card-content>
+                <md-content>
+                    <h1>{{classificarRespostaCtrl.tituloPagina}}</h1>
+                </md-content>
+
+                <div layout="row">
+                    <div flex>
+
+                    <md-input-container>
+                        <label>Orientações ao Solicitante</label>
+                        <md-select ng-model="classificarRespostaCtrl.orientacao"
+                                   md-on-close="classificarRespostaCtrl.clearSearchTerm()"
+                                   data-md-container-class="selectdemoSelectHeader"
+                                   multiple>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="classificarRespostaCtrl.searchTerm"
+                                       type="search"
+                                       placeholder="Consultar"
+                                       class="demo-header-searchbox md-text">
+                            </md-select-header>
+                            <md-optgroup label="Orientações">
+                                <md-option ng-value="classificacao" ng-repeat="classificacao in classificarRespostaCtrl.listaOrientacaoSolicitante | filter:classificarRespostaCtrl.searchTerm">{{classificacao.descricao}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    </div>
+                    <div flex>
+                        <md-input-container>
+                        <label>Acesso Concedido - Transparência Ativa</label>
+                        <md-select ng-model="classificarRespostaCtrl.transparenciaAtiva"
+                                   md-on-close="classificarRespostaCtrl.clearSearchTerm()"
+                                   data-md-container-class="selectdemoSelectHeader"
+                                   multiple>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="classificarRespostaCtrl.searchTerm"
+                                       type="search"
+                                       placeholder="Consultar"
+                                       class="demo-header-searchbox md-text">
+                            </md-select-header>
+                            <md-optgroup label="Orientações ao Solicitante">
+                                <md-option ng-value="classificacao" ng-repeat="classificacao in classificarRespostaCtrl.listaTransparenciaAtiva | filter:classificarRespostaCtrl.searchTerm">{{classificacao.descricao}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    </div> 
+                </div>
+                <div layout="row">
+                    <div flex>
+                        <md-input-container>
+                            <label>Acesso Concedido - Transparência Passiva</label>
+                            <md-select ng-model="classificarRespostaCtrl.transparenciaPassiva"
+                                    md-on-close="classificarRespostaCtrl.clearSearchTerm()"
+                                    data-md-container-class="selectdemoSelectHeader"
+                                    multiple>
+                                <md-select-header class="demo-select-header">
+                                    <input ng-model="classificarRespostaCtrl.searchTerm"
+                                        type="search"
+                                        placeholder="Consultar"
+                                        class="demo-header-searchbox md-text">
+                                </md-select-header>
+                                <md-optgroup label="Orientações ao Solicitante">
+                                    <md-option ng-value="classificacao" ng-repeat="classificacao in classificarRespostaCtrl.listaTransparenciaPassiva | filter:classificarRespostaCtrl.searchTerm">{{classificacao.descricao}}</md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div flex>
+                        <md-input-container>
+                                <label>Acesso Negado</label>
+                                <md-select ng-model="classificarRespostaCtrl.acessoNegado"
+                                           md-on-close="classificarRespostaCtrl.clearSearchTerm()"
+                                           data-md-container-class="selectdemoSelectHeader"
+                                           multiple>
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="classificarRespostaCtrl.searchTerm"
+                                               type="search"
+                                               placeholder="Consultar"
+                                               class="demo-header-searchbox md-text">
+                                    </md-select-header>
+                                    <md-optgroup label="Orientações ao Solicitante">
+                                        <md-option ng-value="classificacao" ng-repeat="classificacao in classificarRespostaCtrl.listaAcessoNegado | filter:classificarRespostaCtrl.searchTerm">{{classificacao.descricao}}</md-option>
+                                    </md-optgroup>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    
+                </div>
+
+                
+                <div layout="row" layout-align="end right">
+                    <md-button class="md-raised md-primary"
+                               ng-click="classificarRespostaCtrl.salvar()">
+                        Salvar
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="classificarRespostaCtrl.voltarDetalhar()">
+                        Voltar
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+    </ng-form>
+</md-content>

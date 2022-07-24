@@ -1,0 +1,45 @@
+<md-content>
+    <md-content>
+        <h1>Resposta/Justificativa</h1>
+    </md-content>
+    <ng-form name="scope.formulario">
+        <md-card md-theme-watch>
+            <md-card-content>
+                <textarea style="height:100%" name="editor1" id="editor1">
+                </textarea>
+            </md-card-content>
+        </md-card>
+        <div layout="row" layout-align="end right" ng-show="scope.fluxo == 'responder'">
+            <md-button class="md-primary md-raised" ng-click="" ng-disabled="true">
+                Buscar resposta do catálogo
+            </md-button>
+            <md-button class="md-primary md-raised"
+                       ng-click="scope.salvarResposta($event)"
+                       ng-if="scope.statusRespostaAssinada == false
+                       && (scope.statusSolicitacao.nome == 'Triagem SIC'
+                       || scope.statusSolicitacao.nome == 'Distribuição PF'
+                       || scope.statusSolicitacao.nome == 'Resposta SIC'
+                       || scope.statusSolicitacao.nome == 'Produção de Resposta'
+                       || scope.statusSolicitacao.nome == 'Sugestão de Reencaminhamento'
+                       || scope.statusSolicitacao.nome == 'Resposta Assinada')">
+                Salvar
+            </md-button>
+            <md-button class="md-primary md-raised"
+                       ng-click="scope.editarResposta($event)"
+                       ng-if="scope.statusRespostaAssinada == true
+                       || scope.statusSolicitacao.nome == 'Edição Técnico'">
+                Salvar
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="scope.confirmarFecharRespostaSemSalvar($event)">
+                Voltar
+            </md-button>
+        </div>
+    </ng-form>
+</md-content>
+<script>
+    CKEDITOR.replace( 'editor1' );
+    CKEDITOR.config.browserContextMenuOnCtrl = true;
+    CKEDITOR.config.disableNativeSpellChecker = false;
+    CKEDITOR.config.removePlugins='scayt,wsc';
+</script>
+
